@@ -1,29 +1,35 @@
 import dotenv from "dotenv";
-import { MongoClient, ServerApiVersion } from "mongodb";
+import { MongoClient, MongoClientOptions } from "mongodb";
 
 dotenv.config();
 
-const MONGODB_URI = process.env.MONGODB_URI;
-
-const client = new MongoClient(MONGODB_URI || "", {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  },
+const uri = process.env.MONGODB_URI;
+const options = {
+  ssl: true,
+  tls: true,
+  minPoolSize: 1,
   maxPoolSize: 10,
-  minPoolSize: 5,
-});
+  serverSelectionTimeoutMS: 30000,
+  socketTimeoutMS: 45000,
+  retryWrites: true,
+  w: "majority",
+  directConnection: false
+};
 
-async function connectToDatabase() {
+let client: MongoClient | null = null;
+
+export async function connectToDatabase() {
   try {
-    await client.connect();
-    console.log("Connecté avec succès à MongoDB");
+    if (!client) {
+      if (!uri) {
+        throw new Error("MONGODB_URI manquant dans les variables d'environnement");
+      }
+      client = new MongoClient(uri, options as MongoClientOptions);
+      await client.connect();
+    }
     return client.db();
   } catch (error) {
     console.error("Erreur de connexion à MongoDB:", error);
     throw error;
   }
 }
-
-export { connectToDatabase };
