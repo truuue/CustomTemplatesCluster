@@ -1,5 +1,4 @@
 import { connectToDatabase } from "@/config/database";
-import { Section } from "@/types/template";
 import { ObjectId } from "mongodb";
 import { NextResponse } from "next/server";
 
@@ -11,7 +10,7 @@ export async function POST(
     const resolvedParams = await context.params;
     const [db, newSection] = await Promise.all([
       connectToDatabase(),
-      request.json()
+      request.json(),
     ]);
 
     const result = await db

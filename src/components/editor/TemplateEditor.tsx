@@ -2,30 +2,33 @@
 
 import { Loading } from "@/components/ui/loading";
 import {
-  Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
 import { Section, Template } from "@/types/template";
-import { useState, useEffect } from "react";
+import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 import { LivePreview } from "./LivePreview";
 import { SectionEditor } from "./SectionEditor";
-import { useRouter } from "next/navigation";
-import dynamic from 'next/dynamic';
-import { v4 as uuidv4 } from 'uuid';
 
 interface TemplateEditorProps {
   initialTemplate: Template;
 }
 
-const SelectWrapper = dynamic(() => import('@/components/ui/select').then(mod => mod.Select), {
-  ssr: false // Désactive le rendu côté serveur
-});
+const SelectWrapper = dynamic(
+  () => import("@/components/ui/select").then((mod) => mod.Select),
+  {
+    ssr: false, // Désactive le rendu côté serveur
+  }
+);
 
 const DraggableSectionListWrapper = dynamic(
-  () => import('./DraggableSectionList').then(mod => mod.DraggableSectionList),
+  () =>
+    import("./DraggableSectionList").then((mod) => mod.DraggableSectionList),
   { ssr: false }
 );
 
@@ -40,9 +43,15 @@ export function TemplateEditor({ initialTemplate }: TemplateEditorProps) {
     try {
       const newSection: Section = {
         id: uuidv4(),
-        type: sectionType as "hero" | "features" | "pricing" | "testimonials" | "contact" | "footer",
+        type: sectionType as
+          | "hero"
+          | "features"
+          | "pricing"
+          | "testimonials"
+          | "contact"
+          | "footer",
         content: {},
-        style: {}
+        style: {},
       };
 
       const response = await fetch(`/api/templates/${template._id}/sections`, {
@@ -98,14 +107,17 @@ export function TemplateEditor({ initialTemplate }: TemplateEditorProps) {
   const handleSectionsReorder = async (reorderedSections: Section[]) => {
     setIsSaving(true);
     try {
-      const response = await fetch(`/api/templates/${template._id}/sections/reorder`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ sections: reorderedSections }),
-      });
+      const response = await fetch(
+        `/api/templates/${template._id}/sections/reorder`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ sections: reorderedSections }),
+        }
+      );
 
       if (!response.ok) throw new Error("Erreur lors de la réorganisation");
-      setTemplate(prev => ({ ...prev, sections: reorderedSections }));
+      setTemplate((prev) => ({ ...prev, sections: reorderedSections }));
     } catch (error) {
       console.error("Erreur:", error);
     } finally {

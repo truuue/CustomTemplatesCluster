@@ -13,7 +13,7 @@ const options = {
   socketTimeoutMS: 45000,
   retryWrites: true,
   w: "majority",
-  directConnection: false
+  directConnection: false,
 };
 
 let client: MongoClient | null = null;
@@ -22,7 +22,9 @@ export async function connectToDatabase() {
   try {
     if (!client) {
       if (!uri) {
-        throw new Error("MONGODB_URI manquant dans les variables d'environnement");
+        throw new Error(
+          "MONGODB_URI manquant dans les variables d'environnement"
+        );
       }
       client = new MongoClient(uri, options as MongoClientOptions);
       await client.connect();

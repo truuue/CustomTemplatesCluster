@@ -36,7 +36,7 @@ export async function POST(request: Request) {
     const db = await connectToDatabase();
     console.log("Connexion à la DB établie");
 
-    const newTemplate: Omit<Template, '_id'> = {
+    const newTemplate: Omit<Template, "_id"> = {
       name: body.name || "",
       description: body.description || "",
       thumbnail: body.thumbnail || "",
