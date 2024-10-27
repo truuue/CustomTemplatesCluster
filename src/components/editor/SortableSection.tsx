@@ -10,7 +10,11 @@ interface SortableSectionProps {
   onDelete: () => void;
 }
 
-export function SortableSection({ section, onSelect, onDelete }: SortableSectionProps) {
+export function SortableSection({
+  section,
+  onSelect,
+  onDelete,
+}: SortableSectionProps) {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: section.id });
 

@@ -12,7 +12,7 @@ export async function DELETE(
     const result = await db.collection("templates").updateOne(
       { _id: new ObjectId(params.id) },
       {
-        $pull: { "sections": { "id": params.sectionId } } as any,
+        $pull: { sections: { id: params.sectionId } } as any,
         $set: { updatedAt: new Date().toISOString() },
       }
     );
@@ -46,15 +46,15 @@ export async function PUT(
     const updatedSection = await request.json();
 
     const result = await db.collection("templates").updateOne(
-      { 
+      {
         _id: new ObjectId(params.id),
-        "sections.id": params.sectionId 
+        "sections.id": params.sectionId,
       },
       {
-        $set: { 
+        $set: {
           "sections.$": updatedSection,
-          updatedAt: new Date().toISOString()
-        }
+          updatedAt: new Date().toISOString(),
+        },
       }
     );
 
