@@ -1,53 +1,102 @@
 "use client";
 
-import { Section } from "@/types/template";
+import { cn } from "@/lib/utils";
+import { Section, Template } from "@/types/template";
+import { Loader2, Monitor, Smartphone, Tablet } from "lucide-react";
+import { useState } from "react";
+import { TemplateRenderer } from "../templates/TemplateRenderer";
+import { Button } from "../ui/button";
 
 interface LivePreviewProps {
   sections: Section[];
+  onSectionClick?: (section: Section) => void;
 }
 
-export function LivePreview({ sections }: LivePreviewProps) {
-  const renderSection = (section: Section) => {
-    switch (section.type) {
-      case "hero":
-        return (
-          <div
-            style={{
-              backgroundColor: section.style.backgroundColor,
-              padding: section.style.padding || "4rem 2rem",
-              textAlign: section.style.layout as any,
-            }}
-            className="flex min-h-[60vh] flex-col items-center justify-center"
-          >
-            <h1 className="mb-4 text-5xl font-bold">{section.content.title}</h1>
-            <p className="mb-8 text-xl">{section.content.subtitle}</p>
-            <div className="flex gap-4">
-              {section.content.buttons?.map((button, index) => (
-                <button
-                  key={index}
-                  className={`rounded-lg px-6 py-2 ${
-                    button.variant === "primary"
-                      ? "bg-primary text-white"
-                      : "bg-secondary text-primary"
-                  }`}
-                >
-                  {button.text}
-                </button>
-              ))}
-            </div>
-          </div>
-        );
-      // Ajoutez d'autres cas pour les différents types de sections
-      default:
-        return null;
-    }
+type DeviceType = "desktop" | "tablet" | "mobile";
+
+export function LivePreview({ sections, onSectionClick }: LivePreviewProps) {
+  const [device, setDevice] = useState<DeviceType>("desktop");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const deviceStyles = {
+    desktop: "w-full",
+    tablet: "max-w-[768px]",
+    mobile: "max-w-[375px]",
+  };
+
+  const handleDeviceChange = (newDevice: DeviceType) => {
+    setIsLoading(true);
+    setDevice(newDevice);
+    // Simuler un temps de chargement pour une meilleure UX
+    setTimeout(() => setIsLoading(false), 500);
+  };
+
+  const template: Template = {
+    sections,
+    name: "Preview",
+    description: "Live preview",
+    _id: "preview",
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    thumbnail: "",
+    category: "",
+    userId: "",
+    isPublic: false,
+    tags: [],
   };
 
   return (
-    <div className="w-full">
-      {sections.map((section, index) => (
-        <div key={section.id || index}>{renderSection(section)}</div>
-      ))}
+    <div className="flex h-full flex-col">
+      {/* Barre d'outils de prévisualisation */}
+      <div className="flex items-center justify-between border-b bg-white p-4">
+        <div className="flex items-center gap-2">
+          <Button
+            variant={device === "desktop" ? "default" : "ghost"}
+            size="icon"
+            onClick={() => handleDeviceChange("desktop")}
+          >
+            <Monitor className="h-5 w-5" />
+          </Button>
+          <Button
+            variant={device === "tablet" ? "default" : "ghost"}
+            size="icon"
+            onClick={() => handleDeviceChange("tablet")}
+          >
+            <Tablet className="h-5 w-5" />
+          </Button>
+          <Button
+            variant={device === "mobile" ? "default" : "ghost"}
+            size="icon"
+            onClick={() => handleDeviceChange("mobile")}
+          >
+            <Smartphone className="h-5 w-5" />
+          </Button>
+        </div>
+      </div>
+
+      {/* Zone de prévisualisation */}
+      <div className="flex-1 overflow-y-auto bg-gray-100 p-4">
+        {isLoading ? (
+          <div className="flex h-full items-center justify-center">
+            <Loader2 className="h-8 w-8 animate-spin text-primary" />
+          </div>
+        ) : (
+          <div
+            className={cn(
+              "mx-auto h-full overflow-hidden rounded-lg bg-white shadow-lg transition-all duration-300",
+              deviceStyles[device]
+            )}
+          >
+            <div className="h-full overflow-y-auto">
+              <TemplateRenderer
+                template={template}
+                isEditing={true}
+                onSectionClick={onSectionClick}
+              />
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

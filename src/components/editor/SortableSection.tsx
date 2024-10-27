@@ -1,20 +1,27 @@
 import { Section } from "@/types/template";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { GripVertical } from "lucide-react";
+import { GripVertical, Trash2 } from "lucide-react";
+import { Button } from "../ui/button";
 
 interface SortableSectionProps {
   section: Section;
   onSelect: () => void;
+  onDelete: () => void;
 }
 
-export function SortableSection({ section, onSelect }: SortableSectionProps) {
+export function SortableSection({ section, onSelect, onDelete }: SortableSectionProps) {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: section.id });
 
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
+  };
+
+  const handleDelete = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onDelete();
   };
 
   return (
@@ -37,6 +44,14 @@ export function SortableSection({ section, onSelect }: SortableSectionProps) {
           {section.content.title || "Sans titre"}
         </p>
       </div>
+      <Button
+        variant="ghost"
+        size="icon"
+        className="ml-2 text-red-500 hover:bg-red-50 hover:text-red-600"
+        onClick={handleDelete}
+      >
+        <Trash2 size={18} />
+      </Button>
     </div>
   );
 }

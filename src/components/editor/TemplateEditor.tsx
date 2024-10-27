@@ -125,6 +125,29 @@ export function TemplateEditor({ initialTemplate }: TemplateEditorProps) {
     }
   };
 
+  const handleSectionDelete = async (sectionToDelete: Section) => {
+    setIsSaving(true);
+    try {
+      const response = await fetch(
+        `/api/templates/${template._id}/sections/${sectionToDelete.id}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      if (!response.ok) throw new Error("Erreur lors de la suppression");
+
+      setTemplate((prev) => ({
+        ...prev,
+        sections: prev.sections.filter((s) => s.id !== sectionToDelete.id),
+      }));
+    } catch (error) {
+      console.error("Erreur:", error);
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
   return (
     <div className="flex h-screen">
       {/* Panneau d'édition */}
@@ -154,6 +177,7 @@ export function TemplateEditor({ initialTemplate }: TemplateEditorProps) {
               sections={template.sections}
               onSectionsReorder={handleSectionsReorder}
               onSectionSelect={setActiveSection}
+              onSectionDelete={handleSectionDelete}
             />
           )}
         </div>

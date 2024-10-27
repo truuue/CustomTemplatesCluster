@@ -62,7 +62,7 @@ export interface Template {
   name: string;
   description: string;
   thumbnail: string;
-  category: "business" | "portfolio" | "startup" | "saas" | "ecommerce";
+  category: "business" | "portfolio" | "startup" | "saas" | "ecommerce" | "";
   sections: Section[];
   createdAt: string; // Date ISO string
   updatedAt: string; // Date ISO string

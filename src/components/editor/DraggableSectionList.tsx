@@ -22,12 +22,14 @@ interface DraggableSectionListProps {
   sections: Section[];
   onSectionsReorder: (newSections: Section[]) => void;
   onSectionSelect: (section: Section) => void;
+  onSectionDelete: (section: Section) => void;
 }
 
 export function DraggableSectionList({
   sections,
   onSectionsReorder,
   onSectionSelect,
+  onSectionDelete,
 }: DraggableSectionListProps) {
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -63,6 +65,7 @@ export function DraggableSectionList({
               key={section.id}
               section={section}
               onSelect={() => onSectionSelect(section)}
+              onDelete={() => onSectionDelete(section)}
             />
           ))}
         </div>
