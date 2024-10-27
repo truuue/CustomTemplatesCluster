@@ -5,15 +5,18 @@ import { NextResponse } from "next/server";
 
 export async function POST(
   request: Request,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
-    const newSection: Section = await request.json();
-    const db = await connectToDatabase();
+    const resolvedParams = await context.params;
+    const [db, newSection] = await Promise.all([
+      connectToDatabase(),
+      request.json()
+    ]);
 
     const result = await db
       .collection("templates")
-      .updateOne({ _id: new ObjectId(params.id) }, {
+      .updateOne({ _id: new ObjectId(resolvedParams.id) }, {
         $push: { sections: newSection },
         $set: { updatedAt: new Date().toISOString() },
       } as any);
