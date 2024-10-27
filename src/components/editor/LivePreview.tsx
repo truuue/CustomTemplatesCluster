@@ -48,7 +48,7 @@ export function LivePreview({ sections, onSectionClick }: LivePreviewProps) {
   return (
     <div className="flex h-full flex-col">
       {/* Barre d'outils de prévisualisation */}
-      <div className="flex items-center justify-between border-b bg-white p-4">
+      <div className="flex items-center justify-between rounded-b-xl border bg-white p-4">
         <div className="flex items-center gap-2">
           <Button
             variant={device === "desktop" ? "default" : "ghost"}
@@ -75,7 +75,7 @@ export function LivePreview({ sections, onSectionClick }: LivePreviewProps) {
       </div>
 
       {/* Zone de prévisualisation */}
-      <div className="flex-1 overflow-y-auto bg-gray-100 p-4">
+      <div className="flex-1 overflow-y-auto bg-gray-100 p-1">
         {isLoading ? (
           <div className="flex h-full items-center justify-center">
             <Loader2 className="h-8 w-8 animate-spin text-primary" />
