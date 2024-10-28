@@ -2,6 +2,7 @@
 
 import { Card } from "@/components/ui/card";
 import { Section } from "@/types/template";
+import { HeaderEditor } from "./section-editors/HeaderEditor";
 import { HeroEditor } from "./section-editors/HeroEditor";
 
 interface SectionEditorProps {
@@ -12,6 +13,8 @@ interface SectionEditorProps {
 export function SectionEditor({ section, onUpdate }: SectionEditorProps) {
   const renderEditor = () => {
     switch (section.type) {
+      case "header":
+        return <HeaderEditor section={section} onUpdate={onUpdate} />;
       case "hero":
         return <HeroEditor section={section} onUpdate={onUpdate} />;
       case "features":

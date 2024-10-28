@@ -253,6 +253,7 @@ function EditorPanel({
             <SelectValue placeholder="Choisir un type de section" />
           </SelectTrigger>
           <SelectContent>
+            <SelectItem value="header">Entête</SelectItem>
             <SelectItem value="hero">Hero</SelectItem>
             <SelectItem value="features">Fonctionnalités</SelectItem>
             <SelectItem value="pricing">Tarification</SelectItem>

@@ -4,6 +4,7 @@ import { Section, Template } from "@/types/template";
 import { ContactSection } from "../sections/ContactSection";
 import { FeaturesSection } from "../sections/FeaturesSection";
 import { FooterSection } from "../sections/FooterSection";
+import { HeaderSection } from "../sections/HeaderSection";
 import { HeroSection } from "../sections/HeroSection";
 import { PricingSection } from "../sections/PricingSection";
 import { TestimonialsSection } from "../sections/TestimonialsSection";
@@ -31,12 +32,14 @@ export function TemplateRenderer({
       : "";
 
     const wrapSection = (component: React.ReactNode) => (
-      <div key={section.id} className={sectionClasses}>
+      <div key={section.id} id={section.id} className={sectionClasses}>
         {component}
       </div>
     );
 
     switch (section.type) {
+      case "header":
+        return wrapSection(<HeaderSection {...props} />);
       case "hero":
         return wrapSection(<HeroSection {...props} />);
       case "features":

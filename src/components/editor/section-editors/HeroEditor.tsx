@@ -207,7 +207,7 @@ export function HeroEditor({ section, onUpdate }: HeroEditorProps) {
 
       <Button onClick={handleSave} className="mt-4 w-full">
         <Save className="mr-2 h-4 w-4" />
-        Sauvegarder les modifications
+        Sauvegarder
       </Button>
     </Tabs>
   );
