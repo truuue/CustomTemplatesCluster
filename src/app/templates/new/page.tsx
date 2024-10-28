@@ -20,8 +20,12 @@ export default function NewTemplate() {
     description: "",
   });
 
+  const [pending, setPending] = useState(false);
+
   const handleCreate = async () => {
     try {
+      setPending(true);
+
       const response = await fetch("/api/templates", {
         method: "POST",
         headers: {
@@ -81,13 +85,16 @@ export default function NewTemplate() {
               suppressHydrationWarning
             />
           </div>
-          <Button
-            onClick={handleCreate}
-            className="w-full"
-            suppressHydrationWarning
-          >
-            Créer et commencer l'édition
-          </Button>
+          {pending && <p className="text-center">Création en cours...</p>}
+          {!pending && (
+            <Button
+              onClick={handleCreate}
+              className="w-full"
+              suppressHydrationWarning
+            >
+              Créer et commencer l'édition
+            </Button>
+          )}
         </CardContent>
       </Card>
     </div>
