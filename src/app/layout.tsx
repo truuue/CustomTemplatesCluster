@@ -13,8 +13,21 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Créateur de templates",
-  description: "Outils de création de templates personnalisés",
+  title: "LandingBuilder - Créez des Landing Pages Impressionnantes",
+  description:
+    "Créez, personnalisez et publiez des landing pages professionnelles en quelques minutes, sans code. Templates optimisés pour la conversion.",
+  keywords: "landing page, builder, création site web, sans code, templates",
+  openGraph: {
+    title: "LandingBuilder - Créez des Landing Pages Impressionnantes",
+    description: "Créez des landing pages professionnelles sans code",
+    images: ["/og-image.jpg"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "LandingBuilder",
+    description: "Créez des landing pages professionnelles sans code",
+    images: ["/twitter-image.jpg"],
+  },
 };
 
 export default function RootLayout({
