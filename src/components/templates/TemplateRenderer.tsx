@@ -2,7 +2,10 @@
 
 import { Section, Template } from "@/types/template";
 import { ContactSection } from "../sections/ContactSection";
-import { FeaturesSection } from "../sections/FeaturesSection";
+import {
+  FeaturesSection,
+  type FeaturesSectionContent,
+} from "../sections/FeaturesSection";
 import { FooterSection } from "../sections/FooterSection";
 import { HeaderSection } from "../sections/HeaderSection";
 import { HeroSection } from "../sections/HeroSection";
@@ -44,7 +47,15 @@ export function TemplateRenderer({
       case "hero":
         return wrapSection(<HeroSection {...props} />);
       case "features":
-        return wrapSection(<FeaturesSection {...props} />);
+        if ("features" in section.content) {
+          return wrapSection(
+            <FeaturesSection
+              content={section.content as FeaturesSectionContent}
+              style={section.style}
+            />
+          );
+        }
+        return null;
       case "pricing":
         return wrapSection(<PricingSection {...props} />);
       case "testimonials":
