@@ -57,6 +57,16 @@ export interface Section {
   };
 }
 
+export interface HeroContent {
+  title?: string;
+  subtitle?: string;
+  buttons?: Array<{
+    text: string;
+    url: string;
+    variant: "primary" | "secondary" | "outline";
+  }>;
+}
+
 export interface Template {
   _id: string; // Maintenant une chaîne au lieu d'ObjectId
   name: string;

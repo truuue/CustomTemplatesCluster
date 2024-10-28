@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { convertButtonVariant } from "@/lib/utils/button";
 import { Section } from "@/types/template";
 
 interface HeroSectionProps {
@@ -15,10 +16,10 @@ export function HeroSection({ content, style }: HeroSectionProps) {
       style={{
         backgroundColor: style.backgroundColor,
         color: style.textColor,
-        padding: style.padding || "4rem 2rem",
+        padding: style.padding, // Utiliser directement le padding sans valeur par défaut
       }}
       className={cn(
-        "flex min-h-[70vh] items-center justify-center",
+        "flex min-h-[70vh] items-center justify-center transition-all duration-300", // Ajouter une transition
         style.layout === "left" && "text-left",
         style.layout === "center" && "text-center",
         style.layout === "right" && "text-right"
@@ -36,7 +37,11 @@ export function HeroSection({ content, style }: HeroSectionProps) {
         {content.buttons && (
           <div className="flex flex-wrap justify-center gap-4">
             {content.buttons.map((button, index) => (
-              <Button key={index} variant={button.variant as any} asChild>
+              <Button
+                key={index}
+                variant={convertButtonVariant(button.variant)}
+                asChild
+              >
                 <a href={button.url}>{button.text}</a>
               </Button>
             ))}

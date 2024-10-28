@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
 
 interface ContactSectionProps {
   content: Record<string, any>;
@@ -11,7 +11,11 @@ interface ContactSectionProps {
   onClick?: () => void;
 }
 
-export function ContactSection({ content, style, onClick }: ContactSectionProps) {
+export function ContactSection({
+  content,
+  style,
+  onClick,
+}: ContactSectionProps) {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -23,8 +27,8 @@ export function ContactSection({ content, style, onClick }: ContactSectionProps)
       <section className="w-full">
         <div className="container mx-auto px-4 py-12">
           <div className="animate-pulse space-y-4">
-            <div className="h-8 bg-muted rounded w-1/3" />
-            <div className="h-32 bg-muted rounded" />
+            <div className="h-8 w-1/3 rounded bg-muted" />
+            <div className="h-32 rounded bg-muted" />
           </div>
         </div>
       </section>
@@ -32,22 +36,18 @@ export function ContactSection({ content, style, onClick }: ContactSectionProps)
   }
 
   return (
-    <section 
-      className="w-full" 
-      style={style}
-      onClick={onClick}
-    >
+    <section className="w-full" style={style} onClick={onClick}>
       <div className="container mx-auto px-4 py-12">
-        <div className="max-w-lg mx-auto">
+        <div className="mx-auto max-w-lg">
           <div className="grid gap-8">
             <div className="rounded-lg">
               <div className="p-6 pt-0">
-                <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+                <form
+                  className="space-y-4"
+                  onSubmit={(e) => e.preventDefault()}
+                >
                   <div className="space-y-2">
-                    <Input
-                      placeholder="Nom"
-                      suppressHydrationWarning
-                    />
+                    <Input placeholder="Nom" suppressHydrationWarning />
                   </div>
                   <div className="space-y-2">
                     <Input
@@ -57,13 +57,10 @@ export function ContactSection({ content, style, onClick }: ContactSectionProps)
                     />
                   </div>
                   <div className="space-y-2">
-                    <Textarea
-                      placeholder="Message"
-                      suppressHydrationWarning
-                    />
+                    <Textarea placeholder="Message" suppressHydrationWarning />
                   </div>
-                  <Button 
-                    type="submit" 
+                  <Button
+                    type="submit"
                     className="w-full"
                     suppressHydrationWarning
                   >

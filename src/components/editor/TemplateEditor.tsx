@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { Loading } from "@/components/ui/loading";
 import {
   SelectContent,
@@ -7,16 +8,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Section, Template } from "@/types/template";
+import { Menu } from "lucide-react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { LivePreview } from "./LivePreview";
 import { SectionEditor } from "./SectionEditor";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import { Menu } from "lucide-react";
 
 interface TemplateEditorProps {
   initialTemplate: Template;
@@ -37,9 +37,9 @@ const SelectWrapper = dynamic(
 const DraggableSectionListWrapper = dynamic(
   () =>
     import("./DraggableSectionList").then((mod) => mod.DraggableSectionList),
-  { 
+  {
     ssr: false,
-    loading: () => <div className="animate-pulse h-20 bg-muted rounded-md" />
+    loading: () => <div className="h-20 animate-pulse rounded-md bg-muted" />,
   }
 );
 
@@ -185,7 +185,7 @@ export function TemplateEditor({ initialTemplate }: TemplateEditorProps) {
       </div>
 
       {/* Panneau d'édition desktop */}
-      <div className="hidden lg:block lg:w-[300px] xl:w-[400px] fixed h-screen overflow-y-auto border-r bg-background">
+      <div className="fixed hidden h-screen overflow-y-auto border-r bg-background lg:block lg:w-[300px] xl:w-[400px]">
         <EditorPanel
           template={template}
           activeSection={activeSection}
@@ -199,7 +199,7 @@ export function TemplateEditor({ initialTemplate }: TemplateEditorProps) {
       </div>
 
       {/* Prévisualisation */}
-      <div className="lg:pl-[300px] xl:pl-[400px] h-screen overflow-y-auto">
+      <div className="h-screen overflow-y-auto lg:pl-[300px] xl:pl-[400px]">
         {isSaving ? (
           <div className="flex h-full items-center justify-center">
             <Loading />
@@ -241,13 +241,13 @@ function EditorPanel({
   }, []);
 
   if (!isMounted) {
-    return <div className="p-6 space-y-6">Chargement...</div>;
+    return <div className="space-y-6 p-6">Chargement...</div>;
   }
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="space-y-6 p-6">
       <div>
-        <h2 className="text-lg font-semibold mb-4">Ajouter une section</h2>
+        <h2 className="mb-4 text-lg font-semibold">Ajouter une section</h2>
         <SelectWrapper onValueChange={onAddSection} disabled={isSaving}>
           <SelectTrigger>
             <SelectValue placeholder="Choisir un type de section" />
@@ -263,7 +263,7 @@ function EditorPanel({
       </div>
 
       <div>
-        <h2 className="text-lg font-semibold mb-4">Sections</h2>
+        <h2 className="mb-4 text-lg font-semibold">Sections</h2>
         {isSaving ? (
           <Loading />
         ) : (
@@ -278,11 +278,8 @@ function EditorPanel({
 
       {activeSection && (
         <div>
-          <h2 className="text-lg font-semibold mb-4">Éditer la section</h2>
-          <SectionEditor
-            section={activeSection}
-            onUpdate={onSectionUpdate}
-          />
+          <h2 className="mb-4 text-lg font-semibold">Éditer la section</h2>
+          <SectionEditor section={activeSection} onUpdate={onSectionUpdate} />
         </div>
       )}
     </div>
