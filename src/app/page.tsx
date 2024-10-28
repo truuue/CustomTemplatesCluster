@@ -7,8 +7,20 @@ import {
 } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { MotionSection } from "@/components/ui/motion-section";
-import { ArrowRight, Check, Layout, Rocket, Star, Wand2 } from "lucide-react";
+import {
+  ArrowRight,
+  Award,
+  Check,
+  Layout,
+  Rocket,
+  Shield,
+  Star,
+  Trophy,
+  Users,
+  Wand2,
+} from "lucide-react";
 import Link from "next/link";
 
 export default function Home() {
@@ -504,6 +516,87 @@ export default function Home() {
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
+            </div>
+          </div>
+        </section>
+
+        {/* Reconnu par les experts Section */}
+        <section className="w-full border-y bg-gray-50/50 py-12 dark:bg-gray-800/50">
+          <div className="container">
+            <div className="flex flex-col items-center space-y-8">
+              <div className="text-center">
+                <Badge variant="secondary" className="mb-4">
+                  Reconnu par les experts
+                </Badge>
+                <h2 className="text-2xl font-bold tracking-tighter md:text-3xl">
+                  Ils nous font confiance
+                </h2>
+                <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">
+                  Rejoint par plus de 10,000+ entreprises à travers le monde
+                </p>
+              </div>
+
+              <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
+                <Card className="hover-card border-0 bg-white/50 backdrop-blur dark:bg-gray-800/50">
+                  <CardContent className="flex flex-col items-center justify-center p-6">
+                    <div className="mb-4 rounded-full bg-primary/10 p-3 dark:bg-primary/20">
+                      <Award className="h-6 w-6 text-primary" />
+                    </div>
+                    <p className="text-center font-semibold">Forbes</p>
+                    <p className="text-center text-sm text-gray-500">
+                      "Top 10 des outils de création web"
+                    </p>
+                  </CardContent>
+                </Card>
+
+                <Card className="hover-card border-0 bg-white/50 backdrop-blur dark:bg-gray-800/50">
+                  <CardContent className="flex flex-col items-center justify-center p-6">
+                    <div className="mb-4 rounded-full bg-primary/10 p-3 dark:bg-primary/20">
+                      <Trophy className="h-6 w-6 text-primary" />
+                    </div>
+                    <p className="text-center font-semibold">TechCrunch</p>
+                    <p className="text-center text-sm text-gray-500">
+                      "Meilleur outil no-code 2024"
+                    </p>
+                  </CardContent>
+                </Card>
+
+                <Card className="hover-card border-0 bg-white/50 backdrop-blur dark:bg-gray-800/50">
+                  <CardContent className="flex flex-col items-center justify-center p-6">
+                    <div className="mb-4 rounded-full bg-primary/10 p-3 dark:bg-primary/20">
+                      <Star className="h-6 w-6 text-primary" />
+                    </div>
+                    <p className="text-center font-semibold">Wired</p>
+                    <p className="text-center text-sm text-gray-500">
+                      "Innovation de l'année"
+                    </p>
+                  </CardContent>
+                </Card>
+
+                <Card className="hover-card border-0 bg-white/50 backdrop-blur dark:bg-gray-800/50">
+                  <CardContent className="flex flex-col items-center justify-center p-6">
+                    <div className="mb-4 rounded-full bg-primary/10 p-3 dark:bg-primary/20">
+                      <Rocket className="h-6 w-6 text-primary" />
+                    </div>
+                    <p className="text-center font-semibold">ProductHunt</p>
+                    <p className="text-center text-sm text-gray-500">
+                      "#1 Product of the Week"
+                    </p>
+                  </CardContent>
+                </Card>
+              </div>
+
+              <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+                <Badge variant="outline" className="text-sm">
+                  <Star className="mr-1 h-3 w-3" /> 4.9/5 sur Trustpilot
+                </Badge>
+                <Badge variant="outline" className="text-sm">
+                  <Users className="mr-1 h-3 w-3" /> 10k+ Utilisateurs Actifs
+                </Badge>
+                <Badge variant="outline" className="text-sm">
+                  <Shield className="mr-1 h-3 w-3" /> Certifié ISO 27001
+                </Badge>
+              </div>
             </div>
           </div>
         </section>
