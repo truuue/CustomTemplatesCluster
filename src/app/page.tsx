@@ -115,6 +115,60 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Comment ça marche Section */}
+        <section className="w-full py-12 md:py-24">
+          <div className="container">
+            <div className="mb-16 text-center">
+              <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">
+                Comment ça marche ?
+              </h2>
+              <p className="mt-4 text-gray-500 dark:text-gray-400">
+                Créez votre landing page en 3 étapes simples
+              </p>
+            </div>
+            <div className="grid gap-8 md:grid-cols-3">
+              <div className="relative flex flex-col items-center">
+                <div className="absolute -left-4 -top-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary text-xl font-bold text-primary-foreground">
+                  1
+                </div>
+                <div className="w-full rounded-xl bg-white p-6 dark:bg-gray-700">
+                  <h3 className="mb-4 text-xl font-bold">
+                    Choisissez un template
+                  </h3>
+                  <p className="text-gray-500 dark:text-gray-400">
+                    Sélectionnez parmi notre collection de templates
+                    professionnels optimisés pour la conversion
+                  </p>
+                </div>
+              </div>
+              <div className="relative flex flex-col items-center">
+                <div className="absolute -left-4 -top-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary text-xl font-bold text-primary-foreground">
+                  2
+                </div>
+                <div className="w-full rounded-xl bg-white p-6 dark:bg-gray-700">
+                  <h3 className="mb-4 text-xl font-bold">Personnalisez</h3>
+                  <p className="text-gray-500 dark:text-gray-400">
+                    Modifiez les couleurs, textes et images avec notre éditeur
+                    drag-and-drop intuitif
+                  </p>
+                </div>
+              </div>
+              <div className="relative flex flex-col items-center">
+                <div className="absolute -left-4 -top-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary text-xl font-bold text-primary-foreground">
+                  3
+                </div>
+                <div className="w-full rounded-xl bg-white p-6 dark:bg-gray-700">
+                  <h3 className="mb-4 text-xl font-bold">Publiez</h3>
+                  <p className="text-gray-500 dark:text-gray-400">
+                    Mettez en ligne votre landing page en un clic avec
+                    hébergement et SSL inclus
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Features Section amélioré */}
         <section className="w-full bg-gray-50 px-4 py-12 dark:bg-gray-800 md:py-24 lg:py-32">
           <div className="mx-auto max-w-7xl">
@@ -336,6 +390,83 @@ export default function Home() {
                     Designer, CreativeStudio
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Compatible avec vos outils préférés Section */}
+        <section className="w-full bg-gray-50 py-12 dark:bg-gray-800 md:py-24">
+          <div className="container">
+            <div className="mb-16 text-center">
+              <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">
+                Compatible avec vos outils préférés
+              </h2>
+              <p className="mt-4 text-gray-500 dark:text-gray-400">
+                Intégrez facilement avec les plateformes que vous utilisez déjà
+              </p>
+            </div>
+            <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
+              {/* Remplacer par de vrais logos */}
+              <div className="flex items-center justify-center rounded-xl bg-white p-6 dark:bg-gray-700">
+                <span className="text-xl font-bold text-gray-400">Stripe</span>
+              </div>
+              <div className="flex items-center justify-center rounded-xl bg-white p-6 dark:bg-gray-700">
+                <span className="text-xl font-bold text-gray-400">
+                  Mailchimp
+                </span>
+              </div>
+              <div className="flex items-center justify-center rounded-xl bg-white p-6 dark:bg-gray-700">
+                <span className="text-xl font-bold text-gray-400">
+                  Google Analytics
+                </span>
+              </div>
+              <div className="flex items-center justify-center rounded-xl bg-white p-6 dark:bg-gray-700">
+                <span className="text-xl font-bold text-gray-400">Zapier</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Questions Fréquentes Section */}
+        <section className="w-full py-12 md:py-24">
+          <div className="container">
+            <div className="mb-16 text-center">
+              <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">
+                Questions Fréquentes
+              </h2>
+              <p className="mt-4 text-gray-500 dark:text-gray-400">
+                Tout ce que vous devez savoir pour démarrer
+              </p>
+            </div>
+            <div className="mx-auto grid max-w-3xl gap-6">
+              <div className="rounded-xl bg-white p-6 dark:bg-gray-700">
+                <h3 className="mb-2 text-lg font-bold">
+                  Ai-je besoin de savoir coder ?
+                </h3>
+                <p className="text-gray-500 dark:text-gray-400">
+                  Non, notre éditeur visuel vous permet de créer des landing
+                  pages professionnelles sans aucune connaissance en
+                  programmation.
+                </p>
+              </div>
+              <div className="rounded-xl bg-white p-6 dark:bg-gray-700">
+                <h3 className="mb-2 text-lg font-bold">
+                  Puis-je utiliser mon propre nom de domaine ?
+                </h3>
+                <p className="text-gray-500 dark:text-gray-400">
+                  Oui, vous pouvez facilement connecter votre propre nom de
+                  domaine à votre landing page.
+                </p>
+              </div>
+              <div className="rounded-xl bg-white p-6 dark:bg-gray-700">
+                <h3 className="mb-2 text-lg font-bold">
+                  Les pages sont-elles optimisées pour le mobile ?
+                </h3>
+                <p className="text-gray-500 dark:text-gray-400">
+                  Oui, toutes nos landing pages sont automatiquement optimisées
+                  pour tous les appareils.
+                </p>
               </div>
             </div>
           </div>
