@@ -10,26 +10,37 @@ import {
 import { Section, Template } from "@/types/template";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { LivePreview } from "./LivePreview";
 import { SectionEditor } from "./SectionEditor";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
+import { Menu } from "lucide-react";
 
 interface TemplateEditorProps {
   initialTemplate: Template;
 }
 
+// Modifions le SelectWrapper pour éviter les problèmes d'hydratation
 const SelectWrapper = dynamic(
   () => import("@/components/ui/select").then((mod) => mod.Select),
   {
-    ssr: false, // Désactive le rendu côté serveur
+    ssr: false,
+    loading: () => (
+      <div className="h-10 w-full rounded-md border border-input bg-background" />
+    ),
   }
 );
 
+// Modifions le DraggableSectionListWrapper également
 const DraggableSectionListWrapper = dynamic(
   () =>
     import("./DraggableSectionList").then((mod) => mod.DraggableSectionList),
-  { ssr: false }
+  { 
+    ssr: false,
+    loading: () => <div className="animate-pulse h-20 bg-muted rounded-md" />
+  }
 );
 
 export function TemplateEditor({ initialTemplate }: TemplateEditorProps) {
@@ -149,52 +160,46 @@ export function TemplateEditor({ initialTemplate }: TemplateEditorProps) {
   };
 
   return (
-    <div className="flex h-screen">
-      {/* Panneau d'édition */}
-      <div className="w-1/3 overflow-y-auto bg-gray-100 p-4">
-        <div className="mb-6">
-          <h2 className="mb-4 text-2xl font-bold">Ajouter une section</h2>
-          <SelectWrapper onValueChange={handleAddSection} disabled={isSaving}>
-            <SelectTrigger>
-              <SelectValue placeholder="Choisir un type de section" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="hero">Hero</SelectItem>
-              <SelectItem value="features">Fonctionnalités</SelectItem>
-              <SelectItem value="pricing">Tarification</SelectItem>
-              <SelectItem value="testimonials">Témoignages</SelectItem>
-              <SelectItem value="contact">Contact</SelectItem>
-            </SelectContent>
-          </SelectWrapper>
-        </div>
-
-        <div className="mb-6">
-          <h2 className="mb-4 text-2xl font-bold">Sections</h2>
-          {isSaving ? (
-            <Loading />
-          ) : (
-            <DraggableSectionListWrapper
-              sections={template.sections}
+    <div className="relative h-screen">
+      {/* Bouton mobile pour ouvrir le panneau d'édition */}
+      <div className="fixed left-4 top-4 z-50 block lg:hidden">
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button variant="outline" size="icon">
+              <Menu className="h-4 w-4" />
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="left" className="w-[300px] sm:w-[400px]">
+            <EditorPanel
+              template={template}
+              activeSection={activeSection}
+              isSaving={isSaving}
+              onAddSection={handleAddSection}
               onSectionsReorder={handleSectionsReorder}
               onSectionSelect={setActiveSection}
               onSectionDelete={handleSectionDelete}
+              onSectionUpdate={handleSectionUpdate}
             />
-          )}
-        </div>
-
-        {activeSection && (
-          <div className="mt-6">
-            <h2 className="mb-4 text-2xl font-bold">Éditer la section</h2>
-            <SectionEditor
-              section={activeSection}
-              onUpdate={handleSectionUpdate}
-            />
-          </div>
-        )}
+          </SheetContent>
+        </Sheet>
       </div>
 
-      {/* Prévisualisation en direct */}
-      <div className="w-2/3 overflow-y-auto">
+      {/* Panneau d'édition desktop */}
+      <div className="hidden lg:block lg:w-[300px] xl:w-[400px] fixed h-screen overflow-y-auto border-r bg-background">
+        <EditorPanel
+          template={template}
+          activeSection={activeSection}
+          isSaving={isSaving}
+          onAddSection={handleAddSection}
+          onSectionsReorder={handleSectionsReorder}
+          onSectionSelect={setActiveSection}
+          onSectionDelete={handleSectionDelete}
+          onSectionUpdate={handleSectionUpdate}
+        />
+      </div>
+
+      {/* Prévisualisation */}
+      <div className="lg:pl-[300px] xl:pl-[400px] h-screen overflow-y-auto">
         {isSaving ? (
           <div className="flex h-full items-center justify-center">
             <Loading />
@@ -203,6 +208,83 @@ export function TemplateEditor({ initialTemplate }: TemplateEditorProps) {
           <LivePreview sections={template.sections} />
         )}
       </div>
+    </div>
+  );
+}
+
+// Nouveau composant pour le panneau d'édition
+interface EditorPanelProps {
+  template: Template;
+  activeSection: Section | null;
+  isSaving: boolean;
+  onAddSection: (sectionType: string) => void;
+  onSectionsReorder: (sections: Section[]) => void;
+  onSectionSelect: (section: Section) => void;
+  onSectionDelete: (section: Section) => void;
+  onSectionUpdate: (section: Section) => void;
+}
+
+function EditorPanel({
+  template,
+  activeSection,
+  isSaving,
+  onAddSection,
+  onSectionsReorder,
+  onSectionSelect,
+  onSectionDelete,
+  onSectionUpdate,
+}: EditorPanelProps) {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return <div className="p-6 space-y-6">Chargement...</div>;
+  }
+
+  return (
+    <div className="p-6 space-y-6">
+      <div>
+        <h2 className="text-lg font-semibold mb-4">Ajouter une section</h2>
+        <SelectWrapper onValueChange={onAddSection} disabled={isSaving}>
+          <SelectTrigger>
+            <SelectValue placeholder="Choisir un type de section" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="hero">Hero</SelectItem>
+            <SelectItem value="features">Fonctionnalités</SelectItem>
+            <SelectItem value="pricing">Tarification</SelectItem>
+            <SelectItem value="testimonials">Témoignages</SelectItem>
+            <SelectItem value="contact">Contact</SelectItem>
+          </SelectContent>
+        </SelectWrapper>
+      </div>
+
+      <div>
+        <h2 className="text-lg font-semibold mb-4">Sections</h2>
+        {isSaving ? (
+          <Loading />
+        ) : (
+          <DraggableSectionListWrapper
+            sections={template.sections}
+            onSectionsReorder={onSectionsReorder}
+            onSectionSelect={onSectionSelect}
+            onSectionDelete={onSectionDelete}
+          />
+        )}
+      </div>
+
+      {activeSection && (
+        <div>
+          <h2 className="text-lg font-semibold mb-4">Éditer la section</h2>
+          <SectionEditor
+            section={activeSection}
+            onUpdate={onSectionUpdate}
+          />
+        </div>
+      )}
     </div>
   );
 }
