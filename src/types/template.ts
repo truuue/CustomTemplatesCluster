@@ -1,14 +1,7 @@
 export interface Section {
   id: string;
-  type:
-    | "header"
-    | "hero"
-    | "features"
-    | "pricing"
-    | "testimonials"
-    | "contact"
-    | "footer";
-  content: {
+  type: "header" | "hero" | "features" | "pricing" | "testimonials" | "contact" | "footer";
+  content: HeaderContent | {
     title?: string;
     subtitle?: string;
     companyName?: string;
@@ -87,4 +80,21 @@ export interface Template {
   userId: string;
   isPublic: boolean;
   tags: string[];
+}
+
+export interface HeaderContent {
+  title?: string;
+  subtitle?: string;
+  companyName?: string;
+  logo?: string;
+  variant?: "default" | "centered";
+  buttons?: {
+    text: string;
+    url: string;
+    variant: "primary" | "secondary" | "outline";
+  }[];
+  social?: {
+    platform: string;
+    url: string;
+  }[];
 }

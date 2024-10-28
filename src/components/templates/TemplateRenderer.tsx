@@ -25,6 +25,7 @@ export function TemplateRenderer({
       content: section.content,
       style: section.style,
       onClick: isEditing ? () => onSectionClick?.(section) : undefined,
+      sections: template.sections,
     };
 
     const sectionClasses = isEditing

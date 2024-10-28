@@ -2,6 +2,7 @@ interface HeaderSectionProps {
   content?: {
     logo?: string;
     companyName?: string;
+    variant?: "default" | "centered";
   };
   style?: {
     backgroundColor?: string;
@@ -13,7 +14,8 @@ interface HeaderSectionProps {
     id: string;
     type: string;
     content: {
-      category: string;
+      type?: string;
+      [key: string]: any;
     };
   }>;
 }
@@ -25,7 +27,7 @@ export function HeaderSection({ content, style, onClick, sections }: HeaderSecti
     return sections
       .filter((section) => section.type !== "header")
       .map((section) => ({
-        label: section.content.category || capitalizeFirstLetter(section.type),
+        label: section.content.type || capitalizeFirstLetter(section.type),
         href: `#${section.id}`,
       }));
   };
@@ -35,15 +37,61 @@ export function HeaderSection({ content, style, onClick, sections }: HeaderSecti
   };
 
   const navigationLinks = generateLinks();
+  const variant = content?.variant || "default";
+
+  if (variant === "centered") {
+    return (
+      <header
+        onClick={onClick}
+        className="sticky top-0 z-50 w-full border-b bg-white shadow-sm"
+        style={{
+          backgroundColor: style?.backgroundColor,
+          color: style?.textColor,
+          padding: style?.padding || "1rem",
+        }}
+      >
+        <div className="container mx-auto">
+          <div className="flex flex-col items-center justify-center space-y-4">
+            {content?.logo && (
+              <img
+                src={content.logo}
+                alt="Logo"
+                className="h-16 w-16 object-contain"
+              />
+            )}
+            {content?.companyName && (
+              <h1 className="text-2xl font-bold tracking-tight text-gray-800">
+                {content.companyName}
+              </h1>
+            )}
+            <nav className="mt-4">
+              <ul className="flex items-center space-x-8">
+                {navigationLinks.map((link, index) => (
+                  <li key={index}>
+                    <a
+                      href={link.href}
+                      className="text-sm font-medium text-gray-600 transition-colors hover:text-gray-900"
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </header>
+    );
+  }
 
   return (
     <header
       onClick={onClick}
-      className="sticky top-0 z-50 w-full border-b bg-white px-4 py-6 shadow-sm"
+      className="sticky top-0 z-50 w-full border-b bg-white shadow-sm"
       style={{
         backgroundColor: style?.backgroundColor,
         color: style?.textColor,
-        padding: style?.padding,
+        padding: style?.padding || "1rem",
       }}
     >
       <div className="container mx-auto">
@@ -56,21 +104,19 @@ export function HeaderSection({ content, style, onClick, sections }: HeaderSecti
                 className="h-12 w-12 object-contain"
               />
             )}
-
             {content?.companyName && (
               <h1 className="text-xl font-bold tracking-tight text-gray-800">
                 {content.companyName}
               </h1>
             )}
           </div>
-
           <nav className="hidden md:flex">
             <ul className="flex items-center space-x-8">
               {navigationLinks.map((link, index) => (
                 <li key={index}>
                   <a
                     href={link.href}
-                    className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+                    className="text-sm font-medium text-gray-600 transition-colors hover:text-gray-900"
                   >
                     {link.label}
                   </a>

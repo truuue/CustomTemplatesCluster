@@ -3,7 +3,14 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Section } from "@/types/template";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Section, HeaderContent } from "@/types/template";
 import { Save, Trash2, Upload } from "lucide-react";
 import { useState } from "react";
 
@@ -14,10 +21,9 @@ interface HeaderEditorProps {
 
 export function HeaderEditor({ section, onUpdate }: HeaderEditorProps) {
   const [localContent, setLocalContent] = useState({
-    title: section.content?.title || "",
-    subtitle: section.content?.subtitle || "",
     companyName: section.content?.companyName || "",
     logo: section.content?.logo || "",
+    variant: (section.content as HeaderContent).variant || "default",
   });
 
   const handleInputChange = (field: string, value: string) => {
@@ -101,6 +107,22 @@ export function HeaderEditor({ section, onUpdate }: HeaderEditorProps) {
           onChange={(e) => handleInputChange("companyName", e.target.value)}
           placeholder="Entrez le nom de la société"
         />
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="variant">Style du header</Label>
+        <Select
+          value={localContent.variant}
+          onValueChange={(value) => handleInputChange("variant", value)}
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="Choisir un style" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="default">Standard</SelectItem>
+            <SelectItem value="centered">Centré</SelectItem>
+          </SelectContent>
+        </Select>
       </div>
 
       <Button onClick={handleSave} className="w-full">
