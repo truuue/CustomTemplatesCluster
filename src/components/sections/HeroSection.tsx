@@ -16,10 +16,10 @@ export function HeroSection({ content, style }: HeroSectionProps) {
       style={{
         backgroundColor: style.backgroundColor,
         color: style.textColor,
-        padding: style.padding, // Utiliser directement le padding sans valeur par défaut
+        padding: style.padding,
       }}
       className={cn(
-        "flex min-h-[70vh] items-center justify-center transition-all duration-300", // Ajouter une transition
+        "flex min-h-[70vh] items-center justify-center transition-all duration-300",
         style.layout === "left" && "text-left",
         style.layout === "center" && "text-center",
         style.layout === "right" && "text-right"
@@ -35,7 +35,7 @@ export function HeroSection({ content, style }: HeroSectionProps) {
           </p>
         )}
         {content.buttons && (
-          <div className="flex flex-wrap justify-center gap-4">
+          <div>
             {content.buttons.map((button, index) => (
               <Button
                 key={index}
@@ -44,18 +44,6 @@ export function HeroSection({ content, style }: HeroSectionProps) {
               >
                 <a href={button.url}>{button.text}</a>
               </Button>
-            ))}
-          </div>
-        )}
-        {content.images && (
-          <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2">
-            {content.images.map((image, index) => (
-              <img
-                key={index}
-                src={image.url}
-                alt={image.alt}
-                className="rounded-lg shadow-lg"
-              />
             ))}
           </div>
         )}
