@@ -1,4 +1,7 @@
 import { ThemeProvider } from "@/components/providers/theme-provider";
+import { ChatWidget } from "@/components/ui/chat-widget";
+import { CookieConsent } from "@/components/ui/cookie-consent";
+import { ScrollProgress } from "@/components/ui/scroll-progress";
 import { Toaster } from "@/components/ui/toaster";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
@@ -29,9 +32,12 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <ScrollProgress />
           {children}
+          <ChatWidget />
+          <CookieConsent />
+          <Toaster />
         </ThemeProvider>
-        <Toaster />
       </body>
     </html>
   );
