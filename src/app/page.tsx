@@ -1,6 +1,13 @@
 import { ModeToggle } from "@/components/mode-toggle";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { MotionSection } from "@/components/ui/motion-section";
 import { ArrowRight, Check, Layout, Rocket, Star, Wand2 } from "lucide-react";
 import Link from "next/link";
 
@@ -43,9 +50,9 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Hero Section avec gradient et effet visuel */}
+      {/* Hero Section avec animation */}
       <main className="flex-1">
-        <section className="relative w-full bg-gradient-to-b from-primary/5 to-background px-4 py-12 md:py-24 lg:py-32 xl:py-48">
+        <MotionSection className="relative w-full bg-gradient-to-b from-primary/5 to-background px-4 py-12 md:py-24 lg:py-32 xl:py-48">
           <div className="mx-auto max-w-7xl">
             <div className="flex flex-col items-center space-y-4 text-center">
               <Badge className="mb-4" variant="secondary">
@@ -83,10 +90,10 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </section>
+        </MotionSection>
 
-        {/* Stats Section */}
-        <section className="w-full border-y bg-gray-50/50 px-4 py-12 dark:bg-gray-800/50">
+        {/* Stats Section avec animation */}
+        <MotionSection className="w-full border-y bg-gray-50/50 px-4 py-12 dark:bg-gray-800/50">
           <div className="mx-auto max-w-7xl">
             <div className="grid grid-cols-2 gap-8 text-center md:grid-cols-4">
               <div className="space-y-2">
@@ -113,7 +120,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </section>
+        </MotionSection>
 
         {/* Comment ça marche Section */}
         <section className="w-full py-12 md:py-24">
@@ -169,8 +176,8 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Features Section amélioré */}
-        <section className="w-full bg-gray-50 px-4 py-12 dark:bg-gray-800 md:py-24 lg:py-32">
+        {/* Features Section avec animation */}
+        <MotionSection className="w-full bg-gray-50 px-4 py-12 dark:bg-gray-800 md:py-24 lg:py-32">
           <div className="mx-auto max-w-7xl">
             <div className="mb-16 text-center">
               <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">
@@ -208,10 +215,10 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </section>
+        </MotionSection>
 
-        {/* Pricing Section */}
-        <section className="w-full px-4 py-12 md:py-24 lg:py-32">
+        {/* Pricing Section avec animation */}
+        <MotionSection className="w-full px-4 py-12 md:py-24 lg:py-32">
           <div className="mx-auto max-w-7xl">
             <div className="mb-16 text-center">
               <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">
@@ -287,9 +294,9 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </section>
+        </MotionSection>
 
-        {/* CTA Section amélioré */}
+        {/* CTA Section sans animation */}
         <section className="w-full bg-primary px-4 py-12 text-primary-foreground md:py-24 lg:py-32">
           <div className="mx-auto max-w-7xl">
             <div className="flex flex-col items-center space-y-4 text-center">
@@ -316,8 +323,8 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Testimonials Section */}
-        <section
+        {/* Testimonials Section avec animation */}
+        <MotionSection
           className="w-full bg-gray-50 px-4 py-12 dark:bg-gray-800 md:py-24 lg:py-32"
           id="testimonials"
         >
@@ -393,7 +400,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </section>
+        </MotionSection>
 
         {/* Compatible avec vos outils préférés Section */}
         <section className="w-full bg-gray-50 py-12 dark:bg-gray-800 md:py-24">
@@ -439,35 +446,64 @@ export default function Home() {
                 Tout ce que vous devez savoir pour démarrer
               </p>
             </div>
-            <div className="mx-auto grid max-w-3xl gap-6">
-              <div className="rounded-xl bg-white p-6 dark:bg-gray-700">
-                <h3 className="mb-2 text-lg font-bold">
-                  Ai-je besoin de savoir coder ?
-                </h3>
-                <p className="text-gray-500 dark:text-gray-400">
-                  Non, notre éditeur visuel vous permet de créer des landing
-                  pages professionnelles sans aucune connaissance en
-                  programmation.
-                </p>
-              </div>
-              <div className="rounded-xl bg-white p-6 dark:bg-gray-700">
-                <h3 className="mb-2 text-lg font-bold">
-                  Puis-je utiliser mon propre nom de domaine ?
-                </h3>
-                <p className="text-gray-500 dark:text-gray-400">
-                  Oui, vous pouvez facilement connecter votre propre nom de
-                  domaine à votre landing page.
-                </p>
-              </div>
-              <div className="rounded-xl bg-white p-6 dark:bg-gray-700">
-                <h3 className="mb-2 text-lg font-bold">
-                  Les pages sont-elles optimisées pour le mobile ?
-                </h3>
-                <p className="text-gray-500 dark:text-gray-400">
-                  Oui, toutes nos landing pages sont automatiquement optimisées
-                  pour tous les appareils.
-                </p>
-              </div>
+            <div className="mx-auto max-w-3xl">
+              <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="item-1">
+                  <AccordionTrigger className="text-lg font-semibold">
+                    Ai-je besoin de savoir coder ?
+                  </AccordionTrigger>
+                  <AccordionContent className="text-gray-500 dark:text-gray-400">
+                    Non, notre éditeur visuel vous permet de créer des landing
+                    pages professionnelles sans aucune connaissance en
+                    programmation.
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="item-2">
+                  <AccordionTrigger className="text-lg font-semibold">
+                    Puis-je utiliser mon propre nom de domaine ?
+                  </AccordionTrigger>
+                  <AccordionContent className="text-gray-500 dark:text-gray-400">
+                    Oui, vous pouvez facilement connecter votre propre nom de
+                    domaine à votre landing page. Nous fournissons des
+                    instructions détaillées pour la configuration DNS.
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="item-3">
+                  <AccordionTrigger className="text-lg font-semibold">
+                    Les pages sont-elles optimisées pour le mobile ?
+                  </AccordionTrigger>
+                  <AccordionContent className="text-gray-500 dark:text-gray-400">
+                    Oui, toutes nos landing pages sont automatiquement
+                    optimisées pour tous les appareils. Nous utilisons une
+                    approche mobile-first pour garantir une expérience optimale
+                    sur tous les écrans.
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="item-4">
+                  <AccordionTrigger className="text-lg font-semibold">
+                    Quel est le délai de mise en ligne ?
+                  </AccordionTrigger>
+                  <AccordionContent className="text-gray-500 dark:text-gray-400">
+                    La mise en ligne est instantanée. Dès que vous cliquez sur
+                    "Publier", votre landing page est accessible en ligne avec
+                    un certificat SSL automatique.
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="item-5">
+                  <AccordionTrigger className="text-lg font-semibold">
+                    Puis-je exporter le code de ma landing page ?
+                  </AccordionTrigger>
+                  <AccordionContent className="text-gray-500 dark:text-gray-400">
+                    Oui, avec notre plan Pro, vous pouvez exporter votre landing
+                    page en React, Next.js ou HTML statique pour l'héberger où
+                    vous le souhaitez.
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
             </div>
           </div>
         </section>
