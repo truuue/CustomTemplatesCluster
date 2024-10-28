@@ -8,7 +8,7 @@ export function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="fixed bottom-4 right-4 z-50">
+    <div className="fixed bottom-4 right-4 z-40">
       {isOpen ? (
         <div className="h-96 w-80 rounded-lg border bg-background shadow-lg">
           <div className="flex items-center justify-between border-b p-4">
