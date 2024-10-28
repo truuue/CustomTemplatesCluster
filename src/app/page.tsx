@@ -147,7 +147,7 @@ export default function Home() {
             </div>
             <div className="grid gap-8 md:grid-cols-3">
               <div className="relative flex flex-col items-center">
-                <div className="absolute -left-4 -top-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary text-xl font-bold text-primary-foreground">
+                <div className="absolute -left-4 -top-4 flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-xl font-bold text-primary-foreground">
                   1
                 </div>
                 <div className="w-full rounded-xl bg-white p-6 dark:bg-gray-700">
@@ -156,12 +156,12 @@ export default function Home() {
                   </h3>
                   <p className="text-gray-500 dark:text-gray-400">
                     Sélectionnez parmi notre collection de templates
-                    professionnels optimisés pour la conversion
+                    professionnels optimisés
                   </p>
                 </div>
               </div>
               <div className="relative flex flex-col items-center">
-                <div className="absolute -left-4 -top-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary text-xl font-bold text-primary-foreground">
+                <div className="absolute -left-4 -top-4 flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-xl font-bold text-primary-foreground">
                   2
                 </div>
                 <div className="w-full rounded-xl bg-white p-6 dark:bg-gray-700">
@@ -173,7 +173,7 @@ export default function Home() {
                 </div>
               </div>
               <div className="relative flex flex-col items-center">
-                <div className="absolute -left-4 -top-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary text-xl font-bold text-primary-foreground">
+                <div className="absolute -left-4 -top-4 flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-xl font-bold text-primary-foreground">
                   3
                 </div>
                 <div className="w-full rounded-xl bg-white p-6 dark:bg-gray-700">
