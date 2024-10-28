@@ -1,55 +1,64 @@
 export interface Section {
   id: string;
-  type: "header" | "hero" | "features" | "pricing" | "testimonials" | "contact" | "footer";
-  content: HeaderContent | {
-    title?: string;
-    subtitle?: string;
-    companyName?: string;
-    logo?: string;
-    buttons?: Array<{
-      text: string;
-      url: string;
-      variant: "primary" | "secondary" | "outline";
-    }>;
-    images?: Array<{
-      url: string;
-      alt: string;
-    }>;
-    features?: Array<{
-      title: string;
-      description: string;
-      icon?: string;
-    }>;
-    pricing?: Array<{
-      title: string;
-      price: string;
-      description: string;
-      features: string[];
-      isPopular?: boolean;
-    }>;
-    testimonials?: Array<{
-      name: string;
-      title: string;
-      content: string;
-      avatar?: string;
-    }>;
-    contactInfo?: Array<{
-      type: "email" | "phone" | "address";
-      label: string;
-      value: string;
-    }>;
-    links?: Array<{
-      title: string;
-      items: Array<{
-        label: string;
-        href: string;
-      }>;
-    }>;
-    social?: Array<{
-      icon: "facebook" | "twitter" | "instagram" | "linkedin";
-      url: string;
-    }>;
-  };
+  type:
+    | "header"
+    | "hero"
+    | "features"
+    | "pricing"
+    | "testimonials"
+    | "contact"
+    | "footer";
+  content:
+    | HeaderContent
+    | {
+        title?: string;
+        subtitle?: string;
+        companyName?: string;
+        logo?: string;
+        buttons?: Array<{
+          text: string;
+          url: string;
+          variant: "primary" | "secondary" | "outline";
+        }>;
+        images?: Array<{
+          url: string;
+          alt: string;
+        }>;
+        features?: Array<{
+          title: string;
+          description: string;
+          icon?: string;
+        }>;
+        pricing?: Array<{
+          title: string;
+          price: string;
+          description: string;
+          features: string[];
+          isPopular?: boolean;
+        }>;
+        testimonials?: Array<{
+          name: string;
+          title: string;
+          content: string;
+          avatar?: string;
+        }>;
+        contactInfo?: Array<{
+          type: "email" | "phone" | "address";
+          label: string;
+          value: string;
+        }>;
+        links?: Array<{
+          title: string;
+          items: Array<{
+            label: string;
+            href: string;
+          }>;
+        }>;
+        social?: Array<{
+          icon: "facebook" | "twitter" | "instagram" | "linkedin";
+          url: string;
+        }>;
+      };
   style: {
     backgroundColor?: string;
     textColor?: string;

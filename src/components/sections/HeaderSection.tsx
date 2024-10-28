@@ -20,7 +20,12 @@ interface HeaderSectionProps {
   }>;
 }
 
-export function HeaderSection({ content, style, onClick, sections }: HeaderSectionProps) {
+export function HeaderSection({
+  content,
+  style,
+  onClick,
+  sections,
+}: HeaderSectionProps) {
   const generateLinks = () => {
     if (!sections) return [];
 

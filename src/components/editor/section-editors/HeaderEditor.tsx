@@ -10,7 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Section, HeaderContent } from "@/types/template";
+import { HeaderContent, Section } from "@/types/template";
 import { Save, Trash2, Upload } from "lucide-react";
 import { useState } from "react";
 
