@@ -52,7 +52,7 @@ export default function Home() {
                 ✨ Nouveau : Export en React & Next.js
               </Badge>
               <div className="space-y-2">
-                <h1 className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text mb-12 text-3xl font-bold tracking-normal text-transparent sm:text-4xl md:text-5xl lg:text-6xl/none">
+                <h1 className="mb-12 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-3xl font-bold tracking-normal text-transparent sm:text-4xl md:text-5xl lg:text-6xl/none">
                   Créez des Landing Pages Impressionnantes
                 </h1>
                 <p className="mx-auto max-w-[700px] text-gray-500 dark:text-gray-400 md:text-xl">
