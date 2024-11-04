@@ -6,13 +6,14 @@ export async function DELETE(
   request: Request,
   { params }: { params: { id: string; sectionId: string } }
 ) {
+  const { id, sectionId } = await params;
   try {
     const db = await connectToDatabase();
 
     const result = await db.collection("templates").updateOne(
-      { _id: new ObjectId(params.id) },
+      { _id: new ObjectId(id) },
       {
-        $pull: { sections: { id: params.sectionId } } as any,
+        $pull: { sections: { id: sectionId } } as any,
         $set: { updatedAt: new Date().toISOString() },
       }
     );
@@ -41,14 +42,15 @@ export async function PUT(
   request: Request,
   { params }: { params: { id: string; sectionId: string } }
 ) {
+  const { id, sectionId } = await params;
   try {
     const db = await connectToDatabase();
     const updatedSection = await request.json();
 
     const result = await db.collection("templates").updateOne(
       {
-        _id: new ObjectId(params.id),
-        "sections.id": params.sectionId,
+        _id: new ObjectId(id),
+        "sections.id": sectionId,
       },
       {
         $set: {
