@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { MotionSection } from "@/components/ui/motion-section";
+import { ScrollProgress } from "@/components/ui/scroll-progress";
 import {
   ArrowRight,
   Award,
@@ -25,6 +26,8 @@ import Link from "next/link";
 
 export default function Home() {
   return (
+    <>
+    <ScrollProgress />
     <div className="flex min-h-screen flex-col">
       <header className="sticky top-0 z-40 w-full border-b bg-background/95 px-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="mx-auto flex h-14 max-w-7xl items-center">
@@ -678,5 +681,6 @@ export default function Home() {
         </div>
       </footer>
     </div>
+    </>
   );
 }
