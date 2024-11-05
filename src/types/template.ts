@@ -107,3 +107,15 @@ export interface HeaderContent {
     url: string;
   }[];
 }
+
+export interface PricingContent {
+  title?: string;
+  subtitle?: string;
+  pricing?: {
+    title: string;
+    price: string;
+    description: string;
+    features: string[];
+    isPopular: boolean;
+  }[];
+}

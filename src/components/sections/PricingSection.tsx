@@ -10,11 +10,11 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { Section } from "@/types/template";
+import { PricingContent, Section } from "@/types/template";
 import { Check } from "lucide-react";
 
 interface PricingSectionProps {
-  content: Section["content"];
+  content: Section["content"] & PricingContent;
   style: Section["style"];
 }
 
