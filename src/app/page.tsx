@@ -7,19 +7,14 @@ import {
 } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { MotionSection } from "@/components/ui/motion-section";
 import { ScrollProgress } from "@/components/ui/scroll-progress";
 import {
   ArrowRight,
-  Award,
   Check,
   Layout,
   Rocket,
-  Shield,
   Star,
-  Trophy,
-  Users,
   Wand2,
 } from "lucide-react";
 import Link from "next/link";
@@ -33,7 +28,7 @@ export default function Home() {
           <div className="mx-auto flex h-14 max-w-7xl items-center">
             <Link href="/" className="flex items-center space-x-2">
               <Wand2 className="h-6 w-6" />
-              <span className="font-bold">LandingBuilder</span>
+              <span className="font-bold">Showcaser</span>
             </Link>
             <nav className="ml-6 flex items-center space-x-6">
               <Link
@@ -57,10 +52,10 @@ export default function Home() {
             </nav>
             <div className="ml-auto flex items-center space-x-4">
               <ModeToggle />
+              <Button size="sm">S'inscrire</Button>
               <Button variant="ghost" size="sm">
                 Se connecter
               </Button>
-              <Button size="sm">S'inscrire</Button>
             </div>
           </div>
         </header>
@@ -102,38 +97,6 @@ export default function Home() {
                     <Check className="mr-2 h-4 w-4 text-primary" />
                     Sans carte bancaire
                   </div>
-                </div>
-              </div>
-            </div>
-          </MotionSection>
-
-          {/* Stats Section avec animation */}
-          <MotionSection className="w-full border-y bg-gray-50/50 px-4 py-12 dark:bg-gray-800/50">
-            <div className="mx-auto max-w-7xl">
-              <div className="grid grid-cols-2 gap-8 text-center md:grid-cols-4">
-                <div className="space-y-2">
-                  <h3 className="text-3xl font-bold">10k+</h3>
-                  <p className="text-gray-500 dark:text-gray-400">
-                    Utilisateurs Actifs
-                  </p>
-                </div>
-                <div className="space-y-2">
-                  <h3 className="text-3xl font-bold">50k+</h3>
-                  <p className="text-gray-500 dark:text-gray-400">
-                    Pages Créées
-                  </p>
-                </div>
-                <div className="space-y-2">
-                  <h3 className="text-3xl font-bold">99%</h3>
-                  <p className="text-gray-500 dark:text-gray-400">
-                    Satisfaction Client
-                  </p>
-                </div>
-                <div className="space-y-2">
-                  <h3 className="text-3xl font-bold">24/7</h3>
-                  <p className="text-gray-500 dark:text-gray-400">
-                    Support Client
-                  </p>
                 </div>
               </div>
             </div>
@@ -315,33 +278,6 @@ export default function Home() {
             </div>
           </MotionSection>
 
-          {/* CTA Section sans animation */}
-          <section className="w-full bg-primary px-4 py-12 text-primary-foreground md:py-24 lg:py-32">
-            <div className="mx-auto max-w-7xl">
-              <div className="flex flex-col items-center space-y-4 text-center">
-                <div className="space-y-2">
-                  <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">
-                    Prêt à Créer des Landing Pages Impressionnantes?
-                  </h2>
-                  <p className="mx-auto max-w-[600px] md:text-xl">
-                    Rejoignez des milliers d'utilisateurs qui créent déjà des
-                    landing pages qui convertissent
-                  </p>
-                </div>
-                <div className="flex flex-col gap-4 sm:flex-row">
-                  <Link href="/landing-page">
-                    <Button size="lg" variant="secondary" className="px-8">
-                      Commencer Gratuitement
-                    </Button>
-                  </Link>
-                  <Button size="lg" variant="outline" className="px-8">
-                    Voir la Démo
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </section>
-
           {/* Testimonials Section avec animation */}
           <MotionSection
             className="w-full bg-gray-50 px-4 py-12 dark:bg-gray-800 md:py-24 lg:py-32"
@@ -421,44 +357,6 @@ export default function Home() {
             </div>
           </MotionSection>
 
-          {/* Compatible avec vos outils préférés Section */}
-          <section className="w-full bg-gray-50 py-12 dark:bg-gray-800 md:py-24">
-            <div className="container">
-              <div className="mb-16 text-center">
-                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">
-                  Compatible avec vos outils préférés
-                </h2>
-                <p className="mt-4 text-gray-500 dark:text-gray-400">
-                  Intégrez facilement avec les plateformes que vous utilisez
-                  déjà
-                </p>
-              </div>
-              <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
-                {/* Remplacer par de vrais logos */}
-                <div className="flex items-center justify-center rounded-xl bg-white p-6 dark:bg-gray-700">
-                  <span className="text-xl font-bold text-gray-400">
-                    Stripe
-                  </span>
-                </div>
-                <div className="flex items-center justify-center rounded-xl bg-white p-6 dark:bg-gray-700">
-                  <span className="text-xl font-bold text-gray-400">
-                    Mailchimp
-                  </span>
-                </div>
-                <div className="flex items-center justify-center rounded-xl bg-white p-6 dark:bg-gray-700">
-                  <span className="text-xl font-bold text-gray-400">
-                    Google Analytics
-                  </span>
-                </div>
-                <div className="flex items-center justify-center rounded-xl bg-white p-6 dark:bg-gray-700">
-                  <span className="text-xl font-bold text-gray-400">
-                    Zapier
-                  </span>
-                </div>
-              </div>
-            </div>
-          </section>
-
           {/* Questions Fréquentes Section */}
           <section className="w-full py-12 md:py-24">
             <div className="container">
@@ -528,87 +426,6 @@ export default function Home() {
                     </AccordionContent>
                   </AccordionItem>
                 </Accordion>
-              </div>
-            </div>
-          </section>
-
-          {/* Reconnu par les experts Section */}
-          <section className="w-full border-y bg-gray-50/50 py-12 dark:bg-gray-800/50">
-            <div className="container">
-              <div className="flex flex-col items-center space-y-8">
-                <div className="text-center">
-                  <Badge variant="secondary" className="mb-4">
-                    Reconnu par les experts
-                  </Badge>
-                  <h2 className="text-2xl font-bold tracking-tighter md:text-3xl">
-                    Ils nous font confiance
-                  </h2>
-                  <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">
-                    Rejoint par plus de 10,000+ entreprises à travers le monde
-                  </p>
-                </div>
-
-                <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
-                  <Card className="hover-card border-0 bg-white/50 backdrop-blur dark:bg-gray-800/50">
-                    <CardContent className="flex flex-col items-center justify-center p-6">
-                      <div className="mb-4 rounded-full bg-primary/10 p-3 dark:bg-primary/20">
-                        <Award className="h-6 w-6 text-primary" />
-                      </div>
-                      <p className="text-center font-semibold">Forbes</p>
-                      <p className="text-center text-sm text-gray-500">
-                        "Top 10 des outils de création web"
-                      </p>
-                    </CardContent>
-                  </Card>
-
-                  <Card className="hover-card border-0 bg-white/50 backdrop-blur dark:bg-gray-800/50">
-                    <CardContent className="flex flex-col items-center justify-center p-6">
-                      <div className="mb-4 rounded-full bg-primary/10 p-3 dark:bg-primary/20">
-                        <Trophy className="h-6 w-6 text-primary" />
-                      </div>
-                      <p className="text-center font-semibold">TechCrunch</p>
-                      <p className="text-center text-sm text-gray-500">
-                        "Meilleur outil no-code 2024"
-                      </p>
-                    </CardContent>
-                  </Card>
-
-                  <Card className="hover-card border-0 bg-white/50 backdrop-blur dark:bg-gray-800/50">
-                    <CardContent className="flex flex-col items-center justify-center p-6">
-                      <div className="mb-4 rounded-full bg-primary/10 p-3 dark:bg-primary/20">
-                        <Star className="h-6 w-6 text-primary" />
-                      </div>
-                      <p className="text-center font-semibold">Wired</p>
-                      <p className="text-center text-sm text-gray-500">
-                        "Innovation de l'année"
-                      </p>
-                    </CardContent>
-                  </Card>
-
-                  <Card className="hover-card border-0 bg-white/50 backdrop-blur dark:bg-gray-800/50">
-                    <CardContent className="flex flex-col items-center justify-center p-6">
-                      <div className="mb-4 rounded-full bg-primary/10 p-3 dark:bg-primary/20">
-                        <Rocket className="h-6 w-6 text-primary" />
-                      </div>
-                      <p className="text-center font-semibold">ProductHunt</p>
-                      <p className="text-center text-sm text-gray-500">
-                        "#1 Product of the Week"
-                      </p>
-                    </CardContent>
-                  </Card>
-                </div>
-
-                <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-                  <Badge variant="outline" className="text-sm">
-                    <Star className="mr-1 h-3 w-3" /> 4.9/5 sur Trustpilot
-                  </Badge>
-                  <Badge variant="outline" className="text-sm">
-                    <Users className="mr-1 h-3 w-3" /> 10k+ Utilisateurs Actifs
-                  </Badge>
-                  <Badge variant="outline" className="text-sm">
-                    <Shield className="mr-1 h-3 w-3" /> Certifié ISO 27001
-                  </Badge>
-                </div>
               </div>
             </div>
           </section>
@@ -685,7 +502,7 @@ export default function Home() {
               </div>
             </div>
             <div className="mt-12 border-t pt-8 text-center text-sm text-gray-500">
-              <p>© 2024 LandingBuilder. Tous droits réservés.</p>
+              <p>© 2024 Showcaser. Tous droits réservés.</p>
             </div>
           </div>
         </footer>
