@@ -10,6 +10,9 @@ export interface Section {
     | "footer";
   content:
     | HeaderContent
+    | HeroContent
+    | PricingContent
+    | TestimonialContent
     | {
         title?: string;
         subtitle?: string;
@@ -63,7 +66,7 @@ export interface Section {
     backgroundColor?: string;
     textColor?: string;
     padding?: string;
-    layout?: "left" | "center" | "right";
+    layout?: "grid" | "carousel" | "list" | "center" | "left" | "right";
   };
 }
 
@@ -122,4 +125,16 @@ export interface PricingContent {
     buttonUrl?: string;
     buttonVariant?: "primary" | "secondary" | "outline";
   }[];
+}
+
+export interface TestimonialContent {
+  title?: string;
+  subtitle?: string;
+  testimonials?: Array<{
+    name: string;
+    title: string;
+    content: string;
+    avatar?: string;
+    rating?: number;
+  }>;
 }

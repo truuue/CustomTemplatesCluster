@@ -6,6 +6,7 @@ import { FeaturesEditor } from "./section-editors/FeaturesEditor";
 import { HeaderEditor } from "./section-editors/HeaderEditor";
 import { HeroEditor } from "./section-editors/HeroEditor";
 import { PricingEditor } from "./section-editors/PricingEditor";
+import { TestimonialsEditor } from "./section-editors/TestimonialsEditor";
 
 interface SectionEditorProps {
   section: Section;
@@ -24,8 +25,7 @@ export function SectionEditor({ section, onUpdate }: SectionEditorProps) {
       case "pricing":
         return <PricingEditor section={section} onUpdate={onUpdate} />;
       case "testimonials":
-        // À implémenter
-        return <div>Éditeur de témoignages à venir</div>;
+        return <TestimonialsEditor section={section} onUpdate={onUpdate} />;
       case "contact":
         // À implémenter
         return <div>Éditeur de contact à venir</div>;
