@@ -9,14 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { MotionSection } from "@/components/ui/motion-section";
 import { ScrollProgress } from "@/components/ui/scroll-progress";
-import {
-  ArrowRight,
-  Check,
-  Layout,
-  Rocket,
-  Star,
-  Wand2,
-} from "lucide-react";
+import { ArrowRight, Check, Layout, Rocket, Star, Wand2 } from "lucide-react";
 import Link from "next/link";
 
 export default function Home() {
