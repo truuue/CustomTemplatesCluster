@@ -1,6 +1,6 @@
 "use client";
 
-import { Section, Template } from "@/types/template";
+import { PricingContent, Section, Template } from "@/types/template";
 import { ContactSection } from "../sections/ContactSection";
 import {
   FeaturesSection,
@@ -9,7 +9,8 @@ import {
 import { FooterSection } from "../sections/FooterSection";
 import { HeaderSection } from "../sections/HeaderSection";
 import { HeroSection } from "../sections/HeroSection";
-import { PricingSection } from "../sections/PricingSection";
+import { PricingComparisonSection } from "../sections/PricingComparisonSection";
+import { PricingModernSection } from "../sections/PricingModernSection";
 import { TestimonialsSection } from "../sections/TestimonialsSection";
 
 interface TemplateRendererProps {
@@ -56,8 +57,21 @@ export function TemplateRenderer({
           );
         }
         return null;
-      case "pricing":
-        return wrapSection(<PricingSection {...props} />);
+      case "pricing": {
+        const pricingContent = section.content as PricingContent;
+        const pricingProps = {
+          content: pricingContent,
+          style: section.style,
+          onClick: props.onClick,
+        };
+        return wrapSection(
+          pricingContent.variant === "modern" ? (
+            <PricingModernSection {...pricingProps} />
+          ) : (
+            <PricingComparisonSection {...pricingProps} />
+          )
+        );
+      }
       case "testimonials":
         return wrapSection(<TestimonialsSection {...props} />);
       case "contact":

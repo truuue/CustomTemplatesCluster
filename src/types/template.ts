@@ -111,11 +111,15 @@ export interface HeaderContent {
 export interface PricingContent {
   title?: string;
   subtitle?: string;
+  variant?: "modern" | "comparison";
   pricing?: {
     title: string;
     price: string;
     description: string;
     features: string[];
     isPopular: boolean;
+    buttonText?: string;
+    buttonUrl?: string;
+    buttonVariant?: "primary" | "secondary" | "outline";
   }[];
 }
