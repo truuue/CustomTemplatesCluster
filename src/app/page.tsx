@@ -1,3 +1,4 @@
+import { MobileMenu } from "@/components/mobile-menu";
 import { ModeToggle } from "@/components/mode-toggle";
 import {
   Accordion,
@@ -17,13 +18,15 @@ export default function Home() {
     <>
       <ScrollProgress />
       <div className="flex min-h-screen flex-col">
+        {/* Header */}
         <header className="sticky top-0 z-40 w-full border-b bg-background/95 px-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <div className="mx-auto flex h-14 max-w-7xl items-center">
+            <MobileMenu />
             <Link href="/" className="flex items-center space-x-2">
               <Wand2 className="h-6 w-6" />
               <span className="font-bold">Showcaser</span>
             </Link>
-            <nav className="ml-6 flex items-center space-x-6">
+            <nav className="ml-6 hidden items-center space-x-6 md:flex">
               <Link
                 href="#features"
                 className="text-sm font-medium hover:text-primary"
@@ -46,7 +49,7 @@ export default function Home() {
             <div className="ml-auto flex items-center space-x-4">
               <ModeToggle />
               <Button size="sm">S'inscrire</Button>
-              <Button variant="ghost" size="sm">
+              <Button variant="ghost" size="sm" className="hidden md:block">
                 Se connecter
               </Button>
             </div>
@@ -55,7 +58,7 @@ export default function Home() {
 
         {/* Hero Section avec animation */}
         <main className="flex-1">
-          <MotionSection className="relative w-full bg-gradient-to-b from-primary/5 to-background px-4 py-12 md:py-24 lg:py-32 xl:py-48">
+          <MotionSection className="relative w-full bg-gradient-to-b from-primary/5 to-background px-24 py-40 sm:px-16 sm:py-56 md:py-48 lg:py-44 xl:py-56">
             <div className="mx-auto max-w-7xl">
               <div className="flex flex-col items-center space-y-4 text-center">
                 <Badge className="mb-4" variant="secondary">
