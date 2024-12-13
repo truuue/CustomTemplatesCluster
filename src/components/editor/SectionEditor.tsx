@@ -2,6 +2,7 @@
 
 import { Card } from "@/components/ui/card";
 import { Section } from "@/types/template";
+import { ContactEditor } from "./section-editors/ContactEditor";
 import { FeaturesEditor } from "./section-editors/FeaturesEditor";
 import { HeaderEditor } from "./section-editors/HeaderEditor";
 import { HeroEditor } from "./section-editors/HeroEditor";
@@ -27,8 +28,7 @@ export function SectionEditor({ section, onUpdate }: SectionEditorProps) {
       case "testimonials":
         return <TestimonialsEditor section={section} onUpdate={onUpdate} />;
       case "contact":
-        // À implémenter
-        return <div>Éditeur de contact à venir</div>;
+        return <ContactEditor section={section} onUpdate={onUpdate} />;
       default:
         return <div>Type de section non pris en charge</div>;
     }

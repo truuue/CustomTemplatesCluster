@@ -13,6 +13,7 @@ export interface Section {
     | HeroContent
     | PricingContent
     | TestimonialContent
+    | ContactContent
     | {
         title?: string;
         subtitle?: string;
@@ -137,4 +138,20 @@ export interface TestimonialContent {
     avatar?: string;
     rating?: number;
   }>;
+}
+
+export interface ContactButton {
+  id: string;
+  title: string;
+  link: string;
+  imageUrl: string;
+  size: "small" | "medium" | "large";
+  shape: "square" | "rounded" | "circle";
+}
+
+export interface ContactContent {
+  title?: string;
+  subtitle?: string;
+  email?: string;
+  buttons: ContactButton[];
 }
