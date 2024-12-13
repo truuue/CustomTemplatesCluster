@@ -110,8 +110,9 @@ export default function Home() {
                 </p>
               </div>
               <div className="grid gap-8 md:grid-cols-3">
+                {/* premier bloc */}
                 <div className="relative flex flex-col items-center">
-                  <div className="absolute -left-4 -top-4 flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-xl font-bold text-primary-foreground">
+                  <div className="absolute -left-4 -top-4 flex size-10 items-center justify-center rounded-xl bg-primary text-xl font-bold text-primary-foreground">
                     1
                   </div>
                   <div className="w-full rounded-xl bg-white p-6 dark:bg-gray-700">
@@ -124,8 +125,10 @@ export default function Home() {
                     </p>
                   </div>
                 </div>
+
+                {/* deuxième bloc */}
                 <div className="relative flex flex-col items-center">
-                  <div className="absolute -left-4 -top-4 flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-xl font-bold text-primary-foreground">
+                  <div className="absolute -left-4 -top-4 flex size-10 items-center justify-center rounded-xl bg-primary text-xl font-bold text-primary-foreground">
                     2
                   </div>
                   <div className="w-full rounded-xl bg-white p-6 dark:bg-gray-700">
@@ -136,8 +139,10 @@ export default function Home() {
                     </p>
                   </div>
                 </div>
+
+                {/* troisième bloc */}
                 <div className="relative flex flex-col items-center">
-                  <div className="absolute -left-4 -top-4 flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-xl font-bold text-primary-foreground">
+                  <div className="absolute -left-4 -top-4 flex size-10 items-center justify-center rounded-xl bg-primary text-xl font-bold text-primary-foreground">
                     3
                   </div>
                   <div className="w-full rounded-xl bg-white p-6 dark:bg-gray-700">
