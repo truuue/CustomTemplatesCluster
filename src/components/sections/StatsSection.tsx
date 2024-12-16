@@ -30,8 +30,8 @@ export function StatsSection({ content, style }: StatsSectionProps) {
       }}
       className="relative w-full overflow-hidden"
     >
-      <div className="absolute inset-0 bg-grid-pattern opacity-[0.03]" />
-      
+      <div className="bg-grid-pattern absolute inset-0 opacity-[0.03]" />
+
       <div className="container relative">
         <div className="grid gap-8 md:grid-cols-4">
           {stats.map((stat, index) => (
@@ -57,4 +57,4 @@ export function StatsSection({ content, style }: StatsSectionProps) {
       </div>
     </section>
   );
-} 
+}
