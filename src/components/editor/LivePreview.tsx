@@ -55,21 +55,21 @@ export function LivePreview({ sections, onSectionClick }: LivePreviewProps) {
             size="icon"
             onClick={() => handleDeviceChange("desktop")}
           >
-            <Monitor className="h-5 w-5" />
+            <Monitor className="size-5" />
           </Button>
           <Button
             variant={device === "tablet" ? "default" : "ghost"}
             size="icon"
             onClick={() => handleDeviceChange("tablet")}
           >
-            <Tablet className="h-5 w-5" />
+            <Tablet className="size-5" />
           </Button>
           <Button
             variant={device === "mobile" ? "default" : "ghost"}
             size="icon"
             onClick={() => handleDeviceChange("mobile")}
           >
-            <Smartphone className="h-5 w-5" />
+            <Smartphone className="size-5" />
           </Button>
         </div>
       </div>
@@ -78,7 +78,7 @@ export function LivePreview({ sections, onSectionClick }: LivePreviewProps) {
       <div className="flex-1 overflow-y-auto bg-gray-100 p-1">
         {isLoading ? (
           <div className="flex h-full items-center justify-center">
-            <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            <Loader2 className="size-8 animate-spin text-primary" />
           </div>
         ) : (
           <div
