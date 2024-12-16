@@ -26,7 +26,7 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { GripVertical, Plus, Trash2 } from "lucide-react";
+import { GripVertical, Plus, Save, Trash2 } from "lucide-react";
 import { useState } from "react";
 
 const SOCIAL_PRESETS = {
@@ -169,11 +169,17 @@ interface ContactEditorProps {
 
 export function ContactEditor({ section, onUpdate }: ContactEditorProps) {
   const content = section.content as ContactContent;
-  const [formData, setFormData] = useState<ContactContent>({
+  const [localContent, setLocalContent] = useState<ContactContent>({
     title: content?.title || "Contactez-moi",
     subtitle: content?.subtitle || "Retrouvez-moi sur les réseaux sociaux",
     email: content?.email || "",
     buttons: content?.buttons || [],
+  });
+
+  const [localStyle, setLocalStyle] = useState({
+    backgroundColor: section.style?.backgroundColor || "#ffffff",
+    textColor: section.style?.textColor || "#000000",
+    padding: section.style?.padding || "4rem 2rem",
   });
 
   const sensors = useSensors(
@@ -184,12 +190,10 @@ export function ContactEditor({ section, onUpdate }: ContactEditorProps) {
   );
 
   const handleChange = (field: string, value: string) => {
-    const newFormData = { ...formData, [field]: value };
-    setFormData(newFormData);
-    onUpdate({
-      ...section,
-      content: newFormData,
-    });
+    setLocalContent((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
   };
 
   const addButton = (preset?: keyof typeof SOCIAL_PRESETS) => {
@@ -201,13 +205,10 @@ export function ContactEditor({ section, onUpdate }: ContactEditorProps) {
       size: "medium",
       shape: preset ? SOCIAL_PRESETS[preset].shape : "rounded",
     };
-    const newButtons = [...formData.buttons, newButton];
-    const newFormData = { ...formData, buttons: newButtons };
-    setFormData(newFormData);
-    onUpdate({
-      ...section,
-      content: newFormData,
-    });
+    setLocalContent((prev) => ({
+      ...prev,
+      buttons: [...prev.buttons, newButton],
+    }));
   };
 
   const updateButton = (
@@ -215,46 +216,45 @@ export function ContactEditor({ section, onUpdate }: ContactEditorProps) {
     field: keyof ContactButton,
     value: string
   ) => {
-    const newButtons = formData.buttons.map((button) =>
-      button.id === id ? { ...button, [field]: value } : button
-    );
-    const newFormData = { ...formData, buttons: newButtons };
-    setFormData(newFormData);
-    onUpdate({
-      ...section,
-      content: newFormData,
-    });
+    setLocalContent((prev) => ({
+      ...prev,
+      buttons: prev.buttons.map((button) =>
+        button.id === id ? { ...button, [field]: value } : button
+      ),
+    }));
   };
 
   const removeButton = (id: string) => {
-    const newButtons = formData.buttons.filter((button) => button.id !== id);
-    const newFormData = { ...formData, buttons: newButtons };
-    setFormData(newFormData);
-    onUpdate({
-      ...section,
-      content: newFormData,
-    });
+    setLocalContent((prev) => ({
+      ...prev,
+      buttons: prev.buttons.filter((button) => button.id !== id),
+    }));
   };
 
   const handleDragEnd = (event: any) => {
     const { active, over } = event;
 
     if (active.id !== over.id) {
-      const oldIndex = formData.buttons.findIndex(
+      const oldIndex = localContent.buttons.findIndex(
         (button) => button.id === active.id
       );
-      const newIndex = formData.buttons.findIndex(
+      const newIndex = localContent.buttons.findIndex(
         (button) => button.id === over.id
       );
 
-      const newButtons = arrayMove(formData.buttons, oldIndex, newIndex);
-      const newFormData = { ...formData, buttons: newButtons };
-      setFormData(newFormData);
-      onUpdate({
-        ...section,
-        content: newFormData,
-      });
+      setLocalContent((prev) => ({
+        ...prev,
+        buttons: arrayMove(prev.buttons, oldIndex, newIndex),
+      }));
     }
+  };
+
+  const handleSave = () => {
+    onUpdate({
+      ...section,
+      content: localContent,
+      style: localStyle,
+    });
   };
 
   return (
@@ -263,7 +263,7 @@ export function ContactEditor({ section, onUpdate }: ContactEditorProps) {
         <div className="space-y-2">
           <Label>Titre de la section</Label>
           <Input
-            value={formData.title}
+            value={localContent.title}
             onChange={(e) => handleChange("title", e.target.value)}
             placeholder="Titre de la section contact"
           />
@@ -272,7 +272,7 @@ export function ContactEditor({ section, onUpdate }: ContactEditorProps) {
         <div className="space-y-2">
           <Label>Sous-titre</Label>
           <Input
-            value={formData.subtitle}
+            value={localContent.subtitle}
             onChange={(e) => handleChange("subtitle", e.target.value)}
             placeholder="Sous-titre de la section"
           />
@@ -282,7 +282,7 @@ export function ContactEditor({ section, onUpdate }: ContactEditorProps) {
           <Label>Email de contact</Label>
           <Input
             type="email"
-            value={formData.email}
+            value={localContent.email}
             onChange={(e) => handleChange("email", e.target.value)}
             placeholder="votre@email.com"
           />
@@ -327,11 +327,11 @@ export function ContactEditor({ section, onUpdate }: ContactEditorProps) {
           onDragEnd={handleDragEnd}
         >
           <SortableContext
-            items={formData.buttons.map((button) => button.id)}
+            items={localContent.buttons.map((button) => button.id)}
             strategy={verticalListSortingStrategy}
           >
             <div className="space-y-4">
-              {formData.buttons.map((button) => (
+              {localContent.buttons.map((button) => (
                 <SortableButtonItem
                   key={button.id}
                   button={button}
@@ -347,11 +347,13 @@ export function ContactEditor({ section, onUpdate }: ContactEditorProps) {
       <div className="mt-6 rounded-lg border bg-gray-50 p-4">
         <h3 className="mb-4 font-medium">Aperçu de la section</h3>
         <div className="space-y-2">
-          <h4 className="text-lg font-semibold">{formData.title}</h4>
-          <p className="text-gray-600">{formData.subtitle}</p>
-          {formData.email && <p className="text-blue-600">{formData.email}</p>}
+          <h4 className="text-lg font-semibold">{localContent.title}</h4>
+          <p className="text-gray-600">{localContent.subtitle}</p>
+          {localContent.email && (
+            <p className="text-blue-600">{localContent.email}</p>
+          )}
           <div className="mt-4 flex flex-wrap gap-2">
-            {formData.buttons.map((button) => (
+            {localContent.buttons.map((button) => (
               <div
                 key={button.id}
                 className={cn(
@@ -380,6 +382,11 @@ export function ContactEditor({ section, onUpdate }: ContactEditorProps) {
           </div>
         </div>
       </div>
+
+      <Button onClick={handleSave} className="w-full gap-2">
+        <Save className="h-4 w-4" />
+        Enregistrer les modifications
+      </Button>
     </div>
   );
 }
