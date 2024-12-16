@@ -26,7 +26,7 @@ export function StatsSection({ content, style }: StatsSectionProps) {
       style={{
         backgroundColor: style.backgroundColor,
         color: style.textColor,
-        padding: style.padding || "4rem 2rem",
+        padding: style.padding || "6rem 2rem",
       }}
       className="relative w-full overflow-hidden"
     >

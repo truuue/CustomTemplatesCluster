@@ -17,7 +17,7 @@ export default function Home() {
         {/* Header */}
         <Header />
 
-        <main className="flex-1">
+        <main className="flex-1 space-y-24">
           {/* Hero Section */}
           <Hero />
 
