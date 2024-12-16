@@ -10,7 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { MotionSection } from "@/components/ui/motion-section";
 import { ScrollProgress } from "@/components/ui/scroll-progress";
-import { ArrowRight, Check, Layout, Rocket, Star, Wand2 } from "lucide-react";
+import { ArrowRight, Check, Layout, Rocket, Wand2 } from "lucide-react";
 import Link from "next/link";
 
 export default function Home() {
@@ -99,7 +99,7 @@ export default function Home() {
           </MotionSection>
 
           {/* Comment ça marche Section */}
-          <section className="w-full py-12 md:py-24">
+          <section className="w-full bg-gray-50 py-12 dark:bg-gray-800 md:py-24">
             <div className="container">
               <div className="mb-16 text-center">
                 <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">
@@ -158,7 +158,7 @@ export default function Home() {
           </section>
 
           {/* Features Section avec animation */}
-          <MotionSection className="w-full bg-gray-50 px-4 py-12 dark:bg-gray-800 md:py-24 lg:py-32">
+          <MotionSection className="w-full px-4 py-12 md:py-24 lg:py-32">
             <div className="mx-auto max-w-7xl">
               <div className="mb-16 text-center">
                 <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">
@@ -201,7 +201,7 @@ export default function Home() {
           </MotionSection>
 
           {/* Pricing Section avec animation */}
-          <MotionSection className="w-full px-4 py-12 md:py-24 lg:py-32">
+          <MotionSection className="w-full bg-gray-50 px-4 py-12 dark:bg-gray-800 md:py-24 lg:py-32">
             <div className="mx-auto max-w-7xl">
               <div className="mb-16 text-center">
                 <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">
@@ -280,8 +280,8 @@ export default function Home() {
           </MotionSection>
 
           {/* Testimonials Section avec animation */}
-          <MotionSection
-            className="w-full bg-gray-50 px-4 py-12 dark:bg-gray-800 md:py-24 lg:py-32"
+          {/* <MotionSection
+            className="w-full px-4 py-12 md:py-24 lg:py-32"
             id="testimonials"
           >
             <div className="mx-auto max-w-7xl">
@@ -356,10 +356,10 @@ export default function Home() {
                 </div>
               </div>
             </div>
-          </MotionSection>
+          </MotionSection> */}
 
           {/* Questions Fréquentes Section */}
-          <section className="w-full py-12 md:py-24">
+          <section className="w-full bg-gray-50 py-12 dark:bg-gray-800 md:py-24">
             <div className="container">
               <div className="mb-16 text-center">
                 <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">
