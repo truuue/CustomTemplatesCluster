@@ -1,12 +1,25 @@
+"use client";
+
 import { MobileMenu } from "@/components/mobile-menu";
 import { ModeToggle } from "@/components/mode-toggle";
 import { Button } from "@/components/ui/button";
+import { useScroll } from "@/hooks/useScroll";
+import { cn } from "@/lib/utils";
 import { Calendar } from "lucide-react";
 import Link from "next/link";
 
 export default function Header() {
+  const scrolled = useScroll(50);
+
   return (
-    <header className="fixed top-0 z-40 w-full border-b border-gray-100/10 bg-background/60 backdrop-blur-lg">
+    <header
+      className={cn(
+        "fixed top-0 z-40 w-full transition-all duration-300",
+        scrolled
+          ? "border-b border-gray-100/10 bg-background/60 backdrop-blur-lg"
+          : "bg-transparent"
+      )}
+    >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
         <div className="flex items-center gap-8">
           <Link href="/" className="flex items-center gap-2">
