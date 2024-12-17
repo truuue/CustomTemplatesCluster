@@ -20,7 +20,7 @@ export default function Pricing() {
 
         <div className="grid gap-8 md:grid-cols-3">
           {/* Plan Gratuit */}
-          <div className="relative rounded-2xl border bg-card p-8 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
+          <div className="relative flex flex-col justify-between rounded-2xl border bg-card p-8 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
             <h3 className="text-2xl font-bold">Gratuit</h3>
             <p className="mt-2 text-muted-foreground">Pour démarrer</p>
             <div className="my-8">
@@ -43,7 +43,7 @@ export default function Pricing() {
           </div>
 
           {/* Plan Pro */}
-          <div className="relative rounded-2xl border-2 border-primary bg-card p-8 shadow-lg">
+          <div className="relative flex flex-col justify-between rounded-2xl border-2 border-primary bg-card p-8 shadow-lg">
             <Badge className="absolute -top-3 left-6 px-3 py-1">
               Plus populaire
             </Badge>
@@ -73,7 +73,7 @@ export default function Pricing() {
           </div>
 
           {/* Plan Entreprise */}
-          <div className="relative rounded-2xl border bg-card p-8 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
+          <div className="relative flex flex-col justify-between rounded-2xl border bg-card p-8 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
             <h3 className="text-2xl font-bold">Entreprise</h3>
             <p className="mt-2 text-muted-foreground">
               Pour les grandes équipes
