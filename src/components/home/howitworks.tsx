@@ -4,36 +4,6 @@ export default function HowItWorks() {
   return (
     <section className="relative w-full overflow-hidden bg-gray-50/50 py-24 dark:bg-gray-800/50">
       <div className="container relative max-w-7xl py-10">
-        {/* Bordures décoratives avec plus */}
-        <div className="absolute inset-0 -m-4">
-          {/* Bordure supérieure */}
-          <div className="absolute left-4 right-4 top-0 h-px bg-primary/20" />
-          {/* Bordure inférieure */}
-          <div className="absolute bottom-0 left-4 right-4 h-px bg-primary/20" />
-          {/* Bordure gauche */}
-          <div className="absolute bottom-4 left-0 top-4 w-px bg-primary/20" />
-          {/* Bordure droite */}
-          <div className="absolute bottom-4 right-0 top-4 w-px bg-primary/20" />
-
-          {/* Plus aux angles */}
-          {/* Haut gauche */}
-          <div className="absolute -left-[0.6rem] -top-[0.58rem]">
-            <Plus className="size-5 text-gray-400" />
-          </div>
-          {/* Haut droite */}
-          <div className="absolute -right-[0.58rem] -top-[0.6rem]">
-            <Plus className="size-5 text-gray-400" />
-          </div>
-          {/* Bas gauche */}
-          <div className="absolute -bottom-[0.6rem] -left-[0.58rem]">
-            <Plus className="size-5 text-gray-400" />
-          </div>
-          {/* Bas droite */}
-          <div className="absolute -bottom-[0.58rem] -right-[0.6rem]">
-            <Plus className="size-5 text-gray-400" />
-          </div>
-        </div>
-
         {/* Contenu existant */}
         <div className="mb-16 text-center">
           <h2 className="text-3xl font-bold tracking-tight md:text-5xl">

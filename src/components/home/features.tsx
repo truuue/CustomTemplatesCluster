@@ -4,13 +4,6 @@ import { Wand2 } from "lucide-react";
 export default function Features() {
   return (
     <MotionSection className="relative w-full overflow-hidden px-4 py-24">
-      {/* Cercles décoratifs */}
-      <div className="absolute right-0 top-1/2 h-[150px] w-[150px] rounded-full bg-primary/25 blur-3xl" />
-      <div className="absolute left-0 top-1/2 h-[150px] w-[150px] rounded-full bg-primary/25 blur-3xl" />
-
-      {/* Grille de fond subtile */}
-      <div className="bg-grid-pattern absolute inset-0 opacity-[0.03]" />
-
       <div className="mx-auto max-w-7xl">
         <div className="mb-16 text-center">
           <h2 className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-4xl font-bold tracking-tight text-transparent md:text-5xl">
