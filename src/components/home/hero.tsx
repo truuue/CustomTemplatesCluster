@@ -17,7 +17,7 @@ export default function Hero() {
       <div className="relative mx-auto max-w-7xl">
         {/* Contenu existant */}
         <div className="flex flex-col items-center space-y-4 text-center">
-          <Badge className="mb-8 rounded-full border-primary/20 bg-primary/10 px-6 py-2 text-primary">
+          <Badge className="mb-8 rounded-full border-primary/20 bg-primary/10 px-6 py-2 text-primary hover:bg-primary/60 hover:text-primary-foreground/90">
             ✨ Nouveau : Export en React & Next.js
           </Badge>
 
