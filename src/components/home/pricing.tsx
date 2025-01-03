@@ -31,7 +31,7 @@ export default function Pricing() {
               {["1 landing page", "Templates de base", "Support par email"].map(
                 (feature) => (
                   <li key={feature} className="flex items-center">
-                    <Check className="mr-3 h-4 w-4 text-primary" />
+                    <Check className="mr-3 size-4 text-primary" />
                     <span>{feature}</span>
                   </li>
                 )
@@ -64,7 +64,7 @@ export default function Pricing() {
                 "Analytics avancés",
               ].map((feature) => (
                 <li key={feature} className="flex items-center">
-                  <Check className="mr-3 h-4 w-4 text-primary" />
+                  <Check className="mr-3 size-4 text-primary" />
                   <span>{feature}</span>
                 </li>
               ))}

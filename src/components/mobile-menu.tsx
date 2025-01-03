@@ -35,7 +35,7 @@ export function MobileMenu() {
       </button>
 
       {isOpen && (
-        <div className="absolute left-0 top-14 w-full bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="absolute left-0 top-16 w-full bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/90">
           <nav className="flex flex-col space-y-4">
             <Link
               href="#features"

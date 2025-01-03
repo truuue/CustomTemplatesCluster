@@ -32,7 +32,7 @@ export default function Testimonials() {
               </p>
             </div>
             <div className="flex items-center gap-4">
-              <div className="h-12 w-12 overflow-hidden rounded-full bg-primary/10">
+              <div className="size-12 overflow-hidden rounded-full bg-primary/10">
                 {/* Image de l'avatar */}
               </div>
               <div>
@@ -56,7 +56,7 @@ export default function Testimonials() {
               </p>
             </div>
             <div className="flex items-center gap-4">
-              <div className="h-12 w-12 overflow-hidden rounded-full bg-primary/10">
+              <div className="size-12 overflow-hidden rounded-full bg-primary/10">
                 {/* Image de l'avatar */}
               </div>
               <div>
@@ -80,7 +80,7 @@ export default function Testimonials() {
               </p>
             </div>
             <div className="flex items-center gap-4">
-              <div className="h-12 w-12 overflow-hidden rounded-full bg-primary/10">
+              <div className="size-12 overflow-hidden rounded-full bg-primary/10">
                 {/* Image de l'avatar */}
               </div>
               <div>

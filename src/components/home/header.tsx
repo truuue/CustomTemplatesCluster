@@ -23,7 +23,7 @@ export default function Header() {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
         <div className="flex items-center gap-8">
           <Link href="/" className="flex items-center gap-2">
-            <Calendar className="h-6 w-6 text-primary" />
+            <Calendar className="size-6 text-primary" />
             <span className="text-lg font-semibold">Showcaser</span>
           </Link>
 

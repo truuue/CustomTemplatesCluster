@@ -35,7 +35,7 @@ export default function Hero() {
               className="h-12 min-w-[200px] bg-primary text-base hover:bg-primary/90"
             >
               Commencer gratuitement
-              <ArrowRight className="ml-2 h-4 w-4" />
+              <ArrowRight className="ml-2 size-4" />
             </Button>
             <Button
               variant="outline"
