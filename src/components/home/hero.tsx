@@ -2,6 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
+import WordRotate from "@/components/ui/word-rotate";
 
 export default function Hero() {
   return (
@@ -21,8 +22,19 @@ export default function Hero() {
             ✨ Nouveau : Export en React & Next.js
           </Badge>
 
-          <h1 className="mx-auto max-w-4xl bg-gradient-to-b from-foreground to-foreground/70 bg-clip-text text-5xl font-bold tracking-tight text-transparent sm:text-6xl md:text-7xl">
-            Créez des Landing Pages Qui Convertissent
+          <h1 className="mx-auto max-w-3xl xl:max-w-7xl bg-gradient-to-b from-foreground to-foreground/70 bg-clip-text text-5xl font-bold tracking-tight text-transparent sm:text-6xl md:text-7xl">
+            Créez des Landing Pages Qui{" "}
+            <WordRotate
+              words={["Convertissent", "Impactent"]}
+              className="inline-block bg-gradient-to-b from-foreground to-foreground/70 bg-clip-text text-transparent"
+              duration={3000}
+              framerProps={{
+                initial: { opacity: 0, y: 20 },
+                animate: { opacity: 1, y: 0 },
+                exit: { opacity: 0, y: -20 },
+                transition: { duration: 0.3, ease: "easeInOut" },
+              }}
+            />
           </h1>
 
           <p className="mx-auto mt-8 max-w-2xl text-lg text-muted-foreground md:text-xl">
