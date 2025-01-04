@@ -45,7 +45,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {children}
-          <ChatWidget />
+          {/* <ChatWidget /> */}
           <CookieConsent />
           <Toaster />
         </ThemeProvider>

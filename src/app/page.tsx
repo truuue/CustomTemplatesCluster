@@ -34,7 +34,7 @@ export default function Home() {
           <Testimonials />
 
           {/* Statistiques Section */}
-          <Stats />
+          {/* <Stats /> */}
 
           {/* Questions Fréquentes Section */}
           <FAQ />
