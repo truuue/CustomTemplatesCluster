@@ -1,5 +1,3 @@
-import { Plus } from "lucide-react";
-
 export default function HowItWorks() {
   return (
     <section className="relative w-full overflow-hidden bg-gray-50/50 py-24 dark:bg-gray-800/50">
