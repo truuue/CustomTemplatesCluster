@@ -1,5 +1,4 @@
 import { ThemeProvider } from "@/components/providers/theme-provider";
-import { ChatWidget } from "@/components/ui/chat-widget";
 import { CookieConsent } from "@/components/ui/cookie-consent";
 import { Toaster } from "@/components/ui/toaster";
 import type { Metadata } from "next";
