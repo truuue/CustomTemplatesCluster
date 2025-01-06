@@ -48,29 +48,31 @@ export function LivePreview({ sections, onSectionClick }: LivePreviewProps) {
   return (
     <div className="flex h-full flex-col">
       {/* Barre d'outils de prévisualisation */}
-      <div className="flex items-center justify-between rounded-b-xl border bg-white p-4">
-        <div className="flex items-center gap-2">
-          <Button
-            variant={device === "desktop" ? "default" : "ghost"}
-            size="icon"
-            onClick={() => handleDeviceChange("desktop")}
-          >
-            <Monitor className="size-5" />
-          </Button>
-          <Button
-            variant={device === "tablet" ? "default" : "ghost"}
-            size="icon"
-            onClick={() => handleDeviceChange("tablet")}
-          >
-            <Tablet className="size-5" />
-          </Button>
-          <Button
-            variant={device === "mobile" ? "default" : "ghost"}
-            size="icon"
-            onClick={() => handleDeviceChange("mobile")}
-          >
-            <Smartphone className="size-5" />
-          </Button>
+      <div className="bg-gray-100 px-1">
+        <div className="flex items-center justify-between rounded-b-xl border bg-white p-4">
+          <div className="flex items-center gap-2">
+            <Button
+              variant={device === "desktop" ? "default" : "ghost"}
+              size="icon"
+              onClick={() => handleDeviceChange("desktop")}
+            >
+              <Monitor className="size-5" />
+            </Button>
+            <Button
+              variant={device === "tablet" ? "default" : "ghost"}
+              size="icon"
+              onClick={() => handleDeviceChange("tablet")}
+            >
+              <Tablet className="size-5" />
+            </Button>
+            <Button
+              variant={device === "mobile" ? "default" : "ghost"}
+              size="icon"
+              onClick={() => handleDeviceChange("mobile")}
+            >
+              <Smartphone className="size-5" />
+            </Button>
+          </div>
         </div>
       </div>
 
