@@ -5,7 +5,6 @@ import Header from "@/components/home/header";
 import Hero from "@/components/home/hero";
 import HowItWorks from "@/components/home/howitworks";
 import Pricing from "@/components/home/pricing";
-import Stats from "@/components/home/stats";
 import Testimonials from "@/components/home/testimonials";
 import { ScrollProgress } from "@/components/ui/scroll-progress";
 
