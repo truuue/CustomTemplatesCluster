@@ -35,9 +35,9 @@ export default function HowItWorks() {
       ref={containerRef}
       className="relative min-h-[50vh] w-full bg-gray-50/50 py-24 dark:bg-gray-800/50"
     >
-      <div className="container relative flex max-w-7xl flex-row items-start space-x-16">
+      <div className="container relative flex flex-row-reverse items-start space-x-16">
         <motion.div
-          className="mb-16 text-left"
+          className="mb-16 text-right md:mb-0"
           style={{
             position: "sticky",
             top: "50%",
@@ -54,7 +54,7 @@ export default function HowItWorks() {
           }}
           viewport={{ once: true, amount: 0.5 }}
         >
-          <h2 className="max-w-2xl text-wrap text-3xl font-bold tracking-tight md:text-8xl">
+          <h2 className="max-w-2xl text-pretty text-3xl font-bold tracking-tight md:text-8xl">
             Comment ça marche ?
           </h2>
           <p className="mt-4 text-pretty text-lg text-muted-foreground xl:text-nowrap">
