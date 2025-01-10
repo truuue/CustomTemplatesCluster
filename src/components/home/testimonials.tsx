@@ -1,4 +1,44 @@
+"use client";
+
+import { motion } from "framer-motion";
+
 export default function Testimonials() {
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        delayChildren: 0,
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
+  const firstItem = {
+    hidden: { opacity: 0, y: 20 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: "easeOut",
+      },
+    },
+  };
+
+  const laterItems = {
+    hidden: { opacity: 0, y: 20 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: "easeOut",
+        delay: 0.6,
+      },
+    },
+  };
+
   return (
     <section
       className="relative w-full overflow-hidden bg-gray-50/50 py-24 dark:bg-gray-800/50"
@@ -17,79 +57,91 @@ export default function Testimonials() {
           </p>
         </div>
 
-        <div className="grid gap-8 md:grid-cols-3">
-          {/* Carte de témoignage avec effet hover */}
-          <div className="group relative rounded-2xl border bg-card p-8 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg dark:border-gray-800">
-            <div className="absolute -right-2 -top-2 rotate-12 text-4xl opacity-10">
-              "
-            </div>
-            <div className="mb-8">
-              <p className="text-muted-foreground">
-                "Un outil incroyable qui m'a permis de créer une landing page
-                professionnelle en moins d'une heure."
-              </p>
-            </div>
-            <div className="flex items-center gap-4">
-              <div className="size-12 overflow-hidden rounded-full bg-primary/10">
-                {/* Image de l'avatar */}
+        <motion.div
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true }}
+          className="grid gap-8 md:grid-cols-3"
+        >
+          {/* Première carte */}
+          <motion.div variants={laterItems}>
+            <div className="group relative rounded-2xl border bg-card p-8 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg dark:border-gray-800">
+              <div className="absolute -right-2 -top-2 rotate-12 text-4xl opacity-10">
+                "
               </div>
-              <div>
-                <h4 className="font-semibold">Sophie Martin</h4>
-                <p className="text-sm text-muted-foreground">
-                  Fondatrice, TechStart
+              <div className="mb-8">
+                <p className="text-muted-foreground">
+                  "Un outil incroyable qui m'a permis de créer une landing page
+                  professionnelle en moins d'une heure."
                 </p>
               </div>
+              <div className="flex items-center gap-4">
+                <div className="size-12 overflow-hidden rounded-full bg-primary/10">
+                  {/* Image de l'avatar */}
+                </div>
+                <div>
+                  <h4 className="font-semibold">Sophie Martin</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Fondatrice, TechStart
+                  </p>
+                </div>
+              </div>
             </div>
-          </div>
+          </motion.div>
 
-          {/* seconde carte */}
-          <div className="group relative rounded-2xl border bg-card p-8 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg dark:border-gray-800">
-            <div className="absolute -right-2 -top-2 rotate-12 text-4xl opacity-10">
-              "
-            </div>
-            <div className="mb-8">
-              <p className="text-muted-foreground">
-                "Un outil incroyable qui m'a permis de créer une landing page
-                professionnelle en moins d'une heure."
-              </p>
-            </div>
-            <div className="flex items-center gap-4">
-              <div className="size-12 overflow-hidden rounded-full bg-primary/10">
-                {/* Image de l'avatar */}
+          {/* Deuxième carte (apparaît en premier) */}
+          <motion.div variants={firstItem}>
+            <div className="group relative rounded-2xl border bg-card p-8 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg dark:border-gray-800">
+              <div className="absolute -right-2 -top-2 rotate-12 text-4xl opacity-10">
+                "
               </div>
-              <div>
-                <h4 className="font-semibold">Sophie Martin</h4>
-                <p className="text-sm text-muted-foreground">
-                  Fondatrice, TechStart
+              <div className="mb-8">
+                <p className="text-muted-foreground">
+                  "Un outil incroyable qui m'a permis de créer une landing page
+                  professionnelle en moins d'une heure."
                 </p>
               </div>
+              <div className="flex items-center gap-4">
+                <div className="size-12 overflow-hidden rounded-full bg-primary/10">
+                  {/* Image de l'avatar */}
+                </div>
+                <div>
+                  <h4 className="font-semibold">Sophie Martin</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Fondatrice, TechStart
+                  </p>
+                </div>
+              </div>
             </div>
-          </div>
+          </motion.div>
 
-          {/* troisième carte */}
-          <div className="group relative rounded-2xl border bg-card p-8 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg dark:border-gray-800">
-            <div className="absolute -right-2 -top-2 rotate-12 text-4xl opacity-10">
-              "
-            </div>
-            <div className="mb-8">
-              <p className="text-muted-foreground">
-                "Un outil incroyable qui m'a permis de créer une landing page
-                professionnelle en moins d'une heure."
-              </p>
-            </div>
-            <div className="flex items-center gap-4">
-              <div className="size-12 overflow-hidden rounded-full bg-primary/10">
-                {/* Image de l'avatar */}
+          {/* Troisième carte */}
+          <motion.div variants={laterItems}>
+            <div className="group relative rounded-2xl border bg-card p-8 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg dark:border-gray-800">
+              <div className="absolute -right-2 -top-2 rotate-12 text-4xl opacity-10">
+                "
               </div>
-              <div>
-                <h4 className="font-semibold">Sophie Martin</h4>
-                <p className="text-sm text-muted-foreground">
-                  Fondatrice, TechStart
+              <div className="mb-8">
+                <p className="text-muted-foreground">
+                  "Un outil incroyable qui m'a permis de créer une landing page
+                  professionnelle en moins d'une heure."
                 </p>
               </div>
+              <div className="flex items-center gap-4">
+                <div className="size-12 overflow-hidden rounded-full bg-primary/10">
+                  {/* Image de l'avatar */}
+                </div>
+                <div>
+                  <h4 className="font-semibold">Sophie Martin</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Fondatrice, TechStart
+                  </p>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );
