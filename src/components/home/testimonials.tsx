@@ -40,7 +40,7 @@ export default function Testimonials() {
     >
       <div className="container relative">
         <div className="mb-16 text-center">
-          <h2 className="text-4xl font-bold tracking-tight md:text-6xl">
+          <h2 className="text-4xl font-bold tracking-tight md:text-7xl">
             Ce que disent nos utilisateurs
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
