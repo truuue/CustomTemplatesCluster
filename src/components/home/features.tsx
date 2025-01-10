@@ -18,7 +18,7 @@ export default function Features() {
           {/* Feature Card */}
           <div className="group relative rounded-2xl border bg-card p-8 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg dark:border-gray-800">
             <div className="mb-5 inline-flex rounded-xl bg-primary/10 p-3">
-              <Wand2 className="h-6 w-6 text-primary" />
+              <Wand2 className="size-6 text-primary" />
             </div>
             <h3 className="mb-3 text-xl font-bold">Design Intuitif</h3>
             <p className="text-muted-foreground">
@@ -29,7 +29,7 @@ export default function Features() {
 
           <div className="group relative rounded-2xl border bg-card p-8 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg dark:border-gray-800">
             <div className="mb-5 inline-flex rounded-xl bg-primary/10 p-3">
-              <Wand2 className="h-6 w-6 text-primary" />
+              <Wand2 className="size-6 text-primary" />
             </div>
             <h3 className="mb-3 text-xl font-bold">Templates Professionnels</h3>
             <p className="text-muted-foreground">
@@ -40,7 +40,7 @@ export default function Features() {
 
           <div className="group relative rounded-2xl border bg-card p-8 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg dark:border-gray-800">
             <div className="mb-5 inline-flex rounded-xl bg-primary/10 p-3">
-              <Wand2 className="h-6 w-6 text-primary" />
+              <Wand2 className="size-6 text-primary" />
             </div>
             <h3 className="mb-3 text-xl font-bold">Publication Rapide</h3>
             <p className="text-muted-foreground">
