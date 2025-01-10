@@ -1,8 +1,8 @@
-import { MotionSection } from "@/components/ui/motion-section";
+"use client";
 
 export default function Testimonials() {
   return (
-    <MotionSection
+    <section
       className="relative w-full overflow-hidden bg-gray-50/50 py-24 dark:bg-gray-800/50"
       id="testimonials"
     >
@@ -93,6 +93,6 @@ export default function Testimonials() {
           </div>
         </div>
       </div>
-    </MotionSection>
+    </section>
   );
 }
