@@ -11,7 +11,7 @@ export default function FAQ() {
       <div className="container relative">
         <div className="mx-auto max-w-3xl">
           <div className="mb-16 text-center">
-            <h2 className="text-4xl font-bold tracking-tight md:text-5xl">
+            <h2 className="text-4xl font-bold tracking-tight md:text-7xl md:text-nowrap">
               Questions Fréquentes
             </h2>
             <p className="mt-4 text-lg text-muted-foreground">
