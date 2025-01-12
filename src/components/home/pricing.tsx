@@ -46,8 +46,17 @@ export default function Pricing() {
       <div className="container flex flex-col items-center justify-center lg:flex-row-reverse">
         <div className="mb-16 ml-0 text-center lg:mb-0 lg:ml-16 lg:text-right">
           <h2 className="max-w-2xl text-4xl font-bold tracking-tight lg:text-8xl">
-            Des tarifs simples et transparents
+            Des tarifs simples et{" "}
+            <span
+              className="text-transparent"
+              style={{
+                WebkitTextStroke: "2px #29303e",
+              }}
+            >
+              transparents
+            </span>
           </h2>
+
           <p className="mt-4 text-lg text-muted-foreground">
             Choisissez le plan qui correspond à vos besoins
           </p>
