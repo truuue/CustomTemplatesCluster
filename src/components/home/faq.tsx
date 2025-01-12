@@ -11,9 +11,27 @@ export default function FAQ() {
       <div className="container relative">
         <div className="mx-auto max-w-3xl">
           <div className="mb-16 text-center">
-            <h2 className="text-4xl font-bold tracking-tight md:text-7xl md:text-nowrap">
-              Questions Fréquentes
+            <h2 className="under relative text-4xl font-bold tracking-tight md:text-nowrap md:text-7xl">
+              Des{" "}
+              <span className="relative inline-block">
+                <span className="relative z-10">questions</span>
+                <svg
+                  className="absolute bottom-0 left-0 h-1 w-full"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 100 2"
+                  preserveAspectRatio="none"
+                >
+                  <path
+                    d="M0 1 Q25 2 50 1 T100 1"
+                    stroke="#29303e"
+                    strokeWidth="2"
+                    fill="none"
+                  ></path>
+                </svg>
+              </span>{" "}
+              ?
             </h2>
+
             <p className="mt-4 text-lg text-muted-foreground">
               Tout ce que vous devez savoir pour démarrer
             </p>
