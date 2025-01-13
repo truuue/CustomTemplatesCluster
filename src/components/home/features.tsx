@@ -62,7 +62,7 @@ export default function Features() {
           className="mb-16 text-right md:mb-0"
           style={{
             position: "sticky",
-            top: "50%",
+            top: "35%",
             transform: "translateY(-50%)",
           }}
           initial={{ opacity: 0, y: 100 }}
