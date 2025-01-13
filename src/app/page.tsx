@@ -16,32 +16,34 @@ export default function Home() {
         {/* Header */}
         <Header />
 
-        <main className="relative flex-1 space-y-24">
+        <main className="relative flex-1">
           {/* Grille de fond avec dégradé */}
           <div className="bg-grid-pattern fixed inset-0 opacity-100">
             <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-background/20" />
           </div>
 
-          {/* Hero Section */}
-          <Hero />
+          <div className="z-10 space-y-12">
+            {/* Hero Section */}
+            <Hero />
 
-          {/* Features Section avec animation */}
-          <Features />
+            {/* Features Section avec animation */}
+            <Features />
 
-          {/* Comment ça marche Section */}
-          <HowItWorks />
+            {/* Comment ça marche Section */}
+            <HowItWorks />
 
-          {/* Pricing Section avec animation */}
-          <Pricing />
+            {/* Pricing Section avec animation */}
+            <Pricing />
 
-          {/* Testimonials Section avec animation */}
-          <Testimonials />
+            {/* Testimonials Section avec animation */}
+            <Testimonials />
 
-          {/* Statistiques Section */}
-          {/* <Stats /> */}
+            {/* Statistiques Section */}
+            {/* <Stats /> */}
 
-          {/* Questions Fréquentes Section */}
-          <FAQ />
+            {/* Questions Fréquentes Section */}
+            <FAQ />
+          </div>
         </main>
 
         {/* Footer */}
