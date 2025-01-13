@@ -6,14 +6,12 @@ import Link from "next/link";
 
 export default function Hero() {
   return (
-    <section className="relative flex min-h-[90vh] items-center justify-center overflow-hidden bg-background px-4">
-      {/* Grille de fond avec dégradé */}
-      <div className="bg-grid-pattern absolute inset-0 opacity-100">
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background/20" />
-      </div>
+    <section className="relative flex min-h-[90vh] items-center justify-center overflow-hidden bg-transparent px-4">
+      {/* Cercle lumineux principal derrière le texte */}
+      <div className="absolute left-1/2 top-1/2 h-[800px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-br from-background/50 via-background/30 to-transparent blur-3xl" />
 
-      {/* Cercle lumineux */}
-      <div className="absolute left-1/2 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/5 blur-3xl" />
+      {/* Cercle lumineux secondaire pour effet de profondeur */}
+      <div className="absolute left-1/2 top-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-tr from-background via-background/80 to-transparent blur-2xl" />
 
       <div className="relative mx-auto max-w-7xl">
         {/* Contenu existant */}
