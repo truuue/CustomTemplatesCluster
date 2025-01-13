@@ -166,8 +166,14 @@ export default function Testimonials() {
                 </motion.div>
               </CarouselItem>
             </CarouselContent>
-            <CarouselPrevious className="absolute -left-12 top-1/2" />
-            <CarouselNext className="absolute -right-12 top-1/2" />
+
+            <CarouselPrevious className="absolute -left-12 top-1/2 hidden lg:flex" />
+            <CarouselNext className="absolute -right-12 top-1/2 hidden lg:flex" />
+
+            <div className="mt-8 flex justify-center gap-4 lg:hidden">
+              <CarouselPrevious className="static" />
+              <CarouselNext className="static" />
+            </div>
           </Carousel>
         </motion.div>
       </div>
