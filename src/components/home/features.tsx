@@ -54,6 +54,7 @@ export default function Features() {
 
   return (
     <section
+      id="features"
       ref={containerRef}
       className="relative min-h-[50vh] w-full bg-transparent py-24"
     >
