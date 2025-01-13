@@ -7,7 +7,7 @@ import {
 
 export default function FAQ() {
   return (
-    <section className="relative w-full bg-background py-24">
+    <section className="relative w-full bg-transparent py-24">
       <div className="container relative">
         <div className="mx-auto max-w-3xl">
           <div className="mb-16 text-center">

@@ -55,11 +55,11 @@ export default function Features() {
   return (
     <section
       ref={containerRef}
-      className="relative min-h-[50vh] w-full bg-gray-50/50 py-24 dark:bg-gray-800/50"
+      className="relative min-h-[50vh] w-full bg-transparent py-24"
     >
-      <div className="container relative flex flex-row items-start space-x-16">
+      <div className="container relative flex flex-row-reverse items-start space-x-16">
         <motion.div
-          className="mb-16 text-left md:mb-0"
+          className="mb-16 text-right md:mb-0"
           style={{
             position: "sticky",
             top: "50%",
@@ -80,7 +80,7 @@ export default function Features() {
             Tout ce dont vous avez besoin
           </h2>
           <p className="mt-4 text-pretty text-lg text-muted-foreground xl:text-nowrap">
-            Des outils puissants pour créer des landing pages qui convertissent
+            Des outils de création puissants
           </p>
         </motion.div>
 

@@ -35,7 +35,7 @@ export default function Testimonials() {
 
   return (
     <section
-      className="relative w-full overflow-hidden bg-gray-50/50 py-24 dark:bg-gray-800/50"
+      className="relative w-full overflow-hidden bg-transparent py-24"
       id="testimonials"
     >
       <div className="container relative">

@@ -33,11 +33,11 @@ export default function HowItWorks() {
   return (
     <section
       ref={containerRef}
-      className="relative min-h-[50vh] w-full bg-gray-50/50 py-24 dark:bg-gray-800/50"
+      className="relative min-h-[50vh] w-full bg-transparent py-24"
     >
-      <div className="container relative flex flex-row-reverse items-start space-x-16">
+      <div className="container relative flex flex-row items-start space-x-16">
         <motion.div
-          className="mb-16 text-right md:mb-0"
+          className="mb-16 text-left md:mb-0"
           style={{
             position: "sticky",
             top: "50%",
