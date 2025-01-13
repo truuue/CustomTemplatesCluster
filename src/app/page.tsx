@@ -16,15 +16,20 @@ export default function Home() {
         {/* Header */}
         <Header />
 
-        <main className="flex-1 space-y-24">
+        <main className="relative flex-1 space-y-24">
+          {/* Grille de fond avec dégradé */}
+          <div className="bg-grid-pattern fixed inset-0 opacity-100">
+            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-background/20" />
+          </div>
+
           {/* Hero Section */}
           <Hero />
 
-          {/* Comment ça marche Section */}
-          <HowItWorks />
-
           {/* Features Section avec animation */}
           <Features />
+
+          {/* Comment ça marche Section */}
+          <HowItWorks />
 
           {/* Pricing Section avec animation */}
           <Pricing />
