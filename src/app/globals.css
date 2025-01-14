@@ -40,6 +40,8 @@
     --input: 60 20% 88%;
     --ring: 220 20% 20%;
     --radius: 0.5rem;
+
+    --stroke: 220 16% 22%; /* La couleur #29303e en HSL pour le mode clair */
   }
 
   .dark {
@@ -76,6 +78,8 @@
     --chart-3: 60 15% 85%;
     --chart-4: 60 15% 80%;
     --chart-5: 60 15% 75%;
+
+    --stroke: 220 20% 100%; /* Une couleur plus claire pour le mode sombre */
   }
 }
 

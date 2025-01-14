@@ -50,7 +50,7 @@ export default function Pricing() {
             <span
               className="text-transparent"
               style={{
-                WebkitTextStroke: "2px #29303e",
+                WebkitTextStroke: "2px hsl(var(--stroke))",
               }}
             >
               transparents
