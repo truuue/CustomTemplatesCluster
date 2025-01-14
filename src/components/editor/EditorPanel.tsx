@@ -55,6 +55,7 @@ export function EditorPanel({
             <SelectContent>
               <SelectGroup>
                 <SelectLabel>Types de sections disponibles</SelectLabel>
+                <SelectItem value="header">Header</SelectItem>
                 <SelectItem value="hero">Hero</SelectItem>
                 <SelectItem value="features">Fonctionnalités</SelectItem>
                 <SelectItem value="pricing">Tarification</SelectItem>
