@@ -4,11 +4,19 @@ import { Button } from "@/components/ui/button";
 import { Loading } from "@/components/ui/loading";
 import {
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { Section, Template } from "@/types/template";
 import { Menu } from "lucide-react";
 import dynamic from "next/dynamic";
@@ -28,7 +36,9 @@ const SelectWrapper = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="h-10 w-full rounded-md border border-input bg-background" />
+      <div className="h-10 w-full rounded-md border border-input bg-background px-3 py-2">
+        Chargement...
+      </div>
     ),
   }
 );
@@ -161,45 +171,52 @@ export function TemplateEditor({ initialTemplate }: TemplateEditorProps) {
 
   return (
     <div className="relative h-screen">
-      {/* Bouton mobile pour ouvrir le panneau d'édition */}
-      <div className="fixed left-4 top-4 z-50 block lg:hidden">
+      {/* Barre d'outils mobile */}
+      <div className="fixed left-0 top-0 z-50 flex w-full items-center justify-between bg-background p-4 lg:hidden">
         <Sheet>
           <SheetTrigger asChild>
             <Button variant="outline" size="icon">
-              <Menu className="h-4 w-4" />
+              <Menu className="size-4" />
             </Button>
           </SheetTrigger>
-          <SheetContent side="left" className="w-[300px] sm:w-[400px]">
-            <EditorPanel
-              template={template}
-              activeSection={activeSection}
-              isSaving={isSaving}
-              onAddSection={handleAddSection}
-              onSectionsReorder={handleSectionsReorder}
-              onSectionSelect={setActiveSection}
-              onSectionDelete={handleSectionDelete}
-              onSectionUpdate={handleSectionUpdate}
-            />
+          <SheetContent side="left" className="w-[85vw] max-w-[400px] p-0">
+            <SheetHeader className="border-b p-4">
+              <SheetTitle>Éditeur de template</SheetTitle>
+            </SheetHeader>
+            <div className="h-[calc(100vh-65px)] overflow-y-auto p-4">
+              <EditorPanel
+                template={template}
+                activeSection={activeSection}
+                isSaving={isSaving}
+                onAddSection={handleAddSection}
+                onSectionsReorder={handleSectionsReorder}
+                onSectionSelect={setActiveSection}
+                onSectionDelete={handleSectionDelete}
+                onSectionUpdate={handleSectionUpdate}
+              />
+            </div>
           </SheetContent>
         </Sheet>
       </div>
 
       {/* Panneau d'édition desktop */}
-      <div className="fixed hidden h-screen overflow-y-auto border-r bg-background lg:block lg:w-[300px] xl:w-[400px]">
-        <EditorPanel
-          template={template}
-          activeSection={activeSection}
-          isSaving={isSaving}
-          onAddSection={handleAddSection}
-          onSectionsReorder={handleSectionsReorder}
-          onSectionSelect={setActiveSection}
-          onSectionDelete={handleSectionDelete}
-          onSectionUpdate={handleSectionUpdate}
-        />
+      <div className="fixed hidden h-screen w-[300px] overflow-hidden border-r bg-background lg:block xl:w-[400px]">
+        <div className="h-full overflow-y-auto">
+          <EditorPanel
+            template={template}
+            activeSection={activeSection}
+            isSaving={isSaving}
+            onAddSection={handleAddSection}
+            onSectionsReorder={handleSectionsReorder}
+            onSectionSelect={setActiveSection}
+            onSectionDelete={handleSectionDelete}
+            onSectionUpdate={handleSectionUpdate}
+          />
+        </div>
       </div>
 
-      {/* Prévisualisation */}
-      <div className="h-screen overflow-y-auto lg:pl-[300px] xl:pl-[400px]">
+      {/* Zone de prévisualisation */}
+      <div className="h-screen overflow-y-auto pt-[64px] lg:pl-[300px] lg:pt-0 xl:pl-[400px]">
         {isSaving ? (
           <div className="flex h-full items-center justify-center">
             <Loading />
@@ -241,29 +258,34 @@ function EditorPanel({
   }, []);
 
   if (!isMounted) {
-    return <div className="space-y-6 p-6">Chargement...</div>;
+    return <div className="p-6">Chargement...</div>;
   }
 
   return (
     <div className="space-y-6 p-6">
-      <div>
+      <>
         <h2 className="mb-4 text-lg font-semibold">Ajouter une section</h2>
-        <SelectWrapper onValueChange={onAddSection} disabled={isSaving}>
-          <SelectTrigger>
-            <SelectValue placeholder="Choisir un type de section" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="header">Entête</SelectItem>
-            <SelectItem value="hero">Hero</SelectItem>
-            <SelectItem value="features">Fonctionnalités</SelectItem>
-            <SelectItem value="pricing">Tarification</SelectItem>
-            <SelectItem value="testimonials">Témoignages</SelectItem>
-            <SelectItem value="contact">Contact</SelectItem>
-          </SelectContent>
-        </SelectWrapper>
-      </div>
+        <div className="space-y-2">
+          <SelectWrapper onValueChange={onAddSection} disabled={isSaving}>
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Choisir un type de section" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Types de sections disponibles</SelectLabel>
+                <SelectItem value="hero">Hero</SelectItem>
+                <SelectItem value="features">Fonctionnalités</SelectItem>
+                <SelectItem value="pricing">Tarification</SelectItem>
+                <SelectItem value="testimonials">Témoignages</SelectItem>
+                <SelectItem value="contact">Contact</SelectItem>
+                <SelectItem value="footer">Pied de page</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </SelectWrapper>
+        </div>
+      </>
 
-      <div>
+      <>
         <h2 className="mb-4 text-lg font-semibold">Sections</h2>
         {isSaving ? (
           <Loading />
@@ -275,13 +297,13 @@ function EditorPanel({
             onSectionDelete={onSectionDelete}
           />
         )}
-      </div>
+      </>
 
       {activeSection && (
-        <div>
+        <>
           <h2 className="mb-4 text-lg font-semibold">Éditer la section</h2>
           <SectionEditor section={activeSection} onUpdate={onSectionUpdate} />
-        </div>
+        </>
       )}
     </div>
   );

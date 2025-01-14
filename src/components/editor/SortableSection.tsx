@@ -3,6 +3,7 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { GripVertical, Trash2 } from "lucide-react";
 import { Button } from "../ui/button";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 interface SortableSectionProps {
   section: Section;
@@ -32,30 +33,36 @@ export function SortableSection({
     <div
       ref={setNodeRef}
       style={style}
-      className="flex cursor-pointer items-center rounded-lg border border-gray-200 bg-white p-4 shadow-sm hover:border-primary"
+      className="group flex cursor-pointer items-center rounded-lg border border-foreground/20 bg-background p-3 text-sm shadow-sm transition-all hover:border-primary sm:p-4 sm:text-base"
       onClick={onSelect}
     >
       <div
         {...attributes}
         {...listeners}
-        className="mr-2 cursor-grab hover:text-primary"
+        className="mr-2 cursor-grab opacity-60 transition-opacity group-hover:opacity-100"
       >
-        <GripVertical size={20} />
+        <GripVertical className="size-4 sm:size-5" />
       </div>
-      <div className="flex-1">
-        <h4 className="font-medium">{section.type}</h4>
-        <p className="text-sm text-gray-500">
+      <div className="flex-1 overflow-hidden">
+        <h4 className="truncate font-medium capitalize">{section.type}</h4>
+        <p className="truncate text-xs text-muted-foreground sm:text-sm">
           {section.content.title || "Sans titre"}
         </p>
       </div>
-      <Button
-        variant="ghost"
-        size="icon"
-        className="ml-2 text-red-500 hover:bg-red-50 hover:text-red-600"
-        onClick={handleDelete}
-      >
-        <Trash2 size={18} />
-      </Button>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="ml-1 h-8 w-8 text-destructive opacity-0 transition-opacity hover:bg-destructive/10 group-hover:opacity-100 sm:ml-2 sm:h-9 sm:w-9"
+            onClick={handleDelete}
+          >
+            <Trash2 className="size-4 sm:size-[18px]" />
+            <span className="sr-only">Supprimer la section</span>
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>Supprimer la section</TooltipContent>
+      </Tooltip>
     </div>
   );
 }
