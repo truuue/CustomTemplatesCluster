@@ -30,6 +30,27 @@ export default function HowItWorks() {
     },
   };
 
+  const steps = [
+    {
+      number: 1,
+      title: "Choisissez un template",
+      description:
+        "Sélectionnez parmi notre collection de templates professionnels optimisés",
+    },
+    {
+      number: 2,
+      title: "Personnalisez",
+      description:
+        "Modifiez les couleurs, textes et images grâce à notre éditeur intuitif",
+    },
+    {
+      number: 3,
+      title: "Publiez",
+      description:
+        "Mettez en ligne votre landing page en un clic avec hébergement inclus",
+    },
+  ];
+
   return (
     <section
       ref={containerRef}
@@ -68,55 +89,23 @@ export default function HowItWorks() {
           animate={isInView ? "show" : "hidden"}
           className="relative flex flex-col items-center space-y-16"
         >
-          {/* Premier bloc */}
-          <motion.div variants={item} className="group relative w-[500px]">
-            <div className="transition-all hover:-translate-y-1">
-              <div className="absolute -left-4 -top-4 flex size-12 rotate-3 items-center justify-center rounded-xl bg-primary text-2xl font-bold text-primary-foreground transition-transform group-hover:scale-110">
-                <span className="-rotate-3">1</span>
+          {steps.map((step) => (
+            <motion.div
+              key={step.number}
+              variants={item}
+              className="group relative w-[500px]"
+            >
+              <div className="transition-all hover:-translate-y-1">
+                <div className="absolute -left-4 -top-4 flex size-12 rotate-3 items-center justify-center rounded-xl bg-primary text-2xl font-bold text-primary-foreground transition-transform group-hover:scale-110">
+                  <span className="-rotate-3">{step.number}</span>
+                </div>
+                <div className="h-full rounded-2xl border border-primary/20 bg-card p-8 shadow-sm transition-shadow hover:shadow-lg">
+                  <h3 className="mb-4 text-xl font-bold">{step.title}</h3>
+                  <p className="text-muted-foreground">{step.description}</p>
+                </div>
               </div>
-              <div className="h-full rounded-2xl border border-primary/20 bg-card p-8 shadow-sm transition-shadow hover:shadow-lg">
-                <h3 className="mb-4 text-xl font-bold">
-                  Choisissez un template
-                </h3>
-                <p className="text-muted-foreground">
-                  Sélectionnez parmi notre collection de templates
-                  professionnels optimisés
-                </p>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* deuxième bloc */}
-          <motion.div variants={item} className="group relative w-[500px]">
-            <div className="transition-all hover:-translate-y-1">
-              <div className="absolute -left-4 -top-4 flex size-12 rotate-3 items-center justify-center rounded-xl bg-primary text-2xl font-bold text-primary-foreground transition-transform group-hover:scale-110">
-                <span className="-rotate-3">2</span>
-              </div>
-              <div className="h-full rounded-2xl border border-primary/20 bg-card p-8 shadow-sm transition-shadow hover:shadow-lg">
-                <h3 className="mb-4 text-xl font-bold">Personnalisez</h3>
-                <p className="text-muted-foreground">
-                  Modifiez les couleurs, textes et images grâce à notre éditeur
-                  intuitif
-                </p>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* troisième bloc */}
-          <motion.div variants={item} className="group relative w-[500px]">
-            <div className="transition-all hover:-translate-y-1">
-              <div className="absolute -left-4 -top-4 flex size-12 rotate-3 items-center justify-center rounded-xl bg-primary text-2xl font-bold text-primary-foreground transition-transform group-hover:scale-110">
-                <span className="-rotate-3">3</span>
-              </div>
-              <div className="h-full rounded-2xl border border-primary/20 bg-card p-8 shadow-sm transition-shadow hover:shadow-lg">
-                <h3 className="mb-4 text-xl font-bold">Publiez</h3>
-                <p className="text-muted-foreground">
-                  Mettez en ligne votre landing page en un clic avec hébergement
-                  inclus
-                </p>
-              </div>
-            </div>
-          </motion.div>
+            </motion.div>
+          ))}
         </motion.div>
       </div>
     </section>
