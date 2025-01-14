@@ -20,7 +20,7 @@ export default function LandingPage() {
           </p>
         </div>
 
-        <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-6 px-4 sm:grid-cols-2 sm:px-6 lg:grid-cols-3">
+        <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-28 px-4 sm:grid-cols-2 sm:px-6">
           <Card className="hover-card flex flex-col justify-between">
             <CardHeader>
               <CardTitle>Créer une Landing Page</CardTitle>
@@ -42,27 +42,11 @@ export default function LandingPage() {
             </CardHeader>
             <CardContent>
               <p className="mb-4 text-gray-600">
-                Accédez à vos templates sauvegardés
+                Accédez à tous vos templates professionnels et personnalisés
               </p>
               <Link href="/templates">
                 <Button variant="outline" className="w-full">
                   Voir mes templates
-                </Button>
-              </Link>
-            </CardContent>
-          </Card>
-
-          <Card className="hover-card flex flex-col justify-between">
-            <CardHeader>
-              <CardTitle>Templates Populaires</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="mb-4 text-gray-600">
-                Explorez notre collection de templates prédéfinis
-              </p>
-              <Link href="/templates/gallery">
-                <Button variant="outline" className="w-full">
-                  Explorer la galerie
                 </Button>
               </Link>
             </CardContent>
