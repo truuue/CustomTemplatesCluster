@@ -71,7 +71,7 @@ export default function Pricing() {
         >
           {/* Plan Gratuit */}
           <motion.div variants={laterItem}>
-            <div className="relative flex min-w-[300px] flex-col justify-between rounded-xl border bg-card px-14 py-8 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg md:px-8">
+            <div className="relative flex min-w-[300px] flex-col justify-between rounded-xl border border-primary/20 bg-card px-14 py-8 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg md:px-8">
               <h3 className="text-4xl font-bold">Gratuit</h3>
               <p className="mt-2 text-muted-foreground">Pour démarrer</p>
               <div className="my-8">

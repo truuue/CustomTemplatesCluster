@@ -74,7 +74,7 @@ export default function HowItWorks() {
               <div className="absolute -left-4 -top-4 flex size-12 rotate-3 items-center justify-center rounded-xl bg-primary text-2xl font-bold text-primary-foreground transition-transform group-hover:scale-110">
                 <span className="-rotate-3">1</span>
               </div>
-              <div className="h-full rounded-2xl border bg-card p-8 shadow-sm transition-shadow hover:shadow-lg dark:border-gray-800">
+              <div className="h-full rounded-2xl border border-primary/20 bg-card p-8 shadow-sm transition-shadow hover:shadow-lg">
                 <h3 className="mb-4 text-xl font-bold">
                   Choisissez un template
                 </h3>
@@ -92,7 +92,7 @@ export default function HowItWorks() {
               <div className="absolute -left-4 -top-4 flex size-12 rotate-3 items-center justify-center rounded-xl bg-primary text-2xl font-bold text-primary-foreground transition-transform group-hover:scale-110">
                 <span className="-rotate-3">2</span>
               </div>
-              <div className="h-full rounded-2xl border bg-card p-8 shadow-sm transition-shadow hover:shadow-md dark:border-gray-800">
+              <div className="h-full rounded-2xl border border-primary/20 bg-card p-8 shadow-sm transition-shadow hover:shadow-lg">
                 <h3 className="mb-4 text-xl font-bold">Personnalisez</h3>
                 <p className="text-muted-foreground">
                   Modifiez les couleurs, textes et images grâce à notre éditeur
@@ -108,7 +108,7 @@ export default function HowItWorks() {
               <div className="absolute -left-4 -top-4 flex size-12 rotate-3 items-center justify-center rounded-xl bg-primary text-2xl font-bold text-primary-foreground transition-transform group-hover:scale-110">
                 <span className="-rotate-3">3</span>
               </div>
-              <div className="h-full rounded-2xl border bg-card p-8 shadow-sm transition-shadow hover:shadow-md dark:border-gray-800">
+              <div className="h-full rounded-2xl border border-primary/20 bg-card p-8 shadow-sm transition-shadow hover:shadow-lg">
                 <h3 className="mb-4 text-xl font-bold">Publiez</h3>
                 <p className="text-muted-foreground">
                   Mettez en ligne votre landing page en un clic avec hébergement

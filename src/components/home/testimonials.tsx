@@ -65,7 +65,7 @@ export default function Testimonials() {
               {/* Premier témoignage */}
               <CarouselItem className="md:basis-1/3">
                 <motion.div variants={item}>
-                  <div className="group relative rounded-2xl border bg-card p-8 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg dark:border-gray-800">
+                  <div className="group relative rounded-2xl border border-primary/20 bg-card p-8 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
                     <div className="mb-8">
                       <p className="text-muted-foreground">
                         "Un outil incroyable qui m'a permis de créer une landing
@@ -91,7 +91,7 @@ export default function Testimonials() {
               {/* Deuxième témoignage */}
               <CarouselItem className="md:basis-1/3">
                 <motion.div variants={item}>
-                  <div className="group relative rounded-2xl border bg-card p-8 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg dark:border-gray-800">
+                  <div className="group relative rounded-2xl border border-primary/20 bg-card p-8 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
                     <div className="mb-8">
                       <p className="text-muted-foreground">
                         "Un outil incroyable qui m'a permis de créer une landing
@@ -117,7 +117,7 @@ export default function Testimonials() {
               {/* Troisième témoignage */}
               <CarouselItem className="md:basis-1/3">
                 <motion.div variants={item}>
-                  <div className="group relative rounded-2xl border bg-card p-8 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg dark:border-gray-800">
+                  <div className="group relative rounded-2xl border border-primary/20 bg-card p-8 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
                     <div className="mb-8">
                       <p className="text-muted-foreground">
                         "Un outil incroyable qui m'a permis de créer une landing
@@ -143,7 +143,7 @@ export default function Testimonials() {
               {/* Quatrième témoignage */}
               <CarouselItem className="md:basis-1/3">
                 <motion.div variants={item}>
-                  <div className="group relative rounded-2xl border bg-card p-8 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg dark:border-gray-800">
+                  <div className="group relative rounded-2xl border border-primary/20 bg-card p-8 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
                     <div className="mb-8">
                       <p className="text-muted-foreground">
                         "Un outil incroyable qui m'a permis de créer une landing

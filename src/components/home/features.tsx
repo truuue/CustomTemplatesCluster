@@ -98,7 +98,7 @@ export default function Features() {
               className="group relative w-[500px]"
             >
               <div className="transition-all hover:-translate-y-1">
-                <div className="h-full rounded-2xl border bg-card p-8 shadow-sm transition-shadow hover:shadow-lg dark:border-gray-800">
+                <div className="h-full rounded-2xl border border-primary/20 bg-card p-8 shadow-sm transition-shadow hover:shadow-lg">
                   <div className="mb-5 inline-flex rounded-xl bg-primary/10 p-3">
                     {feature.icon}
                   </div>
