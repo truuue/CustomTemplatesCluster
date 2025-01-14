@@ -21,8 +21,8 @@ interface HeaderEditorProps {
 
 export function HeaderEditor({ section, onUpdate }: HeaderEditorProps) {
   const [localContent, setLocalContent] = useState({
-    companyName: section.content?.companyName || "",
-    logo: section.content?.logo || "",
+    companyName: (section.content as HeaderContent).companyName || "",
+    logo: (section.content as HeaderContent).logo || "",
     variant: (section.content as HeaderContent).variant || "default",
   });
 

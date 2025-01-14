@@ -11,7 +11,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { TemplateButtonVariant } from "@/lib/utils/button";
-import { Section } from "@/types/template";
+import { HeroContent, Section } from "@/types/template";
 import { Save } from "lucide-react";
 import { useState } from "react";
 
@@ -24,10 +24,10 @@ export function HeroEditor({ section, onUpdate }: HeroEditorProps) {
   const [localContent, setLocalContent] = useState({
     title: section.content.title || "",
     subtitle: section.content.subtitle || "",
-    ctaText: section.content.buttons?.[0]?.text || "",
-    ctaUrl: section.content.buttons?.[0]?.url || "#",
-    ctaVariant: (section.content.buttons?.[0]?.variant ||
-      "primary") as TemplateButtonVariant,
+    ctaText: (section.content as HeroContent).buttons?.[0]?.text || "",
+    ctaUrl: (section.content as HeroContent).buttons?.[0]?.url || "#",
+    ctaVariant:
+      (section.content as HeroContent).buttons?.[0]?.variant || "primary",
   });
 
   const [localStyle, setLocalStyle] = useState({
