@@ -32,7 +32,7 @@ export default function LandingPage() {
           <h1 className="mb-4 text-3xl font-bold sm:text-4xl md:text-5xl">
             Créateur de Landing Pages
           </h1>
-          <p className="mx-auto max-w-2xl text-lg text-gray-600 sm:text-xl">
+          <p className="mx-auto max-w-2xl text-lg text-muted-foreground sm:text-xl">
             Créez des landing pages professionnelles en quelques minutes
           </p>
         </div>
@@ -47,7 +47,7 @@ export default function LandingPage() {
                 <CardTitle>{card.title}</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="mb-4 text-gray-600">{card.description}</p>
+                <p className="mb-4 text-muted-foreground">{card.description}</p>
                 <Link href={card.href}>
                   <Button variant={card.buttonVariant} className="w-full">
                     {card.buttonText}

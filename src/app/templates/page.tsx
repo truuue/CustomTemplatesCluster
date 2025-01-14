@@ -64,7 +64,7 @@ export default function TemplatesPage() {
               <CardTitle>{template.name}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <p className="text-gray-600">{template.description}</p>
+              <p className="text-muted-foreground">{template.description}</p>
               <Link href={`/templates/editor/${template._id}`}>
                 <Button variant="outline" className="w-full">
                   Éditer
