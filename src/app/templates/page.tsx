@@ -1,5 +1,6 @@
 "use client";
 
+import BackgroundGrid from "@/components/ui/background-grid";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -47,6 +48,8 @@ export default function TemplatesPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
+      <BackgroundGrid />
+
       <div className="mb-8 flex items-center justify-between">
         <h1 className="text-3xl font-bold">Mes Templates</h1>
         <Link href="/templates/new">
@@ -56,7 +59,7 @@ export default function TemplatesPage() {
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {templates.map((template: any) => (
-          <Card key={template._id}>
+          <Card key={template._id} className="border border-primary/20">
             <CardHeader>
               <CardTitle>{template.name}</CardTitle>
             </CardHeader>
