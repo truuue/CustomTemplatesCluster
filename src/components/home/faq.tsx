@@ -23,7 +23,7 @@ export default function FAQ() {
                 >
                   <path
                     d="M0 1 Q25 2 50 1 T100 1"
-                    stroke="#29303e"
+                    stroke="hsl(var(--stroke))"
                     strokeWidth="2"
                     fill="none"
                   ></path>
