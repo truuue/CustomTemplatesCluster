@@ -1,36 +1,32 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { DeviceType } from "@/types/editor";
 import { Section, Template } from "@/types/template";
-import { Calendar, Loader2, Monitor, Smartphone, Tablet } from "lucide-react";
+import { Calendar, Loader2 } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
 import { TemplateRenderer } from "../templates/TemplateRenderer";
-import { Button } from "../ui/button";
-import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
+import { PreviewToolbar } from "./PreviewToolbar";
 
 interface LivePreviewProps {
   sections: Section[];
   onSectionClick?: (section: Section) => void;
+  device: DeviceType;
+  handleDeviceChange: (device: DeviceType) => void;
+  isLoading: boolean;
 }
 
-type DeviceType = "desktop" | "tablet" | "mobile";
-
-export function LivePreview({ sections, onSectionClick }: LivePreviewProps) {
-  const [device, setDevice] = useState<DeviceType>("desktop");
-  const [isLoading, setIsLoading] = useState(false);
-
+export function LivePreview({
+  sections,
+  onSectionClick,
+  device,
+  handleDeviceChange,
+  isLoading,
+}: LivePreviewProps) {
   const deviceStyles = {
     desktop: "w-full",
     tablet: "max-w-[768px]",
     mobile: "max-w-[375px]",
-  };
-
-  const handleDeviceChange = (newDevice: DeviceType) => {
-    setIsLoading(true);
-    setDevice(newDevice);
-    // Simuler un temps de chargement pour une meilleure UX
-    setTimeout(() => setIsLoading(false), 500);
   };
 
   const template: Template = {
@@ -49,54 +45,13 @@ export function LivePreview({ sections, onSectionClick }: LivePreviewProps) {
 
   return (
     <div className="flex h-full flex-col bg-foreground/10">
-      {/* Barre d'outils de prévisualisation */}
-      <div className="sticky top-0 z-10 bg-foreground/10 px-1">
+      {/* Barre d'outils de prévisualisation (desktop uniquement) */}
+      <div className="sticky top-0 z-10 hidden bg-foreground/10 px-1 lg:block">
         <div className="flex items-center justify-between rounded-b-xl bg-background p-2 sm:p-4">
-          <div className="flex items-center gap-1 sm:gap-2">
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  variant={device === "desktop" ? "default" : "ghost"}
-                  size="icon"
-                  className="h-8 w-8 sm:h-10 sm:w-10"
-                  onClick={() => handleDeviceChange("desktop")}
-                >
-                  <Monitor className="size-4 sm:size-5" />
-                  <span className="sr-only">Vue bureau</span>
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>Vue bureau</TooltipContent>
-            </Tooltip>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  variant={device === "tablet" ? "default" : "ghost"}
-                  size="icon"
-                  className="h-8 w-8 sm:h-10 sm:w-10"
-                  onClick={() => handleDeviceChange("tablet")}
-                >
-                  <Tablet className="size-4 sm:size-5" />
-                  <span className="sr-only">Vue tablette</span>
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>Vue tablette</TooltipContent>
-            </Tooltip>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  variant={device === "mobile" ? "default" : "ghost"}
-                  size="icon"
-                  className="h-8 w-8 sm:h-10 sm:w-10"
-                  onClick={() => handleDeviceChange("mobile")}
-                >
-                  <Smartphone className="size-4 sm:size-5" />
-                  <span className="sr-only">Vue mobile</span>
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>Vue mobile</TooltipContent>
-            </Tooltip>
-          </div>
-
+          <PreviewToolbar
+            device={device}
+            handleDeviceChange={handleDeviceChange}
+          />
           <Link
             href="/"
             className="mr-2 flex items-center gap-1 sm:mr-3 sm:gap-2"

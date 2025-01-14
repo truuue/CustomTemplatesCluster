@@ -17,13 +17,16 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { DeviceType } from "@/types/editor";
 import { Section, Template } from "@/types/template";
-import { Menu } from "lucide-react";
+import { Calendar, Menu } from "lucide-react";
 import dynamic from "next/dynamic";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { LivePreview } from "./LivePreview";
+import { PreviewToolbar } from "./PreviewToolbar";
 import { SectionEditor } from "./SectionEditor";
 
 interface TemplateEditorProps {
@@ -57,7 +60,15 @@ export function TemplateEditor({ initialTemplate }: TemplateEditorProps) {
   const [template, setTemplate] = useState<Template>(initialTemplate);
   const [activeSection, setActiveSection] = useState<Section | null>(null);
   const [isSaving, setIsSaving] = useState(false);
+  const [device, setDevice] = useState<DeviceType>("desktop");
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+
+  const handleDeviceChange = (newDevice: DeviceType) => {
+    setIsLoading(true);
+    setDevice(newDevice);
+    setTimeout(() => setIsLoading(false), 500);
+  };
 
   const handleAddSection = async (sectionType: string) => {
     setIsSaving(true);
@@ -173,30 +184,40 @@ export function TemplateEditor({ initialTemplate }: TemplateEditorProps) {
     <div className="relative h-screen">
       {/* Barre d'outils mobile */}
       <div className="fixed left-0 top-0 z-50 flex w-full items-center justify-between bg-background p-4 lg:hidden">
-        <Sheet>
-          <SheetTrigger asChild>
-            <Button variant="outline" size="icon">
-              <Menu className="size-4" />
-            </Button>
-          </SheetTrigger>
-          <SheetContent side="left" className="w-[85vw] max-w-[400px] p-0">
-            <SheetHeader className="border-b p-4">
-              <SheetTitle>Éditeur de template</SheetTitle>
-            </SheetHeader>
-            <div className="h-[calc(100vh-65px)] overflow-y-auto p-4">
-              <EditorPanel
-                template={template}
-                activeSection={activeSection}
-                isSaving={isSaving}
-                onAddSection={handleAddSection}
-                onSectionsReorder={handleSectionsReorder}
-                onSectionSelect={setActiveSection}
-                onSectionDelete={handleSectionDelete}
-                onSectionUpdate={handleSectionUpdate}
-              />
-            </div>
-          </SheetContent>
-        </Sheet>
+        <div className="flex items-center gap-2">
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="outline" size="icon">
+                <Menu className="size-4" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="left" className="w-[85vw] max-w-[400px] p-0">
+              <SheetHeader className="border-b p-4">
+                <SheetTitle>Éditeur de template</SheetTitle>
+              </SheetHeader>
+              <div className="h-[calc(100vh-65px)] overflow-y-auto p-4">
+                <EditorPanel
+                  template={template}
+                  activeSection={activeSection}
+                  isSaving={isSaving}
+                  onAddSection={handleAddSection}
+                  onSectionsReorder={handleSectionsReorder}
+                  onSectionSelect={setActiveSection}
+                  onSectionDelete={handleSectionDelete}
+                  onSectionUpdate={handleSectionUpdate}
+                />
+              </div>
+            </SheetContent>
+          </Sheet>
+          <PreviewToolbar
+            device={device}
+            handleDeviceChange={handleDeviceChange}
+          />
+        </div>
+        <Link href="/" className="flex items-center gap-1">
+          <Calendar className="size-5 text-primary" />
+          <span className="text-base font-semibold">Showcaser</span>
+        </Link>
       </div>
 
       {/* Panneau d'édition desktop */}
@@ -222,7 +243,12 @@ export function TemplateEditor({ initialTemplate }: TemplateEditorProps) {
             <Loading />
           </div>
         ) : (
-          <LivePreview sections={template.sections} />
+          <LivePreview
+            sections={template.sections}
+            device={device}
+            handleDeviceChange={handleDeviceChange}
+            isLoading={isLoading}
+          />
         )}
       </div>
     </div>
