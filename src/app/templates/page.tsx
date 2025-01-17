@@ -20,6 +20,7 @@ export default function TemplatesPage() {
   const [templates, setTemplates] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedTemplates, setSelectedTemplates] = useState<string[]>([]);
+  const [selectionMode, setSelectionMode] = useState(false);
   const { toast } = useToast();
 
   const fetchTemplates = async () => {
@@ -117,6 +118,13 @@ export default function TemplatesPage() {
     }
   };
 
+  const toggleSelectionMode = () => {
+    setSelectionMode(!selectionMode);
+    if (selectionMode) {
+      setSelectedTemplates([]);
+    }
+  };
+
   if (isLoading) {
     return (
       <div className="container mx-auto px-4 py-8">
@@ -144,6 +152,16 @@ export default function TemplatesPage() {
       <div className="mb-8 flex items-center justify-between">
         <h1 className="text-3xl font-bold">Mes Templates</h1>
         <div className="flex items-center gap-4">
+          <Button
+            variant={selectionMode ? "destructive" : "outline"}
+            size="sm"
+            className="flex items-center gap-2"
+            onClick={toggleSelectionMode}
+          >
+            {selectionMode
+              ? "Annuler la sélection"
+              : "Supprimer plusieurs templates"}
+          </Button>
           {selectedTemplates.length > 0 && (
             <Button
               variant="destructive"
@@ -151,7 +169,7 @@ export default function TemplatesPage() {
               className="flex items-center gap-2"
               onClick={handleDeleteSelected}
             >
-              <Trash2 className="h-4 w-4" />
+              <Trash2 className="size-4" />
               Supprimer ({selectedTemplates.length})
             </Button>
           )}
@@ -170,38 +188,45 @@ export default function TemplatesPage() {
               selectedTemplates.includes(template._id) && "border-primary"
             )}
           >
-            <div className="absolute left-4 top-4 z-10">
-              <Checkbox
-                checked={selectedTemplates.includes(template._id)}
-                onCheckedChange={() => handleSelectTemplate(template._id)}
-              />
-            </div>
+            {selectionMode && (
+              <div className="absolute left-4 top-4 z-10">
+                <Checkbox
+                  checked={selectedTemplates.includes(template._id)}
+                  onCheckedChange={() => handleSelectTemplate(template._id)}
+                />
+              </div>
+            )}
             <CardHeader>
               <CardTitle>{template.name}</CardTitle>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="absolute right-4 top-4 size-8 text-destructive opacity-0 transition-opacity hover:bg-destructive/10 group-hover:opacity-100"
-                    onClick={() => handleDelete(template._id)}
-                  >
-                    <Trash2 className="size-4" />
-                    <span className="sr-only">Supprimer le template</span>
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>Supprimer le template</TooltipContent>
-              </Tooltip>
             </CardHeader>
             <CardContent className="space-y-4">
               <p className="mb-4 text-muted-foreground">
                 {template.description}
               </p>
-              <Link href={`/templates/editor/${template._id}`}>
-                <Button variant="outline" className="w-full">
-                  Éditer
-                </Button>
-              </Link>
+              <div className="flex gap-2">
+                <Link
+                  href={`/templates/editor/${template._id}`}
+                  className="flex-1"
+                >
+                  <Button variant="outline" className="w-full">
+                    Éditer
+                  </Button>
+                </Link>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="text-destructive hover:bg-destructive/10"
+                      onClick={() => handleDelete(template._id)}
+                    >
+                      <Trash2 className="size-4" />
+                      <span className="sr-only">Supprimer le template</span>
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>Supprimer le template</TooltipContent>
+                </Tooltip>
+              </div>
             </CardContent>
           </Card>
         ))}
