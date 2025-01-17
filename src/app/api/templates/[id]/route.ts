@@ -84,13 +84,15 @@ export async function PUT(
 
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
+    const resolvedParams = await context.params;
     const db = await connectToDatabase();
-    const result = await db.collection("templates").deleteOne({
-      _id: new ObjectId(params.id),
-    });
+
+    const result = await db
+      .collection("templates")
+      .deleteOne({ _id: new ObjectId(resolvedParams.id) });
 
     if (result.deletedCount === 0) {
       return NextResponse.json(

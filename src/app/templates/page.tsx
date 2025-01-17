@@ -4,29 +4,68 @@ import BackgroundGrid from "@/components/ui/background-grid";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { useToast } from "@/hooks/use-toast";
+import { Trash2 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function TemplatesPage() {
   const [templates, setTemplates] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const { toast } = useToast();
+
+  const fetchTemplates = async () => {
+    try {
+      const response = await fetch("/api/templates");
+      if (!response.ok) throw new Error("Erreur lors du chargement");
+      const data = await response.json();
+      setTemplates(data);
+    } catch (error) {
+      console.error("Erreur:", error);
+      toast({
+        variant: "destructive",
+        title: "Erreur",
+        description: "Impossible de charger les templates",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchTemplates = async () => {
-      try {
-        const response = await fetch("/api/templates");
-        if (!response.ok) throw new Error("Erreur lors du chargement");
-        const data = await response.json();
-        setTemplates(data);
-      } catch (error) {
-        console.error("Erreur:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
     fetchTemplates();
   }, []);
+
+  const handleDelete = async (templateId: string) => {
+    if (!confirm("Êtes-vous sûr de vouloir supprimer ce template ?")) return;
+
+    try {
+      const response = await fetch(`/api/templates/${templateId}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) throw new Error("Erreur lors de la suppression");
+
+      toast({
+        title: "Succès",
+        description: "Template supprimé avec succès",
+      });
+
+      setTemplates(templates.filter((t: any) => t._id !== templateId));
+    } catch (error) {
+      console.error("Erreur:", error);
+      toast({
+        variant: "destructive",
+        title: "Erreur",
+        description: "Impossible de supprimer le template",
+      });
+    }
+  };
 
   if (isLoading) {
     return (
@@ -63,10 +102,24 @@ export default function TemplatesPage() {
         {templates.map((template: any) => (
           <Card
             key={template._id}
-            className="flex flex-col justify-between border border-primary/20 text-center"
+            className="group relative flex flex-col justify-between border border-primary/20 text-center"
           >
             <CardHeader>
               <CardTitle>{template.name}</CardTitle>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="absolute right-4 top-4 size-8 text-destructive opacity-0 transition-opacity hover:bg-destructive/10 group-hover:opacity-100"
+                    onClick={() => handleDelete(template._id)}
+                  >
+                    <Trash2 className="size-4" />
+                    <span className="sr-only">Supprimer le template</span>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>Supprimer le template</TooltipContent>
+              </Tooltip>
             </CardHeader>
             <CardContent className="space-y-4">
               <p className="mb-4 text-muted-foreground">
