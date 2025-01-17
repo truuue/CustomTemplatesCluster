@@ -154,7 +154,6 @@ export default function TemplatesPage() {
         <div className="flex items-center gap-4">
           <Button
             variant={selectionMode ? "destructive" : "outline"}
-            size="sm"
             className="flex items-center gap-2"
             onClick={toggleSelectionMode}
           >
@@ -165,7 +164,6 @@ export default function TemplatesPage() {
           {selectedTemplates.length > 0 && (
             <Button
               variant="destructive"
-              size="sm"
               className="flex items-center gap-2"
               onClick={handleDeleteSelected}
             >
