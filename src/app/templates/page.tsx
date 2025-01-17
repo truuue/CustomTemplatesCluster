@@ -3,6 +3,7 @@
 import BackgroundGrid from "@/components/ui/background-grid";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   Tooltip,
@@ -10,6 +11,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { useToast } from "@/hooks/use-toast";
+import { cn } from "@/lib/utils";
 import { Trash2 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -17,6 +19,7 @@ import { useEffect, useState } from "react";
 export default function TemplatesPage() {
   const [templates, setTemplates] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedTemplates, setSelectedTemplates] = useState<string[]>([]);
   const { toast } = useToast();
 
   const fetchTemplates = async () => {
@@ -67,6 +70,53 @@ export default function TemplatesPage() {
     }
   };
 
+  const handleSelectTemplate = (templateId: string) => {
+    setSelectedTemplates((prev) =>
+      prev.includes(templateId)
+        ? prev.filter((id) => id !== templateId)
+        : [...prev, templateId]
+    );
+  };
+
+  const handleDeleteSelected = async () => {
+    if (
+      !confirm(
+        `Êtes-vous sûr de vouloir supprimer ${selectedTemplates.length} templates ?`
+      )
+    )
+      return;
+
+    try {
+      const results = await Promise.all(
+        selectedTemplates.map((id) =>
+          fetch(`/api/templates/${id}`, {
+            method: "DELETE",
+          })
+        )
+      );
+
+      if (results.some((r) => !r.ok))
+        throw new Error("Erreur lors de la suppression");
+
+      toast({
+        title: "Succès",
+        description: `${selectedTemplates.length} templates supprimés avec succès`,
+      });
+
+      setTemplates(
+        templates.filter((t: any) => !selectedTemplates.includes(t._id))
+      );
+      setSelectedTemplates([]);
+    } catch (error) {
+      console.error("Erreur:", error);
+      toast({
+        variant: "destructive",
+        title: "Erreur",
+        description: "Impossible de supprimer les templates sélectionnés",
+      });
+    }
+  };
+
   if (isLoading) {
     return (
       <div className="container mx-auto px-4 py-8">
@@ -93,17 +143,39 @@ export default function TemplatesPage() {
 
       <div className="mb-8 flex items-center justify-between">
         <h1 className="text-3xl font-bold">Mes Templates</h1>
-        <Link href="/templates/new">
-          <Button>Nouveau Template</Button>
-        </Link>
+        <div className="flex items-center gap-4">
+          {selectedTemplates.length > 0 && (
+            <Button
+              variant="destructive"
+              size="sm"
+              className="flex items-center gap-2"
+              onClick={handleDeleteSelected}
+            >
+              <Trash2 className="h-4 w-4" />
+              Supprimer ({selectedTemplates.length})
+            </Button>
+          )}
+          <Link href="/templates/new">
+            <Button>Nouveau Template</Button>
+          </Link>
+        </div>
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {templates.map((template: any) => (
           <Card
             key={template._id}
-            className="group relative flex flex-col justify-between border border-primary/20 text-center"
+            className={cn(
+              "group relative flex flex-col justify-between border border-primary/20 text-center",
+              selectedTemplates.includes(template._id) && "border-primary"
+            )}
           >
+            <div className="absolute left-4 top-4 z-10">
+              <Checkbox
+                checked={selectedTemplates.includes(template._id)}
+                onCheckedChange={() => handleSelectTemplate(template._id)}
+              />
+            </div>
             <CardHeader>
               <CardTitle>{template.name}</CardTitle>
               <Tooltip>
