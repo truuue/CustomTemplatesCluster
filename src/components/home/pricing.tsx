@@ -42,7 +42,10 @@ const laterItem = {
 
 export default function Pricing() {
   return (
-    <section className="relative w-full overflow-hidden bg-transparent py-24">
+    <section
+      id="pricing"
+      className="relative w-full overflow-hidden bg-transparent py-24"
+    >
       <div className="container flex flex-col items-center justify-center lg:flex-row-reverse">
         <div className="mb-16 ml-0 text-center lg:mb-0 lg:ml-16 lg:text-right">
           <h2 className="max-w-2xl text-4xl font-bold tracking-tight lg:text-8xl">

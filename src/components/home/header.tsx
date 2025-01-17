@@ -4,12 +4,20 @@ import { MobileMenu } from "@/components/mobile-menu";
 import { ModeToggle } from "@/components/mode-toggle";
 import { Button } from "@/components/ui/button";
 import { useScroll } from "@/hooks/useScroll";
-import { cn } from "@/lib/utils";
+import { cn, scrollToSection } from "@/lib/utils";
 import { Calendar } from "lucide-react";
 import Link from "next/link";
 
 export default function Header() {
   const scrolled = useScroll(50);
+
+  const handleNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    sectionId: string
+  ) => {
+    e.preventDefault();
+    scrollToSection(sectionId);
+  };
 
   return (
     <header
@@ -28,24 +36,27 @@ export default function Header() {
           </Link>
 
           <nav className="hidden items-center gap-6 md:flex">
-            <Link
+            <a
               href="#features"
+              onClick={(e) => handleNavClick(e, "features")}
               className="text-sm text-muted-foreground transition-colors hover:text-primary"
             >
               Fonctionnalités
-            </Link>
-            <Link
+            </a>
+            <a
               href="#pricing"
+              onClick={(e) => handleNavClick(e, "pricing")}
               className="text-sm text-muted-foreground transition-colors hover:text-primary"
             >
               Tarifs
-            </Link>
-            <Link
+            </a>
+            <a
               href="#testimonials"
+              onClick={(e) => handleNavClick(e, "testimonials")}
               className="text-sm text-muted-foreground transition-colors hover:text-primary"
             >
               Témoignages
-            </Link>
+            </a>
           </nav>
         </div>
 
