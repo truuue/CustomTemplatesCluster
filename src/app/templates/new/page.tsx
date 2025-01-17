@@ -23,7 +23,12 @@ export default function NewTemplate() {
 
   const [pending, setPending] = useState(false);
 
+  const isFormValid =
+    templateInfo.name.trim() !== "" && templateInfo.description.trim() !== "";
+
   const handleCreate = async () => {
+    if (!isFormValid) return;
+
     try {
       setPending(true);
 
@@ -63,7 +68,7 @@ export default function NewTemplate() {
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="space-y-2">
-              <Label htmlFor="template-name">Nom du template</Label>
+              <Label htmlFor="template-name">Nom du template *</Label>
               <Input
                 id="template-name"
                 type="text"
@@ -72,11 +77,12 @@ export default function NewTemplate() {
                   setTemplateInfo((prev) => ({ ...prev, name: e.target.value }))
                 }
                 placeholder="Mon super template"
+                required
                 suppressHydrationWarning
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="template-description">Description</Label>
+              <Label htmlFor="template-description">Description *</Label>
               <Input
                 id="template-description"
                 type="text"
@@ -88,6 +94,7 @@ export default function NewTemplate() {
                   }))
                 }
                 placeholder="Une brève description de votre template"
+                required
                 suppressHydrationWarning
               />
             </div>
@@ -96,6 +103,7 @@ export default function NewTemplate() {
               <Button
                 onClick={handleCreate}
                 className="w-full"
+                disabled={!isFormValid}
                 suppressHydrationWarning
               >
                 Créer et commencer l'édition
