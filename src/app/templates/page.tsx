@@ -150,7 +150,16 @@ export default function TemplatesPage() {
       <BackgroundGrid />
 
       <div className="mb-8 flex items-center justify-between">
-        <h1 className="text-3xl font-bold">Mes Templates</h1>
+        <div className="flex items-center gap-4">
+          <Button
+            variant="ghost"
+            onClick={() => window.history.back()}
+            className="mr-4"
+          >
+            ← Retour
+          </Button>
+          <h1 className="text-3xl font-bold">Mes Templates</h1>
+        </div>
         <div className="flex items-center gap-4">
           <Button
             variant={selectionMode ? "destructive" : "outline"}
