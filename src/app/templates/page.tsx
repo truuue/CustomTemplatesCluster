@@ -31,6 +31,8 @@ export default function TemplatesPage() {
   if (isLoading) {
     return (
       <div className="container mx-auto px-4 py-8">
+        <BackgroundGrid />
+
         <div className="mb-8 flex items-center justify-between">
           <Skeleton className="h-10 w-48" />
           <Skeleton className="h-10 w-32" />
@@ -59,12 +61,17 @@ export default function TemplatesPage() {
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {templates.map((template: any) => (
-          <Card key={template._id} className="border border-primary/20">
+          <Card
+            key={template._id}
+            className="flex flex-col justify-between border border-primary/20 text-center"
+          >
             <CardHeader>
               <CardTitle>{template.name}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <p className="text-muted-foreground">{template.description}</p>
+              <p className="mb-4 text-muted-foreground">
+                {template.description}
+              </p>
               <Link href={`/templates/editor/${template._id}`}>
                 <Button variant="outline" className="w-full">
                   Éditer
