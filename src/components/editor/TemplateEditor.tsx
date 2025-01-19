@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/sheet";
 import { DeviceType } from "@/types/editor";
 import { Section, Template } from "@/types/template";
-import { Calendar, Menu } from "lucide-react";
+import { Brush, Menu } from "lucide-react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -207,7 +207,7 @@ export function TemplateEditor({ initialTemplate }: TemplateEditorProps) {
           />
         </div>
         <Link href="/" className="flex items-center gap-1">
-          <Calendar className="size-5 text-primary" />
+          <Brush className="size-5 text-primary" />
           <span className="text-base font-semibold">Showcaser</span>
         </Link>
       </div>

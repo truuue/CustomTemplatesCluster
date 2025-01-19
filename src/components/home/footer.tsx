@@ -1,4 +1,4 @@
-import { Calendar } from "lucide-react";
+import { Brush } from "lucide-react";
 import Link from "next/link";
 
 export default function Footer() {
@@ -9,7 +9,7 @@ export default function Footer() {
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-2 sm:gap-12 lg:grid-cols-5">
           <div className="col-span-2 lg:col-span-2">
             <Link href="/" className="flex items-center gap-2">
-              <Calendar className="size-6 text-primary" />
+              <Brush className="size-6 text-primary" />
               <span className="text-xl font-bold">Showcaser</span>
             </Link>
             <p className="mt-4 text-sm text-muted-foreground">

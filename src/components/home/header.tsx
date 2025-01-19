@@ -5,7 +5,7 @@ import { ModeToggle } from "@/components/mode-toggle";
 import { Button } from "@/components/ui/button";
 import { useScroll } from "@/hooks/useScroll";
 import { cn, scrollToSection } from "@/lib/utils";
-import { Calendar } from "lucide-react";
+import { Brush } from "lucide-react";
 import Link from "next/link";
 
 export default function Header() {
@@ -31,7 +31,7 @@ export default function Header() {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
         <div className="flex items-center gap-8">
           <Link href="/" className="flex items-center gap-2">
-            <Calendar className="size-6 text-primary" />
+            <Brush className="size-6 text-primary" />
             <span className="text-lg font-semibold">Showcaser</span>
           </Link>
 

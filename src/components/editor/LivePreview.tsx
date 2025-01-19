@@ -3,7 +3,7 @@
 import { cn } from "@/lib/utils";
 import { DeviceType } from "@/types/editor";
 import { Section, Template } from "@/types/template";
-import { Calendar, Loader2 } from "lucide-react";
+import { Brush, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { TemplateRenderer } from "../templates/TemplateRenderer";
 import { PreviewToolbar } from "./PreviewToolbar";
@@ -56,7 +56,7 @@ export function LivePreview({
             href="/"
             className="mr-2 flex items-center gap-1 sm:mr-3 sm:gap-2"
           >
-            <Calendar className="size-5 text-primary sm:size-6" />
+            <Brush className="size-5 text-primary sm:size-6" />
             <span className="text-base font-semibold sm:text-lg">
               Showcaser
             </span>
