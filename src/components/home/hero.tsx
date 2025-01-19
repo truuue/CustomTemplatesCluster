@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export default function Hero() {
   return (
-    <section className="relative -mb-24 flex min-h-[90vh] items-center justify-center overflow-hidden bg-transparent px-4">
+    <section className="relative -mb-24 flex min-h-[calc(100dvh-64px)] items-center justify-center overflow-hidden bg-transparent px-4 lg:min-h-screen">
       {/* Cercle lumineux principal derrière le texte */}
       <div className="absolute left-1/2 top-1/2 h-[800px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-br from-background/50 via-background/30 to-transparent blur-3xl" />
 

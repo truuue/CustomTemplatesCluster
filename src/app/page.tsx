@@ -15,11 +15,11 @@ export default function Home() {
   return (
     <>
       <ScrollProgress />
-      <div className="flex min-h-screen flex-col">
+      <div className="flex min-h-[100dvh] flex-col">
         {/* Header */}
         <Header />
 
-        <main className="relative flex-1">
+        <main className="relative flex-1 pt-[64px] lg:pt-0">
           <BackgroundGrid />
 
           <div className="z-10 space-y-12">
