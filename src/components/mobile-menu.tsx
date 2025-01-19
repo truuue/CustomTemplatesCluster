@@ -1,66 +1,63 @@
 "use client";
 
-import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { Menu } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
 
 export function MobileMenu() {
-  const [isOpen, setIsOpen] = useState(false);
-
   return (
     <div className="block md:hidden">
-      <button
-        className="mr-4 flex flex-col space-y-1.5 p-2"
-        onClick={() => setIsOpen(!isOpen)}
-        aria-label="Menu"
-      >
-        <span
-          className={cn(
-            "h-0.5 w-6 bg-foreground transition-transform duration-200",
-            isOpen && "translate-y-2 rotate-45"
-          )}
-        />
-        <span
-          className={cn(
-            "h-0.5 w-6 bg-foreground transition-opacity duration-200",
-            isOpen && "opacity-0"
-          )}
-        />
-        <span
-          className={cn(
-            "h-0.5 w-6 bg-foreground transition-transform duration-200",
-            isOpen && "-translate-y-2 -rotate-45"
-          )}
-        />
-      </button>
-
-      {isOpen && (
-        <div className="absolute left-0 top-16 w-full bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/90">
-          <nav className="flex flex-col space-y-4">
-            <Link
-              href="#features"
-              className="text-sm font-medium hover:text-primary"
-              onClick={() => setIsOpen(false)}
-            >
-              Fonctionnalités
-            </Link>
-            <Link
-              href="#pricing"
-              className="text-sm font-medium hover:text-primary"
-              onClick={() => setIsOpen(false)}
-            >
-              Prix
-            </Link>
-            <Link
-              href="#testimonials"
-              className="text-sm font-medium hover:text-primary"
-              onClick={() => setIsOpen(false)}
-            >
-              Témoignages
-            </Link>
-          </nav>
-        </div>
-      )}
+      <Sheet>
+        <SheetTrigger asChild>
+          <Button variant="outline" size="icon">
+            <Menu className="size-4" />
+          </Button>
+        </SheetTrigger>
+        <SheetContent side="right" className="w-[85vw] max-w-[400px] p-0">
+          <div className="flex h-full flex-col">
+            <SheetHeader className="border-b p-4">
+              <SheetTitle>Menu</SheetTitle>
+            </SheetHeader>
+            <div className="flex flex-1 flex-col justify-between overflow-y-auto">
+              <nav className="flex flex-col items-center space-y-6 px-4 py-4">
+                <Link
+                  href="#features"
+                  className="text-base font-medium hover:text-primary"
+                >
+                  Fonctionnalités
+                </Link>
+                <Link
+                  href="#pricing"
+                  className="text-base font-medium hover:text-primary"
+                >
+                  Tarifs
+                </Link>
+                <Link
+                  href="#testimonials"
+                  className="text-base font-medium hover:text-primary"
+                >
+                  Témoignages
+                </Link>
+              </nav>
+              <div className="mt-auto border-t px-4 py-4">
+                <div className="flex flex-col gap-2">
+                  <Button variant="ghost" className="w-full">
+                    Se connecter
+                  </Button>
+                  <Button className="w-full">S'inscrire</Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </SheetContent>
+      </Sheet>
     </div>
   );
 }
