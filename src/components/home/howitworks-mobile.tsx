@@ -3,7 +3,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
-export default function HowItWorks() {
+export default function HowItWorksMobile() {
   const containerRef = useRef(null);
   const isInView = useInView(containerRef, { once: true, amount: 0.5 });
 
@@ -12,19 +12,19 @@ export default function HowItWorks() {
     show: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.5,
-        delayChildren: 0.3,
+        staggerChildren: 0.3,
+        delayChildren: 0.2,
       },
     },
   };
 
   const item = {
-    hidden: { opacity: 0, y: 50 },
+    hidden: { opacity: 0, y: 30 },
     show: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.8,
+        duration: 0.6,
         ease: "easeOut",
       },
     },
@@ -54,17 +54,12 @@ export default function HowItWorks() {
   return (
     <section
       ref={containerRef}
-      className="relative hidden min-h-[50vh] w-full bg-transparent py-24 lg:block"
+      className="relative w-full bg-transparent py-16 lg:hidden"
     >
-      <div className="container relative flex flex-row items-start space-x-16">
+      <div className="container px-4">
         <motion.div
-          className="mb-16 text-left md:mb-0"
-          style={{
-            position: "sticky",
-            top: "35%",
-            transform: "translateY(-50%)",
-          }}
-          initial={{ opacity: 0, y: 100 }}
+          className="mb-12 text-center"
+          initial={{ opacity: 0, y: 50 }}
           whileInView={{
             opacity: 1,
             y: 0,
@@ -75,10 +70,10 @@ export default function HowItWorks() {
           }}
           viewport={{ once: true, amount: 0.5 }}
         >
-          <h2 className="max-w-2xl text-pretty text-3xl font-bold tracking-tight md:text-8xl">
+          <h2 className="text-4xl font-bold tracking-tight sm:text-5xl">
             Comment ça marche ?
           </h2>
-          <p className="mt-4 text-pretty text-lg text-muted-foreground xl:text-nowrap">
+          <p className="mt-4 text-lg text-muted-foreground">
             Créez votre landing page en 3 étapes simples
           </p>
         </motion.div>
@@ -87,21 +82,23 @@ export default function HowItWorks() {
           variants={container}
           initial="hidden"
           animate={isInView ? "show" : "hidden"}
-          className="relative flex flex-col items-center space-y-16"
+          className="space-y-6"
         >
           {steps.map((step) => (
             <motion.div
               key={step.number}
               variants={item}
-              className="group relative w-[500px]"
+              className="group relative"
             >
               <div className="transition-all hover:-translate-y-1">
-                <div className="absolute -left-4 -top-4 flex size-12 rotate-3 items-center justify-center rounded-xl bg-primary text-2xl font-bold text-primary-foreground transition-transform group-hover:scale-110">
-                  <span className="-rotate-3">{step.number}</span>
-                </div>
-                <div className="h-full rounded-2xl border border-primary/20 bg-card p-8 shadow-sm transition-shadow hover:shadow-lg">
-                  <h3 className="mb-4 text-xl font-bold">{step.title}</h3>
-                  <p className="text-muted-foreground">{step.description}</p>
+                <div className="relative rounded-2xl border border-primary/20 bg-card p-6 shadow-sm transition-shadow hover:shadow-lg">
+                  <div className="absolute -left-2 -top-2 flex size-10 rotate-3 items-center justify-center rounded-xl bg-primary text-xl font-bold text-primary-foreground transition-transform group-hover:scale-110 sm:size-12 sm:text-2xl">
+                    <span className="-rotate-3">{step.number}</span>
+                  </div>
+                  <div className="ml-8 sm:ml-10">
+                    <h3 className="mb-2 text-xl font-bold">{step.title}</h3>
+                    <p className="text-muted-foreground">{step.description}</p>
+                  </div>
                 </div>
               </div>
             </motion.div>

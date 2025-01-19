@@ -25,7 +25,7 @@ const features = [
   },
 ];
 
-export default function Features() {
+export default function FeaturesMobile() {
   const containerRef = useRef(null);
   const isInView = useInView(containerRef, { once: true, amount: 0.5 });
 
@@ -34,19 +34,19 @@ export default function Features() {
     show: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.5,
-        delayChildren: 0.3,
+        staggerChildren: 0.3,
+        delayChildren: 0.2,
       },
     },
   };
 
   const item = {
-    hidden: { opacity: 0, y: 50 },
+    hidden: { opacity: 0, y: 30 },
     show: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.8,
+        duration: 0.6,
         ease: "easeOut",
       },
     },
@@ -54,19 +54,14 @@ export default function Features() {
 
   return (
     <section
-      id="features"
+      id="features-mobile"
       ref={containerRef}
-      className="relative hidden min-h-[50vh] w-full bg-transparent py-24 lg:block"
+      className="relative min-h-[40vh] w-full bg-transparent py-16 lg:hidden"
     >
-      <div className="container relative flex flex-row-reverse items-start space-x-16">
+      <div className="container px-4">
         <motion.div
-          className="mb-16 text-right md:mb-0"
-          style={{
-            position: "sticky",
-            top: "35%",
-            transform: "translateY(-50%)",
-          }}
-          initial={{ opacity: 0, y: 100 }}
+          className="mb-12 text-center"
+          initial={{ opacity: 0, y: 50 }}
           whileInView={{
             opacity: 1,
             y: 0,
@@ -77,10 +72,10 @@ export default function Features() {
           }}
           viewport={{ once: true, amount: 0.5 }}
         >
-          <h2 className="max-w-2xl text-pretty text-3xl font-bold tracking-tight md:text-8xl">
+          <h2 className="text-4xl font-bold tracking-tight sm:text-5xl">
             Tout ce dont vous avez besoin
           </h2>
-          <p className="mt-4 text-pretty text-lg text-muted-foreground xl:text-nowrap">
+          <p className="mt-4 text-lg text-muted-foreground">
             Des outils de création puissants
           </p>
         </motion.div>
@@ -89,20 +84,16 @@ export default function Features() {
           variants={container}
           initial="hidden"
           animate={isInView ? "show" : "hidden"}
-          className="relative flex flex-col items-center space-y-16"
+          className="grid gap-6 sm:grid-cols-2"
         >
           {features.map((feature, index) => (
-            <motion.div
-              key={index}
-              variants={item}
-              className="group relative w-[500px]"
-            >
+            <motion.div key={index} variants={item} className="group relative">
               <div className="transition-all hover:-translate-y-1">
-                <div className="h-full rounded-2xl border border-primary/20 bg-card p-8 shadow-sm transition-shadow hover:shadow-lg">
-                  <div className="mb-5 inline-flex rounded-xl bg-primary/10 p-3">
+                <div className="h-full rounded-2xl border border-primary/20 bg-card p-6 shadow-sm transition-shadow hover:shadow-lg">
+                  <div className="mb-4 inline-flex rounded-xl bg-primary/10 p-3">
                     {feature.icon}
                   </div>
-                  <h3 className="mb-3 text-xl font-bold">{feature.title}</h3>
+                  <h3 className="mb-2 text-xl font-bold">{feature.title}</h3>
                   <p className="text-muted-foreground">{feature.description}</p>
                 </div>
               </div>

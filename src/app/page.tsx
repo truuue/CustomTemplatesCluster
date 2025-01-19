@@ -1,9 +1,11 @@
 import FAQ from "@/components/home/faq";
 import Features from "@/components/home/features";
+import FeaturesMobile from "@/components/home/features-mobile";
 import Footer from "@/components/home/footer";
 import Header from "@/components/home/header";
 import Hero from "@/components/home/hero";
 import HowItWorks from "@/components/home/howitworks";
+import HowItWorksMobile from "@/components/home/howitworks-mobile";
 import Pricing from "@/components/home/pricing";
 import Testimonials from "@/components/home/testimonials";
 import BackgroundGrid from "@/components/ui/background-grid";
@@ -26,9 +28,11 @@ export default function Home() {
 
             {/* Features Section avec animation */}
             <Features />
+            <FeaturesMobile />
 
             {/* Comment ça marche Section */}
             <HowItWorks />
+            <HowItWorksMobile />
 
             {/* Pricing Section avec animation */}
             <Pricing />
