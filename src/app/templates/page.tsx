@@ -161,15 +161,17 @@ export default function TemplatesPage() {
           <h1 className="text-3xl font-bold">Mes Templates</h1>
         </div>
         <div className="flex items-center gap-4">
-          <Button
-            variant={selectionMode ? "destructive" : "outline"}
-            className="flex items-center gap-2"
-            onClick={toggleSelectionMode}
-          >
-            {selectionMode
-              ? "Annuler la sélection"
-              : "Supprimer plusieurs templates"}
-          </Button>
+          {templates.length > 0 && (
+            <Button
+              variant={selectionMode ? "destructive" : "outline"}
+              className="flex items-center gap-2"
+              onClick={toggleSelectionMode}
+            >
+              {selectionMode
+                ? "Annuler la sélection"
+                : "Supprimer plusieurs templates"}
+            </Button>
+          )}
           {selectedTemplates.length > 0 && (
             <Button
               variant="destructive"
