@@ -34,11 +34,13 @@ export default function Header() {
       return <UserMenu />;
     }
 
-    return (
-      <Link href="/login">
-        <Button>Connexion</Button>
-      </Link>
-    );
+    if (status === "unauthenticated") {
+      return (
+        <Link href="/login">
+          <Button>Connexion</Button>
+        </Link>
+      );
+    }
   };
 
   return (
