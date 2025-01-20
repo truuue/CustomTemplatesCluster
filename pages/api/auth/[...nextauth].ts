@@ -61,9 +61,9 @@ export const authOptions: NextAuthOptions = {
           await prisma.account.create({
             data: {
               userId: existingUser.id,
-              type: account?.type,
-              provider: account?.provider,
-              providerAccountId: account?.providerAccountId,
+              type: account?.type || "",
+              provider: account?.provider || "",
+              providerAccountId: account?.providerAccountId || "",
               access_token: account?.access_token,
               token_type: account?.token_type,
               scope: account?.scope,
