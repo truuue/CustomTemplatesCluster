@@ -1,4 +1,5 @@
 import { connectToDatabase } from "@/config/database";
+import { templateSchema } from "@/lib/validations/template";
 import { Template } from "@/types/template";
 import { getServerSession } from "next-auth/next";
 import { NextResponse } from "next/server";
@@ -35,25 +36,51 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const session = await getServerSession(authOptions);
-
     if (!session?.user?.id) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
     const data = await request.json();
-    const db = await connectToDatabase();
+    console.log("Données reçues:", data); // Pour le débogage
+
+    // Validation du template
+    const validationResult = templateSchema.safeParse(data);
+    if (!validationResult.success) {
+      return NextResponse.json(
+        {
+          error: "Données invalides",
+          details: validationResult.error.errors.map((err) => ({
+            path: err.path.join("."),
+            message: err.message,
+          })),
+        },
+        { status: 400 }
+      );
+    }
 
     const template = {
-      ...data,
+      ...validationResult.data,
       userId: session.user.id,
       createdAt: new Date(),
       updatedAt: new Date(),
     };
 
+    const db = await connectToDatabase();
     const result = await db.collection("templates").insertOne(template);
+
     return NextResponse.json({ _id: result.insertedId, ...template });
   } catch (error) {
-    console.error("Erreur API:", error);
-    return NextResponse.json({ error: "Erreur serveur" }, { status: 500 });
+    console.error(error);
+    return NextResponse.json(
+      {
+        error:
+          process.env.NODE_ENV === "production"
+            ? "Une erreur est survenue"
+            : error instanceof Error
+              ? error.message
+              : "Une erreur est survenue",
+      },
+      { status: 500 }
+    );
   }
 }

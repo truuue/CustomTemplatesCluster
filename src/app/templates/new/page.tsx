@@ -19,6 +19,7 @@ export default function NewTemplate() {
   const [templateInfo, setTemplateInfo] = useState({
     name: "",
     description: "",
+    category: "",
   });
 
   const [pending, setPending] = useState(false);
