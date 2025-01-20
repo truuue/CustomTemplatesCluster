@@ -36,6 +36,7 @@
     "dotenv": "^16.4.5",
     "embla-carousel-react": "^8.5.2",
     "framer-motion": "^11.11.10",
+    "js-cookie": "^3.0.5",
     "lucide-react": "^0.453.0",
     "mongodb": "^6.10.0",
     "motion": "^11.15.0",
@@ -54,6 +55,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@types/js-cookie": "^3.0.6",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
