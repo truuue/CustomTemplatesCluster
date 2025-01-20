@@ -25,7 +25,7 @@ export function UserMenu() {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="flex items-center gap-2 rounded-full outline-none ring-primary transition-colors hover:bg-accent focus:ring-2">
+      <DropdownMenuTrigger className="flex items-center gap-2 rounded-md border border-input bg-background px-2 py-[0.15rem] text-foreground outline-none ring-primary transition-colors hover:bg-foreground hover:text-background focus:ring-2">
         <span className="text-sm font-medium">{session.user.name}</span>
         <Avatar className="size-8">
           <AvatarImage
