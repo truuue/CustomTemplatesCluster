@@ -12,7 +12,7 @@ import Link from "next/link";
 
 export default function Header() {
   const scrolled = useScroll(50);
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
   const handleNavClick = (
     e: React.MouseEvent<HTMLAnchorElement>,
@@ -20,6 +20,25 @@ export default function Header() {
   ) => {
     e.preventDefault();
     scrollToSection(sectionId);
+  };
+
+  // Fonction pour rendre le bouton d'authentification
+  const renderAuthButton = () => {
+    if (status === "loading") {
+      return (
+        <div className="h-9 w-[100px] animate-pulse rounded-md bg-muted" />
+      );
+    }
+
+    if (session?.user) {
+      return <UserMenu />;
+    }
+
+    return (
+      <Link href="/login">
+        <Button>Connexion</Button>
+      </Link>
+    );
   };
 
   return (
@@ -66,13 +85,7 @@ export default function Header() {
         <div className="flex items-center gap-4">
           <ModeToggle />
           <div className="hidden items-center gap-4 md:flex">
-            {session?.user ? (
-              <UserMenu />
-            ) : (
-              <Link href="/login">
-                <Button>Connexion</Button>
-              </Link>
-            )}
+            {renderAuthButton()}
           </div>
           <MobileMenu />
         </div>
