@@ -1,5 +1,6 @@
 "use client";
 
+import { UserMenu } from "@/components/header/UserMenu";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -9,9 +10,12 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 
 export function MobileMenu() {
+  const { data: session } = useSession();
+
   return (
     <div className="block md:hidden">
       <Sheet>
@@ -47,12 +51,19 @@ export function MobileMenu() {
                 </Link>
               </nav>
               <div className="mt-auto border-t px-4 py-4">
-                <div className="flex flex-col gap-2">
-                  <Button variant="ghost" className="w-full">
-                    Se connecter
-                  </Button>
-                  <Button className="w-full">S'inscrire</Button>
-                </div>
+                {session?.user ? (
+                  <div className="flex justify-center">
+                    <UserMenu />
+                  </div>
+                ) : (
+                  <div className="flex flex-col gap-2">
+                    <Link href="/login" className="w-full">
+                      <Button variant="ghost" className="w-full">
+                        Se connecter /
+                      </Button>
+                    </Link>
+                  </div>
+                )}
               </div>
             </div>
           </div>
