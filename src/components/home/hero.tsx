@@ -41,7 +41,7 @@ export default function Hero() {
           </p>
 
           <div className="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <Link href="/landing-page">
+            <Link href="/templates/new">
               <Button
                 size="lg"
                 className="h-12 min-w-[200px] bg-primary text-base hover:bg-primary/90"
