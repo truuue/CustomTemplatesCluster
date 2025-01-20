@@ -1,15 +1,21 @@
 "use client";
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import BackgroundGrid from "@/components/ui/background-grid";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Skeleton } from "@/components/ui/skeleton";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { Trash2 } from "lucide-react";
@@ -21,6 +27,8 @@ export default function TemplatesPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [selectedTemplates, setSelectedTemplates] = useState<string[]>([]);
   const [selectionMode, setSelectionMode] = useState(false);
+  const [templateToDelete, setTemplateToDelete] = useState<string | null>(null);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const { toast } = useToast();
 
   const fetchTemplates = async () => {
@@ -45,11 +53,11 @@ export default function TemplatesPage() {
     fetchTemplates();
   }, []);
 
-  const handleDelete = async (templateId: string) => {
-    if (!confirm("Êtes-vous sûr de vouloir supprimer ce template ?")) return;
+  const handleDeleteConfirm = async () => {
+    if (!templateToDelete) return;
 
     try {
-      const response = await fetch(`/api/templates/${templateId}`, {
+      const response = await fetch(`/api/templates/${templateToDelete}`, {
         method: "DELETE",
       });
 
@@ -60,7 +68,7 @@ export default function TemplatesPage() {
         description: "Template supprimé avec succès",
       });
 
-      setTemplates(templates.filter((t: any) => t._id !== templateId));
+      setTemplates(templates.filter((t: any) => t._id !== templateToDelete));
     } catch (error) {
       console.error("Erreur:", error);
       toast({
@@ -68,6 +76,8 @@ export default function TemplatesPage() {
         title: "Erreur",
         description: "Impossible de supprimer le template",
       });
+    } finally {
+      setTemplateToDelete(null);
     }
   };
 
@@ -79,14 +89,7 @@ export default function TemplatesPage() {
     );
   };
 
-  const handleDeleteSelected = async () => {
-    if (
-      !confirm(
-        `Êtes-vous sûr de vouloir supprimer ${selectedTemplates.length} templates ?`
-      )
-    )
-      return;
-
+  const handleMultipleDeleteConfirm = async () => {
     try {
       const results = await Promise.all(
         selectedTemplates.map((id) =>
@@ -115,6 +118,8 @@ export default function TemplatesPage() {
         title: "Erreur",
         description: "Impossible de supprimer les templates sélectionnés",
       });
+    } finally {
+      setIsDeleteDialogOpen(false);
     }
   };
 
@@ -173,14 +178,38 @@ export default function TemplatesPage() {
             </Button>
           )}
           {selectedTemplates.length > 0 && (
-            <Button
-              variant="destructive"
-              className="flex items-center gap-2"
-              onClick={handleDeleteSelected}
+            <AlertDialog
+              open={isDeleteDialogOpen}
+              onOpenChange={setIsDeleteDialogOpen}
             >
-              <Trash2 className="size-4" />
-              Supprimer ({selectedTemplates.length})
-            </Button>
+              <AlertDialogTrigger asChild>
+                <Button
+                  variant="destructive"
+                  className="flex items-center gap-2"
+                  onClick={() => setIsDeleteDialogOpen(true)}
+                >
+                  <Trash2 className="size-4" />
+                  Supprimer ({selectedTemplates.length})
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>
+                    Êtes-vous absolument sûr ?
+                  </AlertDialogTitle>
+                  <AlertDialogDescription>
+                    Cette action est irréversible. {selectedTemplates.length}{" "}
+                    templates seront définitivement supprimés.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Annuler</AlertDialogCancel>
+                  <AlertDialogAction onClick={handleMultipleDeleteConfirm}>
+                    Supprimer
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           )}
           <Link href="/templates/new">
             <Button>Nouveau Template</Button>
@@ -221,20 +250,40 @@ export default function TemplatesPage() {
                     Éditer
                   </Button>
                 </Link>
-                <Tooltip>
-                  <TooltipTrigger asChild>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
                     <Button
                       variant="ghost"
                       size="icon"
                       className="text-destructive hover:bg-destructive/10"
-                      onClick={() => handleDelete(template._id)}
+                      onClick={() => setTemplateToDelete(template._id)}
                     >
                       <Trash2 className="size-4" />
                       <span className="sr-only">Supprimer le template</span>
                     </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>Supprimer le template</TooltipContent>
-                </Tooltip>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>
+                        Êtes-vous absolument sûr ?
+                      </AlertDialogTitle>
+                      <AlertDialogDescription>
+                        Cette action est irréversible. Le template sera
+                        définitivement supprimé.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel
+                        onClick={() => setTemplateToDelete(null)}
+                      >
+                        Annuler
+                      </AlertDialogCancel>
+                      <AlertDialogAction onClick={handleDeleteConfirm}>
+                        Supprimer
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
               </div>
             </CardContent>
           </Card>
