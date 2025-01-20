@@ -6,10 +6,12 @@ import { Button } from "@/components/ui/button";
 import { useScroll } from "@/hooks/useScroll";
 import { cn, scrollToSection } from "@/lib/utils";
 import { Brush } from "lucide-react";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 
 export default function Header() {
   const scrolled = useScroll(50);
+  const { data: session } = useSession();
 
   const handleNavClick = (
     e: React.MouseEvent<HTMLAnchorElement>,
@@ -63,10 +65,15 @@ export default function Header() {
         <div className="flex items-center gap-4">
           <ModeToggle />
           <div className="hidden items-center gap-4 md:flex">
-            <Button variant="ghost" size="sm">
-              Se connecter
-            </Button>
-            <Button size="sm">S'inscrire</Button>
+            {session ? (
+              <Button variant="ghost" size="sm" asChild>
+                <Link href="/logout">Déconnexion</Link>
+              </Button>
+            ) : (
+              <Button variant="ghost" size="sm" asChild>
+                <Link href="/login">Se connecter / S'inscrire</Link>
+              </Button>
+            )}
           </div>
           <MobileMenu />
         </div>
