@@ -1,15 +1,24 @@
 import { connectToDatabase } from "@/config/database";
 import { ObjectId } from "mongodb";
+import { getServerSession } from "next-auth/next";
 import { NextResponse } from "next/server";
+import { authOptions } from "../../../../../pages/api/auth/[...nextauth]";
 
 export async function GET(
   request: Request,
   { params }: { params: { id: string } }
 ) {
   try {
+    const session = await getServerSession(authOptions);
+
+    if (!session?.user?.id) {
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+    }
+
     const db = await connectToDatabase();
     const template = await db.collection("templates").findOne({
       _id: new ObjectId(params.id),
+      userId: session.user.id,
     });
 
     if (!template) {
@@ -45,8 +54,24 @@ export async function PUT(
   { params }: { params: { id: string } }
 ) {
   try {
+    const session = await getServerSession(authOptions);
+
+    if (!session?.user?.id) {
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+    }
+
     const body = await request.json();
     const db = await connectToDatabase();
+
+    // Vérifier que le template appartient à l'utilisateur
+    const existingTemplate = await db.collection("templates").findOne({
+      _id: new ObjectId(params.id),
+      userId: session.user.id,
+    });
+
+    if (!existingTemplate) {
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+    }
 
     const updateData = {
       ...body,
@@ -84,32 +109,25 @@ export async function PUT(
 
 export async function DELETE(
   request: Request,
-  context: { params: Promise<{ id: string }> }
+  { params }: { params: { id: string } }
 ) {
   try {
-    const resolvedParams = await context.params;
-    const db = await connectToDatabase();
+    const session = await getServerSession(authOptions);
 
-    const result = await db
-      .collection("templates")
-      .deleteOne({ _id: new ObjectId(resolvedParams.id) });
-
-    if (result.deletedCount === 0) {
-      return NextResponse.json(
-        { message: "Template non trouvé" },
-        { status: 404 }
-      );
+    if (!session?.user?.id) {
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
-    return NextResponse.json({ message: "Template supprimé avec succès" });
+    const db = await connectToDatabase();
+
+    const result = await db.collection("templates").deleteOne({
+      _id: new ObjectId(params.id),
+      userId: session.user.id,
+    });
+
+    return NextResponse.json({ success: true });
   } catch (error) {
-    return NextResponse.json(
-      {
-        status: "error",
-        message: "Erreur lors de la suppression du template",
-        error: error instanceof Error ? error.message : "Erreur inconnue",
-      },
-      { status: 500 }
-    );
+    console.error("Erreur API:", error);
+    return NextResponse.json({ error: "Erreur serveur" }, { status: 500 });
   }
 }

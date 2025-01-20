@@ -1,11 +1,22 @@
 import { connectToDatabase } from "@/config/database";
 import { Template } from "@/types/template";
+import { getServerSession } from "next-auth/next";
 import { NextResponse } from "next/server";
+import { authOptions } from "../../../../pages/api/auth/[...nextauth]";
 
 export async function GET() {
   try {
+    const session = await getServerSession(authOptions);
+
+    if (!session?.user?.id) {
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+    }
+
     const db = await connectToDatabase();
-    const templates = await db.collection("templates").find({}).toArray();
+    const templates = await db
+      .collection("templates")
+      .find({ userId: session.user.id })
+      .toArray();
 
     const serializedTemplates = templates.map((template) => ({
       ...template,
@@ -16,51 +27,33 @@ export async function GET() {
 
     return NextResponse.json(serializedTemplates);
   } catch (error) {
-    return NextResponse.json(
-      {
-        status: "error",
-        message: "Erreur lors de la récupération des templates",
-        error: error instanceof Error ? error.message : "Erreur inconnue",
-      },
-      { status: 500 }
-    );
+    console.error("Erreur API:", error);
+    return NextResponse.json({ error: "Erreur serveur" }, { status: 500 });
   }
 }
 
 export async function POST(request: Request) {
   try {
-    console.log("Début de la requête POST");
-    const body = await request.json();
-    console.log("Body reçu:", body);
+    const session = await getServerSession(authOptions);
 
+    if (!session?.user?.id) {
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+    }
+
+    const data = await request.json();
     const db = await connectToDatabase();
-    console.log("Connexion à la DB établie");
 
-    const newTemplate: Omit<Template, "_id"> = {
-      name: body.name || "",
-      description: body.description || "",
-      thumbnail: body.thumbnail || "",
-      category: body.category || "business",
-      sections: body.sections || [],
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      userId: body.userId || "",
-      isPublic: body.isPublic || false,
-      tags: body.tags || [],
+    const template = {
+      ...data,
+      userId: session.user.id,
+      createdAt: new Date(),
+      updatedAt: new Date(),
     };
 
-    const result = await db.collection("templates").insertOne(newTemplate);
-    console.log("Document inséré:", result);
-
-    return NextResponse.json({
-      _id: result.insertedId.toString(),
-      ...newTemplate,
-    } as Template);
+    const result = await db.collection("templates").insertOne(template);
+    return NextResponse.json({ _id: result.insertedId, ...template });
   } catch (error) {
-    console.error("Erreur détaillée:", error);
-    return NextResponse.json(
-      { message: "Erreur lors de la création du template" },
-      { status: 500 }
-    );
+    console.error("Erreur API:", error);
+    return NextResponse.json({ error: "Erreur serveur" }, { status: 500 });
   }
 }
