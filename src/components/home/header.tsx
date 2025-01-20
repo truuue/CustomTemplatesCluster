@@ -1,6 +1,7 @@
 "use client";
 
-import { MobileMenu } from "@/components/mobile-menu";
+import { UserMenu } from "@/components/header/UserMenu";
+import { MobileMenu } from "@/components/home/mobile-menu";
 import { ModeToggle } from "@/components/mode-toggle";
 import { Button } from "@/components/ui/button";
 import { useScroll } from "@/hooks/useScroll";
@@ -65,14 +66,12 @@ export default function Header() {
         <div className="flex items-center gap-4">
           <ModeToggle />
           <div className="hidden items-center gap-4 md:flex">
-            {session ? (
-              <Button variant="ghost" size="sm" asChild>
-                <Link href="/logout">Déconnexion</Link>
-              </Button>
+            {session?.user ? (
+              <UserMenu />
             ) : (
-              <Button variant="ghost" size="sm" asChild>
-                <Link href="/login">Se connecter / S'inscrire</Link>
-              </Button>
+              <Link href="/login">
+                <Button>Connexion</Button>
+              </Link>
             )}
           </div>
           <MobileMenu />
