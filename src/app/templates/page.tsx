@@ -154,65 +154,70 @@ export default function TemplatesPage() {
     <div className="container mx-auto px-4 py-8">
       <BackgroundGrid />
 
-      <div className="mb-8 space-y-4">
-        <div className="flex items-center gap-4">
-          <Button
-            variant="ghost"
-            onClick={() => window.history.back()}
-            className="shrink-0"
-          >
-            ← Retour
-          </Button>
-          <h1 className="text-2xl font-bold sm:text-3xl">Mes Templates</h1>
-        </div>
-
-        <div className="flex flex-wrap items-center gap-2">
-          {templates.length > 0 && (
+      <div className="mb-8 space-y-4 md:space-y-0">
+        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <div className="flex items-center gap-4">
             <Button
-              variant={selectionMode ? "destructive" : "outline"}
-              className="flex-1 items-center gap-2 text-sm sm:flex-none sm:text-base"
-              onClick={toggleSelectionMode}
+              variant="ghost"
+              onClick={() => window.history.back()}
+              className="shrink-0"
             >
-              {selectionMode ? "Annuler" : "Supprimer plusieurs templates"}
+              ← Retour
             </Button>
-          )}
-          {selectedTemplates.length > 0 && (
-            <AlertDialog
-              open={isDeleteDialogOpen}
-              onOpenChange={setIsDeleteDialogOpen}
-            >
-              <AlertDialogTrigger asChild>
-                <Button
-                  variant="destructive"
-                  className="flex-1 items-center gap-2 sm:flex-none"
-                  onClick={() => setIsDeleteDialogOpen(true)}
-                >
-                  <Trash2 className="size-4" />
-                  Supprimer ({selectedTemplates.length})
-                </Button>
-              </AlertDialogTrigger>
-              <AlertDialogContent>
-                <AlertDialogHeader>
-                  <AlertDialogTitle>
-                    Êtes-vous absolument sûr ?
-                  </AlertDialogTitle>
-                  <AlertDialogDescription>
-                    Cette action est irréversible. {selectedTemplates.length}{" "}
-                    templates seront définitivement supprimés.
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>Annuler</AlertDialogCancel>
-                  <AlertDialogAction onClick={handleMultipleDeleteConfirm}>
-                    Supprimer
-                  </AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
-          )}
-          <Link href="/templates/new" className="flex-1 sm:flex-none">
-            <Button className="w-full">Nouveau Template</Button>
-          </Link>
+            <h1 className="text-2xl font-bold sm:text-3xl">Mes Templates</h1>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2">
+            {templates.length > 0 && (
+              <Button
+                variant={selectionMode ? "destructive" : "outline"}
+                className="flex-1 items-center gap-2 text-sm sm:text-base md:flex-none"
+                onClick={toggleSelectionMode}
+              >
+                {selectionMode ? "Annuler" : "Supprimer plusieurs"}
+              </Button>
+            )}
+            {selectedTemplates.length > 0 && (
+              <AlertDialog
+                open={isDeleteDialogOpen}
+                onOpenChange={setIsDeleteDialogOpen}
+              >
+                <AlertDialogTrigger asChild>
+                  <Button
+                    variant="destructive"
+                    className="flex-1 items-center gap-2 md:flex-none"
+                    onClick={() => setIsDeleteDialogOpen(true)}
+                  >
+                    <Trash2 className="size-4" />
+                    <span className="hidden sm:inline">Supprimer</span> (
+                    {selectedTemplates.length})
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>
+                      Êtes-vous absolument sûr ?
+                    </AlertDialogTitle>
+                    <AlertDialogDescription>
+                      Cette action est irréversible. {selectedTemplates.length}{" "}
+                      templates seront définitivement supprimés.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Annuler</AlertDialogCancel>
+                    <AlertDialogAction onClick={handleMultipleDeleteConfirm}>
+                      Supprimer
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            )}
+            <Link href="/templates/new" className="flex-1 md:flex-none">
+              <Button className="w-full">
+                <span className="hidden sm:inline">Nouveau</span> Template
+              </Button>
+            </Link>
+          </div>
         </div>
       </div>
 
