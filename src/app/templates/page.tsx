@@ -132,17 +132,17 @@ export default function TemplatesPage() {
 
   if (isLoading) {
     return (
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-2 py-4 sm:px-4 sm:py-8">
         <BackgroundGrid />
 
-        <div className="mb-8 flex items-center justify-between">
-          <Skeleton className="h-10 w-48" />
-          <Skeleton className="h-10 w-32" />
+        <div className="mb-4 flex flex-col justify-between gap-4 sm:mb-8 sm:flex-row sm:items-center">
+          <Skeleton className="h-8 w-32 sm:h-10 sm:w-48" />
+          <Skeleton className="h-8 w-24 sm:h-10 sm:w-32" />
         </div>
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
           {[...Array(6)].map((_, index) => (
             <div key={index} className="space-y-4">
-              <Skeleton className="h-40" />
+              <Skeleton className="h-32 sm:h-40" />
             </div>
           ))}
         </div>
@@ -154,27 +154,26 @@ export default function TemplatesPage() {
     <div className="container mx-auto px-4 py-8">
       <BackgroundGrid />
 
-      <div className="mb-8 flex items-center justify-between">
+      <div className="mb-8 space-y-4">
         <div className="flex items-center gap-4">
           <Button
             variant="ghost"
             onClick={() => window.history.back()}
-            className="mr-4"
+            className="shrink-0"
           >
             ← Retour
           </Button>
-          <h1 className="text-3xl font-bold">Mes Templates</h1>
+          <h1 className="text-2xl font-bold sm:text-3xl">Mes Templates</h1>
         </div>
-        <div className="flex items-center gap-4">
+
+        <div className="flex flex-wrap items-center gap-2">
           {templates.length > 0 && (
             <Button
               variant={selectionMode ? "destructive" : "outline"}
-              className="flex items-center gap-2"
+              className="flex-1 items-center gap-2 text-sm sm:flex-none sm:text-base"
               onClick={toggleSelectionMode}
             >
-              {selectionMode
-                ? "Annuler la sélection"
-                : "Supprimer plusieurs templates"}
+              {selectionMode ? "Annuler" : "Supprimer plusieurs templates"}
             </Button>
           )}
           {selectedTemplates.length > 0 && (
@@ -185,7 +184,7 @@ export default function TemplatesPage() {
               <AlertDialogTrigger asChild>
                 <Button
                   variant="destructive"
-                  className="flex items-center gap-2"
+                  className="flex-1 items-center gap-2 sm:flex-none"
                   onClick={() => setIsDeleteDialogOpen(true)}
                 >
                   <Trash2 className="size-4" />
@@ -211,34 +210,43 @@ export default function TemplatesPage() {
               </AlertDialogContent>
             </AlertDialog>
           )}
-          <Link href="/templates/new">
-            <Button>Nouveau Template</Button>
+          <Link href="/templates/new" className="flex-1 sm:flex-none">
+            <Button className="w-full">Nouveau Template</Button>
           </Link>
         </div>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {templates.length === 0 && (
+        <div className="flex h-[70dvh] items-center justify-center">
+          <p className="text-muted-foreground">
+            Aucun template trouvé créez en un dès maintenant !
+          </p>
+        </div>
+      )}
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {templates.map((template: any) => (
           <Card
             key={template._id}
             className={cn(
-              "group relative flex flex-col justify-between border border-primary/20 text-center",
+              "group relative flex flex-col justify-between border border-primary/20 p-4 text-center sm:p-6",
               selectedTemplates.includes(template._id) && "border-primary"
             )}
           >
             {selectionMode && (
-              <div className="absolute left-4 top-4 z-10">
+              <div className="absolute left-2 top-2 z-10 sm:left-4 sm:top-4">
                 <Checkbox
                   checked={selectedTemplates.includes(template._id)}
                   onCheckedChange={() => handleSelectTemplate(template._id)}
                 />
               </div>
             )}
-            <CardHeader>
-              <CardTitle>{template.name}</CardTitle>
+            <CardHeader className="p-0 sm:p-4">
+              <CardTitle className="text-lg sm:text-xl">
+                {template.name}
+              </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="mb-4 text-muted-foreground">
+            <CardContent className="space-y-4 p-0 sm:p-4">
+              <p className="mb-4 text-sm text-muted-foreground sm:text-base">
                 {template.description}
               </p>
               <div className="flex gap-2">
@@ -246,7 +254,10 @@ export default function TemplatesPage() {
                   href={`/templates/editor/${template._id}`}
                   className="flex-1"
                 >
-                  <Button variant="outline" className="w-full">
+                  <Button
+                    variant="outline"
+                    className="w-full text-sm sm:text-base"
+                  >
                     Éditer
                   </Button>
                 </Link>
