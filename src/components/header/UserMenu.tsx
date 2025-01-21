@@ -12,7 +12,12 @@ import { LogOut, Settings, Trash2 } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 
-export function UserMenu() {
+interface UserMenuProps {
+  side?: "top" | "bottom" | "left" | "right";
+  align?: "start" | "center" | "end";
+}
+
+export function UserMenu({ side = "bottom", align = "end" }: UserMenuProps) {
   const { data: session } = useSession();
 
   if (!session?.user) return null;
@@ -36,7 +41,7 @@ export function UserMenu() {
         </Avatar>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent align="end" className="mt-2 w-56">
+      <DropdownMenuContent side={side} align={align} className="z-50 my-2 w-56">
         <div className="flex items-center justify-start gap-2 p-2">
           <div className="flex flex-col space-y-1">
             <p className="text-sm font-medium">{session.user.name}</p>

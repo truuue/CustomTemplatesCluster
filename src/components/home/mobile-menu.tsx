@@ -53,13 +53,13 @@ export function MobileMenu() {
               <div className="mt-auto border-t px-4 py-4">
                 {session?.user ? (
                   <div className="flex justify-center">
-                    <UserMenu />
+                    <UserMenu side="top" align="center" />
                   </div>
                 ) : (
                   <div className="flex flex-col gap-2">
                     <Link href="/login" className="w-full">
                       <Button variant="ghost" className="w-full">
-                        Se connecter /
+                        Connexion
                       </Button>
                     </Link>
                   </div>
