@@ -7,7 +7,10 @@ import {
   type FeaturesSectionContent,
 } from "../sections/FeaturesSection";
 import { FooterSection } from "../sections/FooterSection";
-import { HeaderSection } from "../sections/HeaderSection";
+import {
+  HeaderSection,
+  type HeaderSectionProps,
+} from "../sections/HeaderSection";
 import { HeroSection } from "../sections/HeroSection";
 import { PricingComparisonSection } from "../sections/PricingComparisonSection";
 import { PricingModernSection } from "../sections/PricingModernSection";
