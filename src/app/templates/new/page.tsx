@@ -107,7 +107,7 @@ export default function NewTemplate() {
                 disabled={!isFormValid}
                 suppressHydrationWarning
               >
-                Créer et commencer l'édition
+                Créer et commencer l&apos;édition
               </Button>
             )}
           </CardContent>

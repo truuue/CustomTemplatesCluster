@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/select";
 import { HeaderContent, Section } from "@/types/template";
 import { Save, Trash2, Upload } from "lucide-react";
+import Image from "next/image";
 import { useState } from "react";
 
 interface HeaderEditorProps {
@@ -64,7 +65,7 @@ export function HeaderEditor({ section, onUpdate }: HeaderEditorProps) {
   return (
     <div className="space-y-4">
       <div className="space-y-2">
-        <Label htmlFor="logo">Logo de l'entreprise</Label>
+        <Label htmlFor="logo">Logo de l&apos;entreprise</Label>
         <div className="flex items-center gap-4">
           <div className={`relative ${localContent.logo ? "w-40" : "flex-1"}`}>
             <Input
@@ -81,9 +82,11 @@ export function HeaderEditor({ section, onUpdate }: HeaderEditorProps) {
           </div>
           {localContent.logo && (
             <div className="flex items-center gap-2">
-              <img
+              <Image
                 src={localContent.logo}
                 alt="Logo preview"
+                width={48}
+                height={48}
                 className="h-12 w-12 object-contain"
               />
               <Button

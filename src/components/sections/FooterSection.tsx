@@ -118,7 +118,7 @@ export function FooterSection({ content, style }: FooterSectionProps) {
               placeholder="Votre email"
               className="max-w-xs"
             />
-            <Button>S'abonner</Button>
+            <Button>S&apos;abonner</Button>
           </div>
         </div>
       </div>

@@ -32,7 +32,7 @@ export function CookieConsent() {
         <div className="flex flex-col gap-2">
           <p className="text-sm text-gray-500">
             Nous utilisons des cookies essentiels pour le fonctionnement du site
-            et des cookies d'analyse pour améliorer votre expérience.
+            et des cookies d&apos;analyse pour améliorer votre expérience.
           </p>
           <p className="text-xs text-gray-400">
             Les cookies essentiels sont toujours activés car ils sont

@@ -137,7 +137,7 @@ export function PricingEditor({ section, onUpdate }: PricingEditorProps) {
             />
           </div>
           <div>
-            <Label>Style d'affichage</Label>
+            <Label>Style d&apos;affichage</Label>
             <Select
               value={localContent.variant}
               onValueChange={(value) => handleContentChange("variant", value)}
@@ -252,10 +252,9 @@ export function PricingEditor({ section, onUpdate }: PricingEditorProps) {
                         </div>
                       ))}
                       <Button
-                        onClick={() => addFeature(planIndex)}
                         variant="outline"
                         size="sm"
-                        className="w-full"
+                        onClick={() => addFeature(planIndex)}
                       >
                         <Plus className="mr-2 h-4 w-4" />
                         Ajouter une fonctionnalité
@@ -275,7 +274,7 @@ export function PricingEditor({ section, onUpdate }: PricingEditorProps) {
                             e.target.value
                           )
                         }
-                        placeholder="ex: Commencer"
+                        placeholder="ex: S&apos;abonner"
                       />
                     </div>
                     <div>
@@ -289,7 +288,7 @@ export function PricingEditor({ section, onUpdate }: PricingEditorProps) {
                             e.target.value
                           )
                         }
-                        placeholder="ex: /signup"
+                        placeholder="https://..."
                       />
                     </div>
                   </div>
@@ -308,7 +307,7 @@ export function PricingEditor({ section, onUpdate }: PricingEditorProps) {
             onValueChange={(value) => handleStyleChange("layout", value)}
           >
             <SelectTrigger>
-              <SelectValue placeholder="Choisir l'alignement" />
+              <SelectValue placeholder="Choisir l&apos;alignement" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="left">Gauche</SelectItem>
