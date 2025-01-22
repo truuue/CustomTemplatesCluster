@@ -44,3 +44,6 @@ package-lock.json
 
 # prisma
 prisma/migrations
+
+# diagrams
+diagrams/
