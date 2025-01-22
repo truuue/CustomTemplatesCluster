@@ -6,7 +6,13 @@ import { convertButtonVariant } from "@/lib/utils/button";
 import { Section } from "@/types/template";
 
 interface HeroSectionProps {
-  content: Section["content"];
+  content: {
+    buttons?: Array<{
+      text: string;
+      url: string;
+      variant: "primary" | "secondary" | "outline";
+    }>;
+  } & Section["content"];
   style: Section["style"];
 }
 
