@@ -2,21 +2,23 @@ import { connectToDatabase } from "@/config/database";
 import { sectionSchema } from "@/lib/validations/template";
 import { ObjectId } from "mongodb";
 import { getServerSession } from "next-auth/next";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { authOptions } from "../../../../../../../pages/api/auth/[...nextauth]";
 
-export async function PUT(
-  request: Request,
-  { params }: { params: { id: string } }
-) {
+export async function PUT(req: NextRequest) {
+  const id = req.nextUrl.searchParams.get("id");
+  if (!id) {
+    return NextResponse.json({ error: "ID invalide" }, { status: 400 });
+  }
+
   try {
     const session = await getServerSession(authOptions);
     if (!session?.user?.id) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
-    const { sections } = await request.json();
+    const { sections } = await req.json();
 
     // Validation des sections
     const validationResult = z.array(sectionSchema).safeParse(sections);
@@ -31,7 +33,7 @@ export async function PUT(
 
     // Vérifier que le template appartient à l'utilisateur
     const template = await db.collection("templates").findOne({
-      _id: new ObjectId(params.id),
+      _id: new ObjectId(id),
       userId: session.user.id,
     });
 
@@ -40,7 +42,7 @@ export async function PUT(
     }
 
     const result = await db.collection("templates").updateOne(
-      { _id: new ObjectId(params.id) },
+      { _id: new ObjectId(id) },
       {
         $set: {
           sections: sections,
