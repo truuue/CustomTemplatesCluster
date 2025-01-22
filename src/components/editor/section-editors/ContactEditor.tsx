@@ -27,6 +27,7 @@ import {
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { GripVertical, Plus, Save, Trash2 } from "lucide-react";
+import Image from "next/image";
 import { useState } from "react";
 
 const SOCIAL_PRESETS = {
@@ -107,7 +108,7 @@ function SortableButtonItem({
       </div>
       <div className="grid gap-4 sm:grid-cols-3">
         <div className="space-y-2">
-          <Label>URL de l'image</Label>
+          <Label>URL de l&apos;image</Label>
           <Input
             value={button.imageUrl}
             onChange={(e) =>
@@ -365,9 +366,11 @@ export function ContactEditor({ section, onUpdate }: ContactEditorProps) {
                 )}
               >
                 {button.imageUrl && (
-                  <img
+                  <Image
                     src={button.imageUrl}
                     alt={button.title}
+                    width={20}
+                    height={20}
                     className={cn(
                       "object-contain",
                       button.size === "small" && "h-3 w-3",

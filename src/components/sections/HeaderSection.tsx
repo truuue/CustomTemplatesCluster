@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 interface HeaderSectionProps {
   content?: {
     logo?: string;
@@ -58,10 +60,12 @@ export function HeaderSection({
         <div className="container mx-auto">
           <div className="flex flex-col items-center justify-center space-y-4">
             {content?.logo && (
-              <img
+              <Image
                 src={content.logo}
                 alt="Logo"
-                className="h-16 w-16 object-contain"
+                width={40}
+                height={40}
+                className="h-10 w-10 object-contain"
               />
             )}
             {content?.companyName && (
@@ -103,10 +107,12 @@ export function HeaderSection({
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
             {content?.logo && (
-              <img
+              <Image
                 src={content.logo}
                 alt="Logo"
-                className="h-12 w-12 object-contain"
+                width={40}
+                height={40}
+                className="h-10 w-10 object-contain"
               />
             )}
             {content?.companyName && (

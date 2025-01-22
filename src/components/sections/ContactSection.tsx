@@ -2,6 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { ContactContent } from "@/types/template";
+import Image from "next/image";
 
 interface ContactSectionProps {
   content: ContactContent;
@@ -53,9 +54,11 @@ export function ContactSection({
                   )}
                 >
                   {button.imageUrl && (
-                    <img
+                    <Image
                       src={button.imageUrl}
                       alt={button.title}
+                      width={24}
+                      height={24}
                       className={cn(
                         "object-contain",
                         button.size === "small" && "h-4 w-4",

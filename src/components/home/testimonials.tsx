@@ -68,13 +68,14 @@ export default function Testimonials() {
                   <div className="group relative rounded-2xl border border-primary/20 bg-card p-8 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
                     <div className="mb-8">
                       <p className="text-muted-foreground">
-                        "Un outil incroyable qui m'a permis de créer une landing
-                        page professionnelle en moins d'une heure."
+                        &quot;Un outil incroyable qui m&apos;a permis de créer
+                        une landing page professionnelle en moins d&apos;une
+                        heure.&quot;
                       </p>
                     </div>
                     <div className="flex items-center gap-4">
                       <div className="absolute bottom-12 left-7 z-10 -rotate-12 text-4xl opacity-10">
-                        "
+                        &quot;
                       </div>
                       <div className="size-12 overflow-hidden rounded-full bg-primary/10" />
                       <div>
@@ -94,13 +95,14 @@ export default function Testimonials() {
                   <div className="group relative rounded-2xl border border-primary/20 bg-card p-8 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
                     <div className="mb-8">
                       <p className="text-muted-foreground">
-                        "Un outil incroyable qui m'a permis de créer une landing
-                        page professionnelle en moins d'une heure."
+                        &quot;Un outil incroyable qui m&apos;a permis de créer
+                        une landing page professionnelle en moins d&apos;une
+                        heure.&quot;
                       </p>
                     </div>
                     <div className="flex items-center gap-4">
                       <div className="absolute bottom-12 left-7 z-10 -rotate-12 text-4xl opacity-10">
-                        "
+                        &quot;
                       </div>
                       <div className="size-12 overflow-hidden rounded-full bg-primary/10" />
                       <div>
@@ -120,13 +122,14 @@ export default function Testimonials() {
                   <div className="group relative rounded-2xl border border-primary/20 bg-card p-8 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
                     <div className="mb-8">
                       <p className="text-muted-foreground">
-                        "Un outil incroyable qui m'a permis de créer une landing
-                        page professionnelle en moins d'une heure."
+                        &quot;Un outil incroyable qui m&apos;a permis de créer
+                        une landing page professionnelle en moins d&apos;une
+                        heure.&quot;
                       </p>
                     </div>
                     <div className="flex items-center gap-4">
                       <div className="absolute bottom-12 left-7 z-10 -rotate-12 text-4xl opacity-10">
-                        "
+                        &quot;
                       </div>
                       <div className="size-12 overflow-hidden rounded-full bg-primary/10" />
                       <div>
@@ -146,13 +149,14 @@ export default function Testimonials() {
                   <div className="group relative rounded-2xl border border-primary/20 bg-card p-8 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
                     <div className="mb-8">
                       <p className="text-muted-foreground">
-                        "Un outil incroyable qui m'a permis de créer une landing
-                        page professionnelle en moins d'une heure."
+                        &quot;Un outil incroyable qui m&apos;a permis de créer
+                        une landing page professionnelle en moins d&apos;une
+                        heure.&quot;
                       </p>
                     </div>
                     <div className="flex items-center gap-4">
                       <div className="absolute bottom-12 left-7 z-10 -rotate-12 text-4xl opacity-10">
-                        "
+                        &quot;
                       </div>
                       <div className="size-12 overflow-hidden rounded-full bg-primary/10" />
                       <div>
