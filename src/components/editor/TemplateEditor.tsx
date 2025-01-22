@@ -12,9 +12,7 @@ import {
 import { DeviceType } from "@/types/editor";
 import { Section, Template } from "@/types/template";
 import { Brush, Menu } from "lucide-react";
-import dynamic from "next/dynamic";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { EditorPanel } from "./EditorPanel";
@@ -25,36 +23,12 @@ interface TemplateEditorProps {
   initialTemplate: Template;
 }
 
-// Modifions le SelectWrapper pour éviter les problèmes d'hydratation
-const SelectWrapper = dynamic(
-  () => import("@/components/ui/select").then((mod) => mod.Select),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="h-10 w-full rounded-md border border-input bg-background px-3 py-2">
-        Chargement...
-      </div>
-    ),
-  }
-);
-
-// Modifions le DraggableSectionListWrapper également
-const DraggableSectionListWrapper = dynamic(
-  () =>
-    import("./DraggableSectionList").then((mod) => mod.DraggableSectionList),
-  {
-    ssr: false,
-    loading: () => <div className="h-20 animate-pulse rounded-md bg-muted" />,
-  }
-);
-
 export function TemplateEditor({ initialTemplate }: TemplateEditorProps) {
   const [template, setTemplate] = useState<Template>(initialTemplate);
   const [activeSection, setActiveSection] = useState<Section | null>(null);
   const [isSaving, setIsSaving] = useState(false);
   const [device, setDevice] = useState<DeviceType>("desktop");
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
 
   const handleDeviceChange = (newDevice: DeviceType) => {
     setIsLoading(true);

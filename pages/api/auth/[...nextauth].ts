@@ -37,7 +37,7 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt",
   },
   callbacks: {
-    signIn: async ({ user, account, profile }) => {
+    signIn: async ({ user, account }) => {
       try {
         if (!user.email) return false;
 
@@ -50,7 +50,11 @@ export const authOptions: NextAuthOptions = {
         if (existingUser) {
           // Vérifier si un compte existe déjà pour ce provider
           const existingAccount = existingUser.accounts.find(
-            (acc: any) => acc.provider === account?.provider
+            (acc: {
+              provider: string;
+              type: string;
+              providerAccountId: string;
+            }) => acc.provider === account?.provider
           );
 
           if (existingAccount) {

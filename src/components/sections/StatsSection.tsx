@@ -2,7 +2,6 @@ import { Section } from "@/types/template";
 import { motion } from "framer-motion";
 
 interface StatsSectionProps {
-  content: Section["content"];
   style: Section["style"];
 }
 
@@ -13,7 +12,7 @@ interface Stat {
   suffix?: string;
 }
 
-export function StatsSection({ content, style }: StatsSectionProps) {
+export function StatsSection({ style }: StatsSectionProps) {
   const stats: Stat[] = [
     { value: "100", suffix: "k+", label: "Pages créées" },
     { value: "95", suffix: "%", label: "Satisfaction client" },

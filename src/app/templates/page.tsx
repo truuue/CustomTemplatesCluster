@@ -20,7 +20,7 @@ import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { Trash2 } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export default function TemplatesPage() {
   const [templates, setTemplates] = useState([]);
@@ -31,7 +31,7 @@ export default function TemplatesPage() {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const { toast } = useToast();
 
-  const fetchTemplates = async () => {
+  const fetchTemplates = useCallback(async () => {
     try {
       const response = await fetch("/api/templates");
       if (!response.ok) throw new Error("Erreur lors du chargement");
@@ -47,11 +47,11 @@ export default function TemplatesPage() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [toast]);
 
   useEffect(() => {
     fetchTemplates();
-  }, []);
+  }, [fetchTemplates]);
 
   const handleDeleteConfirm = async () => {
     if (!templateToDelete) return;

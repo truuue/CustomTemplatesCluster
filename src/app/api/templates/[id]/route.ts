@@ -125,6 +125,13 @@ export async function DELETE(
       userId: session.user.id,
     });
 
+    if (result.deletedCount === 0) {
+      return NextResponse.json(
+        { error: "Template non trouvé" },
+        { status: 404 }
+      );
+    }
+
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Erreur API:", error);

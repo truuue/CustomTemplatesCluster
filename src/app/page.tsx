@@ -14,13 +14,10 @@ import BackgroundGrid from "@/components/ui/background-grid";
 import { useToast } from "@/hooks/use-toast";
 import { cookies } from "@/lib/cookies";
 import { useSession } from "next-auth/react";
-import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 
 export default function Home() {
   const { toast } = useToast();
-  const searchParams = useSearchParams();
-  const loginSuccess = searchParams?.get("login");
   const { status } = useSession();
 
   useEffect(() => {

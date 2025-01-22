@@ -26,7 +26,7 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { GripVertical, Plus, Save, Trash2 } from "lucide-react";
+import { GripVertical, Plus, Save } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -64,11 +64,7 @@ interface SortableButtonItemProps {
   removeButton: (id: string) => void;
 }
 
-function SortableButtonItem({
-  button,
-  updateButton,
-  removeButton,
-}: SortableButtonItemProps) {
+function SortableButtonItem({ button, updateButton }: SortableButtonItemProps) {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: button.id });
 
@@ -133,32 +129,7 @@ function SortableButtonItem({
             </SelectContent>
           </Select>
         </div>
-        <div className="space-y-2">
-          <Label>Forme</Label>
-          <Select
-            value={button.shape}
-            onValueChange={(value) => updateButton(button.id, "shape", value)}
-          >
-            <SelectTrigger>
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="square">Carré</SelectItem>
-              <SelectItem value="rounded">Arrondi</SelectItem>
-              <SelectItem value="circle">Cercle</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
       </div>
-      <Button
-        variant="destructive"
-        size="sm"
-        onClick={() => removeButton(button.id)}
-        className="w-full sm:w-auto"
-      >
-        <Trash2 className="mr-2 h-4 w-4" />
-        Supprimer ce bouton
-      </Button>
     </div>
   );
 }
@@ -177,7 +148,7 @@ export function ContactEditor({ section, onUpdate }: ContactEditorProps) {
     buttons: content?.buttons || [],
   });
 
-  const [localStyle, setLocalStyle] = useState({
+  const [localStyle] = useState({
     backgroundColor: section.style?.backgroundColor || "#ffffff",
     textColor: section.style?.textColor || "#000000",
     padding: section.style?.padding || "4rem 2rem",

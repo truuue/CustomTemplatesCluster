@@ -97,25 +97,6 @@ export function TestimonialsEditor({
     });
   };
 
-  const handleAvatarUpload = async (index: number, file: File) => {
-    try {
-      const formData = new FormData();
-      formData.append("file", file);
-
-      const response = await fetch("/api/upload", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!response.ok) throw new Error("Erreur lors du téléchargement");
-
-      const { url } = await response.json();
-      handleTestimonialChange(index, "avatar", url);
-    } catch (error) {
-      console.error("Erreur:", error);
-    }
-  };
-
   return (
     <Tabs defaultValue="content" className="space-y-4">
       <TabsList className="grid w-full grid-cols-2">

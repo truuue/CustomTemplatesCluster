@@ -24,12 +24,19 @@ export function TestimonialsSection({
   useEffect(() => {
     if (style.layout !== "carousel") return;
 
-    const interval = setInterval(() => {
-      handleNext();
-    }, 5000);
+    const handleAutoNext = () => {
+      if (isAnimating) return;
+      setIsAnimating(true);
+      setCurrentIndex((prev) =>
+        prev === testimonials.length - 1 ? 0 : prev + 1
+      );
+      setTimeout(() => setIsAnimating(false), 500);
+    };
+
+    const interval = setInterval(handleAutoNext, 5000);
 
     return () => clearInterval(interval);
-  }, [currentIndex, style.layout]);
+  }, [currentIndex, style.layout, isAnimating, testimonials.length]);
 
   const handlePrevious = () => {
     if (isAnimating) return;
