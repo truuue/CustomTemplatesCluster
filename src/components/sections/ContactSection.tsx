@@ -77,3 +77,5 @@ export function ContactSection({
     </section>
   );
 }
+
+export type { ContactSectionProps };

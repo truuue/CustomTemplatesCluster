@@ -1,12 +1,18 @@
 "use client";
 
 import { PricingContent, Section, Template } from "@/types/template";
-import { ContactSection } from "../sections/ContactSection";
+import {
+  ContactSection,
+  type ContactSectionProps,
+} from "../sections/ContactSection";
 import {
   FeaturesSection,
   type FeaturesSectionContent,
 } from "../sections/FeaturesSection";
-import { FooterSection } from "../sections/FooterSection";
+import {
+  FooterSection,
+  type FooterSectionProps,
+} from "../sections/FooterSection";
 import {
   HeaderSection,
   type HeaderSectionProps,
@@ -90,9 +96,20 @@ export function TemplateRenderer({
       case "testimonials":
         return wrapSection(<TestimonialsSection {...props} />);
       case "contact":
-        return wrapSection(<ContactSection {...props} />);
+        const contactProps = {
+          content: section.content as ContactSectionProps["content"],
+          style: section.style,
+          onClick: isEditing ? () => onSectionClick?.(section) : undefined,
+        };
+        return wrapSection(<ContactSection {...contactProps} />);
       case "footer":
-        return wrapSection(<FooterSection {...props} />);
+        const footerProps = {
+          content: section.content as FooterSectionProps["content"],
+          style: section.style,
+          onClick: isEditing ? () => onSectionClick?.(section) : undefined,
+          sections: template.sections,
+        };
+        return wrapSection(<FooterSection {...footerProps} />);
       default:
         return null;
     }

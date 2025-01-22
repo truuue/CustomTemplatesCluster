@@ -24,6 +24,8 @@ interface FooterSectionProps {
   style: Section["style"];
 }
 
+export type { FooterSectionProps };
+
 export function FooterSection({ content, style }: FooterSectionProps) {
   const footerLinks = content.links || [
     {
