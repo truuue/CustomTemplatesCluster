@@ -1,19 +1,20 @@
 import { connectToDatabase } from "@/config/database";
 import { ObjectId } from "mongodb";
-import { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth/next";
+import { NextRequest, NextResponse } from "next/server";
 import { authOptions } from "../../../../../pages/api/auth/[...nextauth]";
 
-export async function GET(req: NextApiRequest, res: NextApiResponse) {
-  const id = Array.isArray(req.query.id) ? req.query.id[0] : req.query.id;
+export async function GET(req: NextRequest) {
+  const url = new URL(req.url);
+  const id = url.searchParams.get("id");
   if (!id) {
-    return res.status(400).json({ error: "ID invalide" });
+    return NextResponse.json({ error: "ID invalide" }, { status: 400 });
   }
   try {
     const session = await getServerSession(authOptions);
 
     if (!session?.user?.id) {
-      return res.status(401).json({ error: "Non autorisé" });
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
     const db = await connectToDatabase();
@@ -23,7 +24,10 @@ export async function GET(req: NextApiRequest, res: NextApiResponse) {
     });
 
     if (!template) {
-      return res.status(404).json({ message: "Template non trouvé" });
+      return NextResponse.json(
+        { message: "Template non trouvé" },
+        { status: 404 }
+      );
     }
 
     // Sérialiser le template
@@ -34,26 +38,30 @@ export async function GET(req: NextApiRequest, res: NextApiResponse) {
       updatedAt: new Date(template.updatedAt).toISOString(),
     };
 
-    return res.json(serializedTemplate);
+    return NextResponse.json(serializedTemplate);
   } catch (error) {
-    return res.status(500).json({
-      status: "error",
-      message: "Erreur lors de la récupération du template",
-      error: error instanceof Error ? error.message : "Erreur inconnue",
-    });
+    return NextResponse.json(
+      {
+        status: "error",
+        message: "Erreur lors de la récupération du template",
+        error: error instanceof Error ? error.message : "Erreur inconnue",
+      },
+      { status: 500 }
+    );
   }
 }
 
-export async function PUT(req: NextApiRequest, res: NextApiResponse) {
-  const { id } = req.query;
+export async function PUT(req: NextRequest) {
+  const url = new URL(req.url);
+  const id = url.searchParams.get("id");
   if (!id) {
-    return res.status(400).json({ error: "ID invalide" });
+    return NextResponse.json({ error: "ID invalide" }, { status: 400 });
   }
   try {
     const session = await getServerSession(authOptions);
 
     if (!session?.user?.id) {
-      return res.status(401).json({ error: "Non autorisé" });
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
     const body = req.body;
@@ -66,7 +74,7 @@ export async function PUT(req: NextApiRequest, res: NextApiResponse) {
     });
 
     if (!existingTemplate) {
-      return res.status(401).json({ error: "Non autorisé" });
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
     const updateData = {
@@ -74,39 +82,48 @@ export async function PUT(req: NextApiRequest, res: NextApiResponse) {
       updatedAt: new Date().toISOString(),
     };
 
-    delete updateData._id; // Supprimer _id pour éviter les conflits
+    if ("_id" in updateData) {
+      delete updateData._id; // Supprimer _id pour éviter les conflits
+    }
 
     const result = await db
       .collection("templates")
       .updateOne({ _id: new ObjectId(id as string) }, { $set: updateData });
 
     if (result.matchedCount === 0) {
-      return res.status(404).json({ message: "Template non trouvé" });
+      return NextResponse.json(
+        { message: "Template non trouvé" },
+        { status: 404 }
+      );
     }
 
-    return res.json({
+    return NextResponse.json({
       _id: id,
       ...updateData,
     });
   } catch (error) {
-    return res.status(500).json({
-      status: "error",
-      message: "Erreur lors de la mise à jour du template",
-      error: error instanceof Error ? error.message : "Erreur inconnue",
-    });
+    return NextResponse.json(
+      {
+        status: "error",
+        message: "Erreur lors de la mise à jour du template",
+        error: error instanceof Error ? error.message : "Erreur inconnue",
+      },
+      { status: 500 }
+    );
   }
 }
 
-export async function DELETE(req: NextApiRequest, res: NextApiResponse) {
-  const { id } = req.query;
+export async function DELETE(req: NextRequest) {
+  const url = new URL(req.url);
+  const id = url.searchParams.get("id");
   if (!id) {
-    return res.status(400).json({ error: "ID invalide" });
+    return NextResponse.json({ error: "ID invalide" }, { status: 400 });
   }
   try {
     const session = await getServerSession(authOptions);
 
     if (!session?.user?.id) {
-      return res.status(401).json({ error: "Non autorisé" });
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
     const db = await connectToDatabase();
@@ -117,12 +134,15 @@ export async function DELETE(req: NextApiRequest, res: NextApiResponse) {
     });
 
     if (result.deletedCount === 0) {
-      return res.status(404).json({ error: "Template non trouvé" });
+      return NextResponse.json(
+        { error: "Template non trouvé" },
+        { status: 404 }
+      );
     }
 
-    return res.json({ success: true });
+    return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Erreur API:", error);
-    return res.status(500).json({ error: "Erreur serveur" });
+    return NextResponse.json({ error: "Erreur serveur" }, { status: 500 });
   }
 }
