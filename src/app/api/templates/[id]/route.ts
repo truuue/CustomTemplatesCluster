@@ -4,13 +4,10 @@ import { getServerSession } from "next-auth/next";
 import { NextRequest, NextResponse } from "next/server";
 import { authOptions } from "../../../../../pages/api/auth/[...nextauth]";
 
-export type RouteContext = {
-  params: {
-    id: string;
-  };
-};
-
-export async function GET(request: NextRequest, context: RouteContext) {
+export async function GET(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
   try {
     const session = await getServerSession(authOptions);
 
@@ -20,7 +17,7 @@ export async function GET(request: NextRequest, context: RouteContext) {
 
     const db = await connectToDatabase();
     const template = await db.collection("templates").findOne({
-      _id: new ObjectId(context.params.id),
+      _id: new ObjectId(params.id),
       userId: session.user.id,
     });
 
@@ -52,7 +49,10 @@ export async function GET(request: NextRequest, context: RouteContext) {
   }
 }
 
-export async function PUT(request: NextRequest, context: RouteContext) {
+export async function PUT(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
   try {
     const session = await getServerSession(authOptions);
 
@@ -65,7 +65,7 @@ export async function PUT(request: NextRequest, context: RouteContext) {
 
     // Vérifier que le template appartient à l'utilisateur
     const existingTemplate = await db.collection("templates").findOne({
-      _id: new ObjectId(context.params.id),
+      _id: new ObjectId(params.id),
       userId: session.user.id,
     });
 
@@ -82,10 +82,7 @@ export async function PUT(request: NextRequest, context: RouteContext) {
 
     const result = await db
       .collection("templates")
-      .updateOne(
-        { _id: new ObjectId(context.params.id) },
-        { $set: updateData }
-      );
+      .updateOne({ _id: new ObjectId(params.id) }, { $set: updateData });
 
     if (result.matchedCount === 0) {
       return NextResponse.json(
@@ -95,7 +92,7 @@ export async function PUT(request: NextRequest, context: RouteContext) {
     }
 
     return NextResponse.json({
-      _id: context.params.id,
+      _id: params.id,
       ...updateData,
     });
   } catch (error) {
@@ -110,7 +107,10 @@ export async function PUT(request: NextRequest, context: RouteContext) {
   }
 }
 
-export async function DELETE(request: NextRequest, context: RouteContext) {
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
   try {
     const session = await getServerSession(authOptions);
 
@@ -121,7 +121,7 @@ export async function DELETE(request: NextRequest, context: RouteContext) {
     const db = await connectToDatabase();
 
     const result = await db.collection("templates").deleteOne({
-      _id: new ObjectId(context.params.id),
+      _id: new ObjectId(params.id),
       userId: session.user.id,
     });
 
