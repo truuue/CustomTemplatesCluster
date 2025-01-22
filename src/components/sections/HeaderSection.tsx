@@ -22,6 +22,8 @@ interface HeaderSectionProps {
   }>;
 }
 
+export type { HeaderSectionProps };
+
 export function HeaderSection({
   content,
   style,
