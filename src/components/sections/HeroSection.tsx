@@ -57,3 +57,5 @@ export function HeroSection({ content, style }: HeroSectionProps) {
     </section>
   );
 }
+
+export type { HeroSectionProps };
