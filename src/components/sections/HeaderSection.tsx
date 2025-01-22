@@ -4,7 +4,7 @@ interface HeaderSectionProps {
   content?: {
     logo?: string;
     companyName?: string;
-    variant?: "default" | "centered";
+    variant?: "default" | "centered" | "modern" | "comparison";
   };
   style?: {
     backgroundColor?: string;
