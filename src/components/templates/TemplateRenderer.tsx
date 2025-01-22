@@ -11,7 +11,7 @@ import {
   HeaderSection,
   type HeaderSectionProps,
 } from "../sections/HeaderSection";
-import { HeroSection } from "../sections/HeroSection";
+import { HeroSection, type HeroSectionProps } from "../sections/HeroSection";
 import { PricingComparisonSection } from "../sections/PricingComparisonSection";
 import { PricingModernSection } from "../sections/PricingModernSection";
 import { TestimonialsSection } from "../sections/TestimonialsSection";
@@ -55,7 +55,13 @@ export function TemplateRenderer({
         };
         return wrapSection(<HeaderSection {...headerProps} />);
       case "hero":
-        return wrapSection(<HeroSection {...props} />);
+        const heroProps = {
+          content: section.content as HeroSectionProps["content"],
+          style: section.style,
+          onClick: isEditing ? () => onSectionClick?.(section) : undefined,
+          sections: template.sections,
+        };
+        return wrapSection(<HeroSection {...heroProps} />);
       case "features":
         if ("features" in section.content) {
           return wrapSection(
