@@ -45,6 +45,7 @@ export async function PUT(
   request: Request,
   { params }: { params: { id: string; sectionId: string } }
 ) {
+  const { id, sectionId } = params;
   try {
     const session = await getServerSession(authOptions);
     if (!session?.user?.id) {
@@ -62,7 +63,6 @@ export async function PUT(
       );
     }
 
-    const { id, sectionId } = params;
     const db = await connectToDatabase();
 
     const result = await db.collection("templates").updateOne(
