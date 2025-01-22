@@ -7,7 +7,20 @@ import { Section } from "@/types/template";
 import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
 
 interface FooterSectionProps {
-  content: Section["content"];
+  content: {
+    links?: Array<{
+      title: string;
+      items: Array<{
+        label: string;
+        href: string;
+      }>;
+    }>;
+    social?: Array<{
+      icon: "facebook" | "twitter" | "instagram" | "linkedin";
+      url: string;
+    }>;
+    companyName?: string;
+  } & Section["content"];
   style: Section["style"];
 }
 
