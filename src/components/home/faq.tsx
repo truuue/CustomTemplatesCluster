@@ -105,8 +105,8 @@ export default function FAQ() {
               </AccordionTrigger>
               <AccordionContent className="mt-2 text-center text-sm text-muted-foreground md:mt-0 md:pl-14 md:text-left md:text-base">
                 La mise en ligne est instantanée. Dès que vous cliquez sur
-                "Publier", votre landing page est accessible en ligne avec un
-                certificat SSL automatique.
+                &quot;Publier&quot;, votre landing page est accessible en ligne
+                avec un certificat SSL automatique.
               </AccordionContent>
             </AccordionItem>
 
@@ -123,8 +123,8 @@ export default function FAQ() {
               </AccordionTrigger>
               <AccordionContent className="mt-2 text-center text-sm text-muted-foreground md:mt-0 md:pl-14 md:text-left md:text-base">
                 Oui, avec notre plan Pro, vous pouvez exporter votre landing
-                page en React, Next.js ou HTML statique pour l'héberger où vous
-                le souhaitez.
+                page en React, Next.js ou HTML statique pour l&apos;héberger où
+                vous le souhaitez.
               </AccordionContent>
             </AccordionItem>
           </Accordion>
