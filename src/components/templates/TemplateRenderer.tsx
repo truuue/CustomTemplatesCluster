@@ -44,7 +44,13 @@ export function TemplateRenderer({
 
     switch (section.type) {
       case "header":
-        return wrapSection(<HeaderSection {...props} />);
+        const headerProps = {
+          content: section.content as HeaderSectionProps["content"],
+          style: section.style,
+          onClick: isEditing ? () => onSectionClick?.(section) : undefined,
+          sections: template.sections,
+        };
+        return wrapSection(<HeaderSection {...headerProps} />);
       case "hero":
         return wrapSection(<HeroSection {...props} />);
       case "features":
