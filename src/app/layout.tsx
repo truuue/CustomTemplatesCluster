@@ -3,6 +3,7 @@ import { ThemeProvider } from "@/components/providers/theme-provider";
 import { CookieConsent } from "@/components/ui/cookie-consent";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
@@ -50,6 +51,7 @@ export default function RootLayout({
             {/* <ChatWidget /> */}
             <CookieConsent />
             <Toaster />
+            <SpeedInsights />
           </ThemeProvider>
         </SessionProvider>
       </body>
