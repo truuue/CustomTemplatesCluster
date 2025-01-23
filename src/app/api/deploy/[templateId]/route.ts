@@ -7,11 +7,17 @@ import { authOptions } from "../../../../../pages/api/auth/[...nextauth]";
 const NETLIFY_PAT = process.env.NETLIFY_PAT;
 const NETLIFY_API = "https://api.netlify.com/api/v1";
 
-export async function POST(
-  request: Request,
-  { params }: { params: { templateId: string } }
-) {
+export async function POST(request: Request) {
   try {
+    const url = new URL(request.url);
+    const templateId = url.pathname.split("/").pop();
+    if (!templateId) {
+      return NextResponse.json(
+        { error: "Template ID manquant" },
+        { status: 400 }
+      );
+    }
+
     const session = await getServerSession(authOptions);
     if (!session?.user?.id) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
@@ -48,7 +54,7 @@ export async function POST(
     const deploymentZip = await generateDeploymentZip(template, assets);
 
     // Générer un nom unique pour le site
-    const uniqueSiteName = `template-${params.templateId}-${Date.now().toString(36)}`;
+    const uniqueSiteName = `template-${templateId}-${Date.now().toString(36)}`;
 
     // 1. Créer un nouveau site sur Netlify
     const siteResponse = await fetch(`${NETLIFY_API}/sites`, {
