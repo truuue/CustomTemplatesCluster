@@ -9,6 +9,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { useToast } from "@/hooks/use-toast";
 import { DeviceType } from "@/types/editor";
 import { Section, Template } from "@/types/template";
 import { Brush, Menu } from "lucide-react";
@@ -29,6 +30,7 @@ export function TemplateEditor({ initialTemplate }: TemplateEditorProps) {
   const [isSaving, setIsSaving] = useState(false);
   const [device, setDevice] = useState<DeviceType>("desktop");
   const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
 
   const handleDeviceChange = (newDevice: DeviceType) => {
     setIsLoading(true);
@@ -76,16 +78,25 @@ export function TemplateEditor({ initialTemplate }: TemplateEditorProps) {
   const handleSectionUpdate = async (updatedSection: Section) => {
     setIsSaving(true);
     try {
-      const response = await fetch(
+      // Construction de l'URL avec les paramètres de requête
+      const url = new URL(
         `/api/templates/${template._id}/sections/${updatedSection.id}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(updatedSection),
-        }
+        window.location.origin
       );
+      url.searchParams.set("id", template._id);
+      url.searchParams.set("sectionId", updatedSection.id);
 
-      if (!response.ok) throw new Error("Erreur lors de la mise à jour");
+      const response = await fetch(url.toString(), {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedSection),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Erreur lors de la mise à jour");
+      }
 
       setTemplate((prev) => ({
         ...prev,
@@ -94,9 +105,17 @@ export function TemplateEditor({ initialTemplate }: TemplateEditorProps) {
         ),
       }));
 
-      console.log("Section mise à jour avec succès");
+      toast({
+        title: "Succès",
+        description: "Section mise à jour avec succès",
+      });
     } catch (error) {
       console.error("Erreur:", error);
+      toast({
+        variant: "destructive",
+        title: "Erreur",
+        description: "Impossible de mettre à jour la section",
+      });
     } finally {
       setIsSaving(false);
     }
@@ -105,19 +124,37 @@ export function TemplateEditor({ initialTemplate }: TemplateEditorProps) {
   const handleSectionsReorder = async (reorderedSections: Section[]) => {
     setIsSaving(true);
     try {
-      const response = await fetch(
+      // Construction de l'URL avec les paramètres de requête
+      const url = new URL(
         `/api/templates/${template._id}/sections/reorder`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ sections: reorderedSections }),
-        }
+        window.location.origin
       );
+      url.searchParams.set("id", template._id);
 
-      if (!response.ok) throw new Error("Erreur lors de la réorganisation");
+      const response = await fetch(url.toString(), {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ sections: reorderedSections }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Erreur lors de la réorganisation");
+      }
+
       setTemplate((prev) => ({ ...prev, sections: reorderedSections }));
+      toast({
+        title: "Succès",
+        description: "Sections réorganisées avec succès",
+      });
     } catch (error) {
       console.error("Erreur:", error);
+      toast({
+        variant: "destructive",
+        title: "Erreur",
+        description: "Impossible de réorganiser les sections",
+      });
     } finally {
       setIsSaving(false);
     }
@@ -126,21 +163,46 @@ export function TemplateEditor({ initialTemplate }: TemplateEditorProps) {
   const handleSectionDelete = async (sectionToDelete: Section) => {
     setIsSaving(true);
     try {
-      const response = await fetch(
-        `/api/templates/${template._id}/sections/${sectionToDelete.id}`,
-        {
-          method: "DELETE",
-        }
-      );
+      console.log("Template ID:", template._id);
+      console.log("Section ID:", sectionToDelete.id);
 
-      if (!response.ok) throw new Error("Erreur lors de la suppression");
+      // Construction de l'URL avec les paramètres de requête
+      const url = new URL(
+        `/api/templates/${template._id}/sections/${sectionToDelete.id}`,
+        window.location.origin
+      );
+      url.searchParams.set("id", template._id);
+      url.searchParams.set("sectionId", sectionToDelete.id);
+
+      const response = await fetch(url.toString(), {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Erreur lors de la suppression");
+      }
 
       setTemplate((prev) => ({
         ...prev,
         sections: prev.sections.filter((s) => s.id !== sectionToDelete.id),
       }));
+
+      toast({
+        title: "Succès",
+        description: data.message || "Section supprimée avec succès",
+      });
     } catch (error) {
       console.error("Erreur:", error);
+      toast({
+        variant: "destructive",
+        title: "Erreur",
+        description: "Impossible de supprimer la section",
+      });
     } finally {
       setIsSaving(false);
     }
@@ -214,6 +276,7 @@ export function TemplateEditor({ initialTemplate }: TemplateEditorProps) {
             device={device}
             handleDeviceChange={handleDeviceChange}
             isLoading={isLoading}
+            templateId={template._id}
           />
         )}
       </div>

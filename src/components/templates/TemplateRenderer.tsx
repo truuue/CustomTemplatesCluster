@@ -45,11 +45,21 @@ export function TemplateRenderer({
       ? "cursor-pointer hover:outline hover:outline-2 hover:outline-primary hover:outline-offset-2"
       : "";
 
-    const wrapSection = (component: React.ReactNode) => (
-      <div key={section.id} id={section.id} className={sectionClasses}>
-        {component}
-      </div>
-    );
+    const wrapSection = (component: React.ReactNode) => {
+      const sectionContent = component as JSX.Element;
+      const html = sectionContent?.props?.children?.toString() || "";
+
+      return (
+        <div
+          key={section.id}
+          id={section.id}
+          className={sectionClasses}
+          data-html={html}
+        >
+          {component}
+        </div>
+      );
+    };
 
     switch (section.type) {
       case "header":

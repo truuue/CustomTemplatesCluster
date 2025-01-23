@@ -7,13 +7,15 @@ export interface Section {
     | "pricing"
     | "testimonials"
     | "contact"
-    | "footer";
+    | "footer"
+    | "stats";
   content:
     | HeaderContent
     | HeroContent
     | PricingContent
     | TestimonialContent
     | ContactContent
+    | StatsContent
     | {
         title?: string;
         subtitle?: string;
@@ -74,6 +76,7 @@ export interface Section {
 export interface HeroContent {
   title?: string;
   subtitle?: string;
+  ctaText?: string;
   buttons?: Array<{
     text: string;
     url: string;
@@ -154,4 +157,14 @@ export interface ContactContent {
   subtitle?: string;
   email?: string;
   buttons: ContactButton[];
+}
+
+export interface StatsContent {
+  title?: string;
+  subtitle?: string;
+  stats: Array<{
+    value: string;
+    suffix?: string;
+    label: string;
+  }>;
 }
