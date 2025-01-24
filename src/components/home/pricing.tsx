@@ -127,9 +127,7 @@ export default function Pricing() {
                   </li>
                 ))}
               </ul>
-              <Button className="w-full text-base">
-                Commencer l&apos;essai gratuit
-              </Button>
+              <Button className="w-full text-base">S&apos;abonner</Button>
             </div>
           </motion.div>
         </motion.div>
