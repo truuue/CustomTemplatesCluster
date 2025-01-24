@@ -11,11 +11,15 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useSessionId } from "@/hooks/useSessionId";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function NewTemplate() {
   const router = useRouter();
+  const { data: session } = useSession();
+  const sessionId = useSessionId();
   const [templateInfo, setTemplateInfo] = useState({
     name: "",
     description: "",
@@ -41,6 +45,8 @@ export default function NewTemplate() {
         body: JSON.stringify({
           ...templateInfo,
           sections: [],
+          userId: session?.user?.id || null,
+          sessionId: !session?.user?.id ? sessionId : null,
         }),
       });
 
@@ -64,7 +70,9 @@ export default function NewTemplate() {
               Créer un nouveau template
             </CardTitle>
             <CardDescription className="text-sm sm:text-base">
-              Commencez par donner un nom et une description à votre template
+              {session?.user
+                ? "Commencez par donner un nom et une description à votre template"
+                : "Vous pouvez créer un template sans compte. Il sera lié à votre compte quand vous vous connecterez."}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">

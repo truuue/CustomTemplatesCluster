@@ -8,12 +8,12 @@ import { authOptions } from "../../../../pages/api/auth/[...nextauth]";
 export async function GET() {
   try {
     const session = await getServerSession(authOptions);
+    const db = await connectToDatabase();
 
     if (!session?.user?.id) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
-    const db = await connectToDatabase();
     const templates = await db
       .collection("templates")
       .find({ userId: session.user.id })
@@ -36,12 +36,8 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const session = await getServerSession(authOptions);
-    if (!session?.user?.id) {
-      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
-    }
-
     const data = await request.json();
-    console.log("Données reçues:", data); // Pour le débogage
+    console.log("Données reçues:", data);
 
     // Validation du template
     const validationResult = templateSchema.safeParse(data);
@@ -60,7 +56,8 @@ export async function POST(request: Request) {
 
     const template = {
       ...validationResult.data,
-      userId: session.user.id,
+      userId: session?.user?.id || null,
+      sessionId: !session?.user?.id ? data.sessionId : null,
       createdAt: new Date(),
       updatedAt: new Date(),
     };
@@ -80,6 +77,51 @@ export async function POST(request: Request) {
               ? error.message
               : "Une erreur est survenue",
       },
+      { status: 500 }
+    );
+  }
+}
+
+export async function PUT(request: Request) {
+  try {
+    const session = await getServerSession(authOptions);
+    const data = await request.json();
+    const { templateId, sessionId } = data;
+
+    if (!session?.user?.id) {
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+    }
+
+    const db = await connectToDatabase();
+
+    // Mettre à jour le template avec l'ID de l'utilisateur
+    const result = await db.collection("templates").updateOne(
+      {
+        _id: templateId,
+        sessionId: sessionId,
+        userId: null,
+      },
+      {
+        $set: {
+          userId: session.user.id,
+          sessionId: null,
+          updatedAt: new Date(),
+        },
+      }
+    );
+
+    if (result.matchedCount === 0) {
+      return NextResponse.json(
+        { error: "Template non trouvé ou déjà lié" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json(
+      { error: "Une erreur est survenue" },
       { status: 500 }
     );
   }

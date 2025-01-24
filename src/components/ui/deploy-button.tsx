@@ -2,6 +2,8 @@ import { useToast } from "@/hooks/use-toast";
 import { generateDeploymentZip } from "@/lib/deploy-utils";
 import { Template } from "@/types/template";
 import { Loader2 } from "lucide-react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button } from "./button";
 
@@ -18,8 +20,24 @@ interface DeployButtonProps {
 export function DeployButton({ template, assets }: DeployButtonProps) {
   const [isDeploying, setIsDeploying] = useState(false);
   const { toast } = useToast();
+  const { data: session } = useSession();
+  const router = useRouter();
 
   const handleDeploy = async () => {
+    if (!session) {
+      toast({
+        title: "Création de compte requise",
+        description:
+          "Créez un compte pour déployer votre template. Votre travail sera automatiquement lié à votre compte.",
+        action: (
+          <Button variant="default" onClick={() => router.push("/login")}>
+            Se connecter
+          </Button>
+        ),
+      });
+      return;
+    }
+
     setIsDeploying(true);
     try {
       const zip = await generateDeploymentZip(template, assets);

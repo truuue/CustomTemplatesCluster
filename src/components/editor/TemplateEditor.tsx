@@ -10,9 +10,11 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { useToast } from "@/hooks/use-toast";
+import { useSessionId } from "@/hooks/useSessionId";
 import { DeviceType } from "@/types/editor";
 import { Section, Template } from "@/types/template";
 import { Brush, Menu } from "lucide-react";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
@@ -31,6 +33,8 @@ export function TemplateEditor({ initialTemplate }: TemplateEditorProps) {
   const [device, setDevice] = useState<DeviceType>("desktop");
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
+  const { data: session } = useSession();
+  const sessionId = useSessionId();
 
   const handleDeviceChange = (newDevice: DeviceType) => {
     setIsLoading(true);
@@ -57,7 +61,10 @@ export function TemplateEditor({ initialTemplate }: TemplateEditorProps) {
       const response = await fetch(`/api/templates/${template._id}/sections`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newSection),
+        body: JSON.stringify({
+          ...newSection,
+          sessionId: !session?.user?.id ? sessionId : null,
+        }),
       });
 
       if (!response.ok) throw new Error("Erreur lors de l'ajout de la section");
@@ -78,7 +85,6 @@ export function TemplateEditor({ initialTemplate }: TemplateEditorProps) {
   const handleSectionUpdate = async (updatedSection: Section) => {
     setIsSaving(true);
     try {
-      // Construction de l'URL avec les paramètres de requête
       const url = new URL(
         `/api/templates/${template._id}/sections/${updatedSection.id}`,
         window.location.origin
@@ -89,7 +95,10 @@ export function TemplateEditor({ initialTemplate }: TemplateEditorProps) {
       const response = await fetch(url.toString(), {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(updatedSection),
+        body: JSON.stringify({
+          ...updatedSection,
+          sessionId: !session?.user?.id ? sessionId : null,
+        }),
       });
 
       const data = await response.json();
@@ -124,7 +133,6 @@ export function TemplateEditor({ initialTemplate }: TemplateEditorProps) {
   const handleSectionsReorder = async (reorderedSections: Section[]) => {
     setIsSaving(true);
     try {
-      // Construction de l'URL avec les paramètres de requête
       const url = new URL(
         `/api/templates/${template._id}/sections/reorder`,
         window.location.origin
@@ -134,7 +142,10 @@ export function TemplateEditor({ initialTemplate }: TemplateEditorProps) {
       const response = await fetch(url.toString(), {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ sections: reorderedSections }),
+        body: JSON.stringify({
+          sections: reorderedSections,
+          sessionId: !session?.user?.id ? sessionId : null,
+        }),
       });
 
       const data = await response.json();
@@ -163,16 +174,13 @@ export function TemplateEditor({ initialTemplate }: TemplateEditorProps) {
   const handleSectionDelete = async (sectionToDelete: Section) => {
     setIsSaving(true);
     try {
-      console.log("Template ID:", template._id);
-      console.log("Section ID:", sectionToDelete.id);
-
-      // Construction de l'URL avec les paramètres de requête
       const url = new URL(
         `/api/templates/${template._id}/sections/${sectionToDelete.id}`,
         window.location.origin
       );
       url.searchParams.set("id", template._id);
       url.searchParams.set("sectionId", sectionToDelete.id);
+      url.searchParams.set("sessionId", !session?.user?.id ? sessionId : "");
 
       const response = await fetch(url.toString(), {
         method: "DELETE",

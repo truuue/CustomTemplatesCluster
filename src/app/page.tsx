@@ -14,21 +14,60 @@ import BackgroundGrid from "@/components/ui/background-grid";
 import { useToast } from "@/hooks/use-toast";
 import { cookies } from "@/lib/cookies";
 import { useSession } from "next-auth/react";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 export default function Home() {
   const { toast } = useToast();
-  const { status } = useSession();
+  const { status, data: session } = useSession();
+  const hasTriedLinking = useRef(false);
 
   useEffect(() => {
-    if (status === "authenticated" && !cookies.hasShownLoginToast()) {
-      toast({
-        title: "Connexion réussie",
-        description: "Vous êtes maintenant connecté",
-      });
-      cookies.setLoginToast();
-    }
-  }, [status, toast]);
+    const linkTemplates = async () => {
+      // Vérifier si la session est authentifiée et si nous n'avons pas déjà essayé de lier les templates
+      if (
+        status === "authenticated" &&
+        session?.user?.id &&
+        !hasTriedLinking.current
+      ) {
+        hasTriedLinking.current = true;
+        const sessionId = localStorage.getItem("temp_session_id");
+
+        if (sessionId) {
+          try {
+            const response = await fetch("/api/templates/link", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ sessionId }),
+            });
+
+            const data = await response.json();
+            if (response.ok && data.templatesLinked > 0) {
+              toast({
+                title: "Templates liés avec succès",
+                description: `${data.templatesLinked} template(s) ont été liés à votre compte.`,
+              });
+              // Supprimer l'ID de session après une liaison réussie
+              localStorage.removeItem("temp_session_id");
+            }
+          } catch (error) {
+            console.error("Erreur lors de la liaison des templates:", error);
+          }
+        }
+
+        if (!cookies.hasShownLoginToast()) {
+          toast({
+            title: "Connexion réussie",
+            description: "Vous êtes maintenant connecté",
+          });
+          cookies.setLoginToast();
+        }
+      }
+    };
+
+    linkTemplates();
+  }, [status, session, toast]);
 
   return (
     <div className="flex min-h-[100dvh] flex-col">
@@ -55,9 +94,6 @@ export default function Home() {
 
           {/* Testimonials Section avec animation */}
           <Testimonials />
-
-          {/* Statistiques Section */}
-          {/* <Stats /> */}
 
           {/* Questions Fréquentes Section */}
           <FAQ />

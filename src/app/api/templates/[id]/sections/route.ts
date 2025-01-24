@@ -10,30 +10,28 @@ export async function POST(
 ) {
   try {
     const session = await getServerSession(authOptions);
-
-    if (!session?.user?.id) {
-      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
-    }
-
     const resolvedParams = await context.params;
     const db = await connectToDatabase();
+    const data = await request.json();
+    const { sessionId } = data;
 
-    // Vérifier que le template appartient à l'utilisateur
+    // Vérifier que le template appartient à l'utilisateur ou correspond à la session
     const template = await db.collection("templates").findOne({
       _id: new ObjectId(resolvedParams.id),
-      userId: session.user.id,
+      $or: [
+        { userId: session?.user?.id },
+        { sessionId: sessionId, userId: null },
+      ],
     });
 
     if (!template) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
-    const [newSection] = await Promise.all([request.json()]);
-
     const result = await db
       .collection("templates")
       .updateOne({ _id: new ObjectId(resolvedParams.id) }, {
-        $push: { sections: newSection },
+        $push: { sections: data },
         $set: { updatedAt: new Date().toISOString() },
       } as any);
 
@@ -44,7 +42,7 @@ export async function POST(
       );
     }
 
-    return NextResponse.json(newSection);
+    return NextResponse.json(data);
   } catch (error) {
     return NextResponse.json(
       {

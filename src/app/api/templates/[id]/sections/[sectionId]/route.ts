@@ -8,14 +8,31 @@ import { authOptions } from "../../../../../../../pages/api/auth/[...nextauth]";
 export async function DELETE(req: NextRequest) {
   const id = req.nextUrl.searchParams.get("id");
   const sectionId = req.nextUrl.searchParams.get("sectionId");
+  const sessionId = req.nextUrl.searchParams.get("sessionId");
+
   if (!id || !sectionId) {
     return NextResponse.json(
       { error: "ID ou sectionId invalide" },
       { status: 400 }
     );
   }
+
   try {
+    const session = await getServerSession(authOptions);
     const db = await connectToDatabase();
+
+    // Vérifier que le template appartient à l'utilisateur ou correspond à la session
+    const template = await db.collection("templates").findOne({
+      _id: new ObjectId(id),
+      $or: [
+        { userId: session?.user?.id },
+        { sessionId: sessionId, userId: null },
+      ],
+    });
+
+    if (!template) {
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+    }
 
     const result = await db.collection("templates").updateOne(
       { _id: new ObjectId(id) },
@@ -48,19 +65,31 @@ export async function DELETE(req: NextRequest) {
 export async function PUT(req: NextRequest) {
   const id = req.nextUrl.searchParams.get("id");
   const sectionId = req.nextUrl.searchParams.get("sectionId");
+
   if (!id || !sectionId) {
     return NextResponse.json(
       { error: "ID ou sectionId invalide" },
       { status: 400 }
     );
   }
+
   try {
     const session = await getServerSession(authOptions);
-    if (!session?.user?.id) {
+    const db = await connectToDatabase();
+    const { sessionId, ...updatedSection } = await req.json();
+
+    // Vérifier que le template appartient à l'utilisateur ou correspond à la session
+    const template = await db.collection("templates").findOne({
+      _id: new ObjectId(id),
+      $or: [
+        { userId: session?.user?.id },
+        { sessionId: sessionId, userId: null },
+      ],
+    });
+
+    if (!template) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
-
-    const updatedSection = await req.json();
 
     // Validation de la section
     const validationResult = sectionSchema.safeParse(updatedSection);
@@ -70,8 +99,6 @@ export async function PUT(req: NextRequest) {
         { status: 400 }
       );
     }
-
-    const db = await connectToDatabase();
 
     const result = await db.collection("templates").updateOne(
       {

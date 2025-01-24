@@ -14,11 +14,7 @@ export async function PUT(req: NextRequest) {
 
   try {
     const session = await getServerSession(authOptions);
-    if (!session?.user?.id) {
-      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
-    }
-
-    const { sections } = await req.json();
+    const { sections, sessionId } = await req.json();
 
     // Validation des sections
     const validationResult = z.array(sectionSchema).safeParse(sections);
@@ -31,10 +27,13 @@ export async function PUT(req: NextRequest) {
 
     const db = await connectToDatabase();
 
-    // Vérifier que le template appartient à l'utilisateur
+    // Vérifier que le template appartient à l'utilisateur ou correspond à la session
     const template = await db.collection("templates").findOne({
       _id: new ObjectId(id),
-      userId: session.user.id,
+      $or: [
+        { userId: session?.user?.id },
+        { sessionId: sessionId, userId: null },
+      ],
     });
 
     if (!template) {
