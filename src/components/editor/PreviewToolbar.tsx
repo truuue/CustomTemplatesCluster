@@ -16,7 +16,7 @@ interface PreviewToolbarProps {
   device: DeviceType;
   handleDeviceChange: (device: DeviceType) => void;
   className?: string;
-  onSave: () => Promise<void>;
+  onSave?: () => Promise<void>;
 }
 
 export function PreviewToolbar({
@@ -43,6 +43,8 @@ export function PreviewToolbar({
       });
       return;
     }
+
+    if (!onSave) return;
 
     try {
       await onSave();

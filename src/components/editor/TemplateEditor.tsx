@@ -180,7 +180,9 @@ export function TemplateEditor({ initialTemplate }: TemplateEditorProps) {
       );
       url.searchParams.set("id", template._id);
       url.searchParams.set("sectionId", sectionToDelete.id);
-      url.searchParams.set("sessionId", !session?.user?.id ? sessionId : "");
+      if (!session?.user?.id && sessionId) {
+        url.searchParams.set("sessionId", sessionId);
+      }
 
       const response = await fetch(url.toString(), {
         method: "DELETE",
