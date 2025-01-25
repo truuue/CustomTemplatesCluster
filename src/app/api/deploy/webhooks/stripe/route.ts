@@ -3,6 +3,16 @@ import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 
 export const POST = async (req: NextRequest) => {
+  const findUserFromCustomerId = async (stripeCustomerId: unknown) => {
+    if (typeof stripeCustomerId !== "string") return null;
+
+    return await prisma.user.findFirst({
+      where: {
+        stripeCustomerId: stripeCustomerId,
+      },
+    });
+  };
+
   const body = (await req.json()) as Stripe.Event;
 
   switch (body.type) {
@@ -75,14 +85,4 @@ export const POST = async (req: NextRequest) => {
     }
   }
   return NextResponse.json({ message: "Event handled" }, { status: 200 });
-};
-
-export const findUserFromCustomerId = async (stripeCustomerId: unknown) => {
-  if (typeof stripeCustomerId !== "string") return null;
-
-  return await prisma.user.findFirst({
-    where: {
-      stripeCustomerId: stripeCustomerId,
-    },
-  });
 };

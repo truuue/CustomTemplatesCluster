@@ -11,12 +11,14 @@ export default function Cancel() {
         </div>
         <h1 className="mb-2 text-2xl font-bold sm:text-3xl">Paiement annulé</h1>
         <p className="mb-8 px-4 text-base text-muted-foreground sm:px-0 sm:text-lg">
-          Le paiement a été annulé. Aucun montant n'a été débité de votre
+          Le paiement a été annulé. Aucun montant n&apos;a été débité de votre
           compte.
         </p>
         <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:gap-4">
           <Button className="w-full sm:w-auto" variant="destructive" asChild>
-            <Link href="/" id="pricing">Réessayer</Link>
+            <Link href="/" id="pricing">
+              Réessayer
+            </Link>
           </Button>
           <Button className="w-full sm:w-auto" variant="outline" asChild>
             <Link href="/">Retour à l&apos;accueil</Link>
