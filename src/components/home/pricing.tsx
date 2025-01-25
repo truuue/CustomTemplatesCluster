@@ -4,6 +4,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { Check } from "lucide-react";
+import Link from "next/link";
+import { BuyButton } from "../ui/buy-button";
 
 const container = {
   hidden: { opacity: 0 },
@@ -93,9 +95,11 @@ export default function Pricing() {
                   </li>
                 ))}
               </ul>
-              <Button className="w-full text-base" variant="outline">
-                Commencer gratuitement
-              </Button>
+              <Link href="/templates/new">
+                <Button className="w-full text-base" variant="outline">
+                  Commencer gratuitement
+                </Button>
+              </Link>
             </div>
           </motion.div>
 
@@ -127,7 +131,7 @@ export default function Pricing() {
                   </li>
                 ))}
               </ul>
-              <Button className="w-full text-base">S&apos;abonner</Button>
+              <BuyButton />
             </div>
           </motion.div>
         </motion.div>
