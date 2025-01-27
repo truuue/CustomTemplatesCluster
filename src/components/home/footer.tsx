@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { siteConfig } from "@/config/site";
 import { useToast } from "@/hooks/use-toast";
 import { scrollToSection } from "@/lib/utils";
 import { Brush } from "lucide-react";
@@ -106,12 +107,18 @@ export default function Footer() {
             <h4 className="mb-3 text-sm font-semibold sm:mb-4">Entreprise</h4>
             <ul className="space-y-3 text-sm text-muted-foreground transition-colors">
               <li>
-                <Link href="/about" className="hover:text-primary">
+                <Link
+                  href={siteConfig.links.about}
+                  className="hover:text-primary"
+                >
                   À propos
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="hover:text-primary">
+                <Link
+                  href={siteConfig.links.contact}
+                  className="hover:text-primary"
+                >
                   Contact
                 </Link>
               </li>
@@ -122,12 +129,18 @@ export default function Footer() {
         {/* Séparateur et copyright */}
         <div className="mt-8 border-t pt-6 sm:mt-12 sm:pt-8">
           <div className="flex flex-col items-center justify-between gap-4 text-center text-sm text-muted-foreground sm:flex-row">
-            <p>© 2024 Showcaser. Tous droits réservés.</p>
+            <p>© 2024 {siteConfig.name}. Tous droits réservés.</p>
             <div className="flex flex-wrap justify-center gap-4 transition-colors">
-              <Link href="/privacy" className="hover:text-primary">
+              <Link
+                href={siteConfig.links.privacy}
+                className="hover:text-primary"
+              >
                 Confidentialité
               </Link>
-              <Link href="/terms" className="hover:text-primary">
+              <Link
+                href={siteConfig.links.terms}
+                className="hover:text-primary"
+              >
                 CGU
               </Link>
               <button
