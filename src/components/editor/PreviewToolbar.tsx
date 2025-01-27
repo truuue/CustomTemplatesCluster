@@ -11,6 +11,7 @@ import { DeviceType } from "@/types/editor";
 import { Monitor, Save, Smartphone, Tablet } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import ReturnButton from "../ui/return-button";
 
 interface PreviewToolbarProps {
   device: DeviceType;
@@ -62,64 +63,73 @@ export function PreviewToolbar({
   };
 
   return (
-    <div className={`flex items-center gap-1 ${className}`}>
+    <div className={`flex w-full items-center justify-between ${className}`}>
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button
-            variant="default"
-            size="icon"
-            className="mr-4 h-8 w-8"
-            onClick={handleSave}
-          >
-            <Save className="size-4" />
-            <span className="sr-only">Sauvegarder</span>
-          </Button>
+          <ReturnButton />
         </TooltipTrigger>
-        <TooltipContent>Sauvegarder</TooltipContent>
+        <TooltipContent>Retour</TooltipContent>
       </Tooltip>
 
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Button
-            variant={device === "desktop" ? "default" : "ghost"}
-            size="icon"
-            className="h-8 w-8"
-            onClick={() => handleDeviceChange("desktop")}
-          >
-            <Monitor className="size-4" />
-            <span className="sr-only">Vue bureau</span>
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent>Vue bureau</TooltipContent>
-      </Tooltip>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Button
-            variant={device === "tablet" ? "default" : "ghost"}
-            size="icon"
-            className="h-8 w-8"
-            onClick={() => handleDeviceChange("tablet")}
-          >
-            <Tablet className="size-4" />
-            <span className="sr-only">Vue tablette</span>
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent>Vue tablette</TooltipContent>
-      </Tooltip>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Button
-            variant={device === "mobile" ? "default" : "ghost"}
-            size="icon"
-            className="h-8 w-8"
-            onClick={() => handleDeviceChange("mobile")}
-          >
-            <Smartphone className="size-4" />
-            <span className="sr-only">Vue mobile</span>
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent>Vue mobile</TooltipContent>
-      </Tooltip>
+      <div className="flex items-center gap-1">
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              variant="default"
+              size="icon"
+              className="mr-4 h-8 w-8"
+              onClick={handleSave}
+            >
+              <Save className="size-4" />
+              <span className="sr-only">Sauvegarder</span>
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>Sauvegarder</TooltipContent>
+        </Tooltip>
+
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              variant={device === "desktop" ? "default" : "ghost"}
+              size="icon"
+              className="h-8 w-8"
+              onClick={() => handleDeviceChange("desktop")}
+            >
+              <Monitor className="size-4" />
+              <span className="sr-only">Vue bureau</span>
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>Vue bureau</TooltipContent>
+        </Tooltip>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              variant={device === "tablet" ? "default" : "ghost"}
+              size="icon"
+              className="h-8 w-8"
+              onClick={() => handleDeviceChange("tablet")}
+            >
+              <Tablet className="size-4" />
+              <span className="sr-only">Vue tablette</span>
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>Vue tablette</TooltipContent>
+        </Tooltip>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              variant={device === "mobile" ? "default" : "ghost"}
+              size="icon"
+              className="h-8 w-8"
+              onClick={() => handleDeviceChange("mobile")}
+            >
+              <Smartphone className="size-4" />
+              <span className="sr-only">Vue mobile</span>
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>Vue mobile</TooltipContent>
+        </Tooltip>
+      </div>
     </div>
   );
 }

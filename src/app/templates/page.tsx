@@ -15,6 +15,7 @@ import BackgroundGrid from "@/components/ui/background-grid";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
+import ReturnButton from "@/components/ui/return-button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
@@ -179,13 +180,7 @@ export default function TemplatesPage() {
       <div className="mb-8 space-y-4 md:space-y-0">
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div className="flex items-center gap-4">
-            <Button
-              variant="ghost"
-              onClick={() => window.history.back()}
-              className="shrink-0"
-            >
-              ← Retour
-            </Button>
+            <ReturnButton />
             <h1 className="text-2xl font-bold sm:text-3xl">Mes Templates</h1>
           </div>
 
