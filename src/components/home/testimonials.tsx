@@ -33,6 +33,45 @@ export default function Testimonials() {
     },
   };
 
+  const testimonials = [
+    {
+      content:
+        "C'est un outil incroyable qui permet de créer une landing page facilement et rapidement.",
+      author: "Fabien (Dieu)",
+      role: "SWE, Holberton",
+    },
+    {
+      content:
+        "Cette solution web est impréssionnante de tant elle facilite la création de landing page.",
+      author: "Yoann",
+      role: "Développeur C#",
+    },
+    {
+      content:
+        "Une interface intuitive et des fonctionnalités qui m'ont permis de concevoir une page rapidement !",
+      author: "Pierre",
+      role: "Développeur ML",
+    },
+    {
+      content:
+        "C'est tout simplement la meilleure solution pour créer des landing pages modernes et réactives sans effort.",
+      author: "Hugo",
+      role: "Développeur Fullstack",
+    },
+    {
+      content:
+        "Grâce à cet outil, j'ai économisé des heures de travail. Le rendu est impeccable !",
+      author: "Cathy",
+      role: "Développeuse Fullstack",
+    },
+    {
+      content:
+        "Grâce à cet outil, j'ai économisé des heures de travail. Le rendu est impeccable !",
+      author: "Valentin",
+      role: "Développeuse Fullstack",
+    },
+  ];
+
   return (
     <section
       className="relative w-full overflow-hidden bg-transparent py-24"
@@ -62,113 +101,33 @@ export default function Testimonials() {
             className="w-full"
           >
             <CarouselContent>
-              {/* Premier témoignage */}
-              <CarouselItem className="md:basis-1/3">
-                <motion.div variants={item}>
-                  <div className="group relative rounded-2xl border border-primary/20 bg-card p-8 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
-                    <div className="mb-8">
-                      <p className="text-muted-foreground">
-                        &quot;Un outil incroyable qui m&apos;a permis de créer
-                        une landing page professionnelle en moins d&apos;une
-                        heure.&quot;
-                      </p>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <div className="absolute bottom-12 left-7 z-10 -rotate-12 text-4xl opacity-10">
-                        &quot;
-                      </div>
-                      <div className="size-12 overflow-hidden rounded-full bg-primary/10" />
-                      <div>
-                        <h4 className="font-semibold">Sophie Martin</h4>
-                        <p className="text-sm text-muted-foreground">
-                          Fondatrice, TechStart
+              {testimonials.map((testimonial, index) => (
+                <CarouselItem key={index} className="md:basis-1/3">
+                  <motion.div variants={item}>
+                    <div className="group relative rounded-2xl border border-primary/20 bg-card p-8 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
+                      <div className="mb-8">
+                        <p className="text-muted-foreground">
+                          &quot;{testimonial.content}&quot;
                         </p>
                       </div>
-                    </div>
-                  </div>
-                </motion.div>
-              </CarouselItem>
-
-              {/* Deuxième témoignage */}
-              <CarouselItem className="md:basis-1/3">
-                <motion.div variants={item}>
-                  <div className="group relative rounded-2xl border border-primary/20 bg-card p-8 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
-                    <div className="mb-8">
-                      <p className="text-muted-foreground">
-                        &quot;Un outil incroyable qui m&apos;a permis de créer
-                        une landing page professionnelle en moins d&apos;une
-                        heure.&quot;
-                      </p>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <div className="absolute bottom-12 left-7 z-10 -rotate-12 text-4xl opacity-10">
-                        &quot;
-                      </div>
-                      <div className="size-12 overflow-hidden rounded-full bg-primary/10" />
-                      <div>
-                        <h4 className="font-semibold">Sophie Martin</h4>
-                        <p className="text-sm text-muted-foreground">
-                          Fondatrice, TechStart
-                        </p>
+                      <div className="flex items-center gap-4">
+                        <div className="absolute bottom-12 left-7 z-10 -rotate-12 text-4xl opacity-10">
+                          &quot;
+                        </div>
+                        <div className="size-12 overflow-hidden rounded-full bg-primary/10" />
+                        <div>
+                          <h4 className="font-semibold">
+                            {testimonial.author}
+                          </h4>
+                          <p className="text-sm text-muted-foreground">
+                            {testimonial.role}
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </motion.div>
-              </CarouselItem>
-
-              {/* Troisième témoignage */}
-              <CarouselItem className="md:basis-1/3">
-                <motion.div variants={item}>
-                  <div className="group relative rounded-2xl border border-primary/20 bg-card p-8 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
-                    <div className="mb-8">
-                      <p className="text-muted-foreground">
-                        &quot;Un outil incroyable qui m&apos;a permis de créer
-                        une landing page professionnelle en moins d&apos;une
-                        heure.&quot;
-                      </p>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <div className="absolute bottom-12 left-7 z-10 -rotate-12 text-4xl opacity-10">
-                        &quot;
-                      </div>
-                      <div className="size-12 overflow-hidden rounded-full bg-primary/10" />
-                      <div>
-                        <h4 className="font-semibold">Sophie Martin</h4>
-                        <p className="text-sm text-muted-foreground">
-                          Fondatrice, TechStart
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              </CarouselItem>
-
-              {/* Quatrième témoignage */}
-              <CarouselItem className="md:basis-1/3">
-                <motion.div variants={item}>
-                  <div className="group relative rounded-2xl border border-primary/20 bg-card p-8 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
-                    <div className="mb-8">
-                      <p className="text-muted-foreground">
-                        &quot;Un outil incroyable qui m&apos;a permis de créer
-                        une landing page professionnelle en moins d&apos;une
-                        heure.&quot;
-                      </p>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <div className="absolute bottom-12 left-7 z-10 -rotate-12 text-4xl opacity-10">
-                        &quot;
-                      </div>
-                      <div className="size-12 overflow-hidden rounded-full bg-primary/10" />
-                      <div>
-                        <h4 className="font-semibold">Sophie Martin</h4>
-                        <p className="text-sm text-muted-foreground">
-                          Fondatrice, TechStart
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              </CarouselItem>
+                  </motion.div>
+                </CarouselItem>
+              ))}
             </CarouselContent>
 
             <CarouselPrevious className="absolute -left-12 top-1/2 hidden lg:flex" />
