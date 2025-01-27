@@ -70,7 +70,7 @@ export default function Home() {
   }, [status, session, toast]);
 
   return (
-    <div className="flex min-h-[100dvh] flex-col">
+    <div className="flex min-h-[100dvh] flex-col" id="top">
       {/* Header */}
       <Header />
 

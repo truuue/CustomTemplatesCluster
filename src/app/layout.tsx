@@ -3,6 +3,7 @@ import { ThemeProvider } from "@/components/providers/theme-provider";
 import { CookieConsent } from "@/components/ui/cookie-consent";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { cn } from "@/lib/utils";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
@@ -39,7 +40,12 @@ export default function RootLayout({
   return (
     <html lang="fr" suppressHydrationWarning>
       <head />
-      <body className={poppins.className}>
+      <body
+        className={cn(
+          "min-h-screen bg-background font-sans antialiased",
+          poppins.className
+        )}
+      >
         <SessionProvider>
           <ThemeProvider
             attribute="class"
