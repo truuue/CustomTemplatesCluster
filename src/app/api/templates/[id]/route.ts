@@ -115,9 +115,9 @@ export async function PUT(req: NextRequest) {
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
-  const { id } = params;
+  const { id } = context.params;
   if (!id) {
     return NextResponse.json({ error: "ID invalide" }, { status: 400 });
   }
