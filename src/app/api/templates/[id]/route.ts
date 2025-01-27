@@ -113,9 +113,11 @@ export async function PUT(req: NextRequest) {
   }
 }
 
-export async function DELETE(req: NextRequest) {
-  const url = new URL(req.url);
-  const id = url.searchParams.get("id");
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const { id } = params;
   if (!id) {
     return NextResponse.json({ error: "ID invalide" }, { status: 400 });
   }
@@ -129,7 +131,7 @@ export async function DELETE(req: NextRequest) {
     const db = await connectToDatabase();
 
     const result = await db.collection("templates").deleteOne({
-      _id: new ObjectId(id as string),
+      _id: new ObjectId(id),
       userId: session.user.id,
     });
 

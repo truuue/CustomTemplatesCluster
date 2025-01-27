@@ -61,23 +61,37 @@ export default function TemplatesPage() {
         method: "DELETE",
       });
 
-      if (!response.ok) throw new Error("Erreur lors de la suppression");
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          data.message || data.error || "Erreur lors de la suppression"
+        );
+      }
+
+      // Mise à jour de l'état local
+      setTemplates((prevTemplates) =>
+        prevTemplates.filter((t: any) => t._id !== templateToDelete)
+      );
 
       toast({
         title: "Succès",
         description: "Template supprimé avec succès",
       });
 
-      setTemplates(templates.filter((t: any) => t._id !== templateToDelete));
+      // Réinitialisation des états
+      setTemplateToDelete(null);
+      setIsDeleteDialogOpen(false);
     } catch (error) {
-      console.error("Erreur:", error);
+      console.error("Erreur complète:", error);
       toast({
         variant: "destructive",
         title: "Erreur",
-        description: "Impossible de supprimer le template",
+        description:
+          error instanceof Error
+            ? error.message
+            : "Impossible de supprimer le template",
       });
-    } finally {
-      setTemplateToDelete(null);
     }
   };
 
@@ -91,7 +105,7 @@ export default function TemplatesPage() {
 
   const handleMultipleDeleteConfirm = async () => {
     try {
-      const results = await Promise.all(
+      const responses = await Promise.all(
         selectedTemplates.map((id) =>
           fetch(`/api/templates/${id}`, {
             method: "DELETE",
@@ -99,8 +113,13 @@ export default function TemplatesPage() {
         )
       );
 
-      if (results.some((r) => !r.ok))
-        throw new Error("Erreur lors de la suppression");
+      const failedDeletions = responses.filter((r) => !r.ok);
+
+      if (failedDeletions.length > 0) {
+        throw new Error(
+          `${failedDeletions.length} template(s) n'ont pas pu être supprimés`
+        );
+      }
 
       toast({
         title: "Succès",
@@ -116,7 +135,10 @@ export default function TemplatesPage() {
       toast({
         variant: "destructive",
         title: "Erreur",
-        description: "Impossible de supprimer les templates sélectionnés",
+        description:
+          error instanceof Error
+            ? error.message
+            : "Impossible de supprimer les templates sélectionnés",
       });
     } finally {
       setIsDeleteDialogOpen(false);
