@@ -106,12 +106,12 @@ export default function Footer() {
             <h4 className="mb-3 text-sm font-semibold sm:mb-4">Entreprise</h4>
             <ul className="space-y-3 text-sm text-muted-foreground transition-colors">
               <li>
-                <Link href="#" className="hover:text-primary">
+                <Link href="/about" className="hover:text-primary">
                   À propos
                 </Link>
               </li>
               <li>
-                <Link href="#" className="hover:text-primary">
+                <Link href="/contact" className="hover:text-primary">
                   Contact
                 </Link>
               </li>
@@ -124,10 +124,10 @@ export default function Footer() {
           <div className="flex flex-col items-center justify-between gap-4 text-center text-sm text-muted-foreground sm:flex-row">
             <p>© 2024 Showcaser. Tous droits réservés.</p>
             <div className="flex flex-wrap justify-center gap-4 transition-colors">
-              <Link href="#" className="hover:text-primary">
+              <Link href="/privacy" className="hover:text-primary">
                 Confidentialité
               </Link>
-              <Link href="#" className="hover:text-primary">
+              <Link href="/terms" className="hover:text-primary">
                 CGU
               </Link>
               <button
