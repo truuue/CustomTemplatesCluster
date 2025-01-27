@@ -113,11 +113,8 @@ export async function PUT(req: NextRequest) {
   }
 }
 
-export async function DELETE(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
-  const { id } = params;
+export async function DELETE(req: NextRequest) {
+  const id = req.nextUrl.pathname.split("/").pop();
   if (!id) {
     return NextResponse.json({ error: "ID invalide" }, { status: 400 });
   }
