@@ -116,9 +116,9 @@ export default function Testimonials() {
                         </div>
                         <div className="size-12 overflow-hidden rounded-full bg-primary/10" />
                         <div>
-                          <h4 className="font-semibold">
+                          <h3 className="font-semibold">
                             {testimonial.author}
-                          </h4>
+                          </h3>
                           <p className="text-sm text-muted-foreground">
                             {testimonial.role}
                           </p>
