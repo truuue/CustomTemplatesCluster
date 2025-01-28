@@ -30,11 +30,11 @@ export function CookieConsent() {
     <div className="fixed bottom-0 left-0 right-0 z-40 border-t bg-background p-4 shadow-lg">
       <div className="container flex flex-col items-center justify-between gap-4 sm:flex-row">
         <div className="flex flex-col gap-2">
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-foreground/90">
             Nous utilisons des cookies essentiels pour le fonctionnement du site
             et des cookies d&apos;analyse pour améliorer votre expérience.
           </p>
-          <p className="text-xs text-gray-400">
+          <p className="text-xs text-foreground/70">
             Les cookies essentiels sont toujours activés car ils sont
             nécessaires au fonctionnement du site.
           </p>
