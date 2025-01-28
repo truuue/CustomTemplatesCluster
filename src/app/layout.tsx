@@ -39,7 +39,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr" suppressHydrationWarning>
-      <head />
+      <head>
+        <meta
+          name="google-site-verification"
+          content="GA6rQCMq0Kxq1QdxaqiousS6j-J_Ruz2yZ6Nv8SiTYE"
+        />
+      </head>
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased",
