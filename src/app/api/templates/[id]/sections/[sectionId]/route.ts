@@ -1,5 +1,4 @@
 import { connectToDatabase } from "@/config/database";
-import { sectionSchema } from "@/lib/validations/template";
 import { ObjectId } from "mongodb";
 import { getServerSession } from "next-auth/next";
 import { NextRequest, NextResponse } from "next/server";
@@ -66,9 +65,7 @@ export async function PUT(
   req: NextRequest,
   { params }: { params: { id: string; sectionId: string } }
 ) {
-  const { id, sectionId } = params;
-
-  if (!id || !sectionId) {
+  if (!params.id || !params.sectionId) {
     return NextResponse.json(
       { error: "ID ou sectionId invalide" },
       { status: 400 }
@@ -82,7 +79,7 @@ export async function PUT(
 
     // Vérifier que le template appartient à l'utilisateur ou correspond à la session
     const template = await db.collection("templates").findOne({
-      _id: new ObjectId(id),
+      _id: new ObjectId(params.id),
       $or: [
         { userId: session?.user?.id },
         { sessionId: sessionId, userId: null },
@@ -93,19 +90,10 @@ export async function PUT(
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
-    // Validation de la section
-    const validationResult = sectionSchema.safeParse(updatedSection);
-    if (!validationResult.success) {
-      return NextResponse.json(
-        { error: "Format de section invalide" },
-        { status: 400 }
-      );
-    }
-
     const result = await db.collection("templates").updateOne(
       {
-        _id: new ObjectId(id),
-        "sections.id": sectionId,
+        _id: new ObjectId(params.id),
+        "sections.id": params.sectionId,
       },
       {
         $set: {
