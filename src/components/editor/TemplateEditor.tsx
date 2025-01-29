@@ -85,34 +85,23 @@ export function TemplateEditor({ initialTemplate }: TemplateEditorProps) {
   const handleSectionUpdate = async (updatedSection: Section) => {
     setIsSaving(true);
     try {
-      console.log("Debug - Données complètes:", {
-        template: template,
-        updatedSection: updatedSection,
-        session: session,
-        sessionId: sessionId
-      });
+      const url = new URL(
+        `/api/templates/${template._id}/sections/${updatedSection.id}`,
+        window.location.origin
+      );
+      url.searchParams.set("id", template._id);
+      url.searchParams.set("sectionId", updatedSection.id);
 
-      // Construction de l'URL avec les paramètres dans la query string
-      let url = `/api/templates/${template._id}/sections/${updatedSection.id}?id=${template._id}&sectionId=${updatedSection.id}`;
-      if (!session?.user?.id && sessionId) {
-        url += `&sessionId=${sessionId}`;
-      }
-
-      console.log("Debug - URL:", url);
-
-      const response = await fetch(url, {
+      const response = await fetch(url.toString(), {
         method: "PUT",
-        headers: { 
-          "Content-Type": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...updatedSection,
           sessionId: !session?.user?.id ? sessionId : null,
-        })
+        }),
       });
 
       const data = await response.json();
-      console.log("Debug - Response:", data);
 
       if (!response.ok) {
         throw new Error(data.error || "Erreur lors de la mise à jour");
