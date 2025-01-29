@@ -62,10 +62,10 @@ export async function DELETE(req: NextRequest) {
 }
 
 export async function PUT(
-  req: NextRequest,
-  context: { params: { id: string; sectionId: string } }
+  req: Request,
+  { params }: { params: { id: string; sectionId: string } }
 ) {
-  const { id, sectionId } = context.params;
+  const { id, sectionId } = params;
 
   if (!id || !sectionId) {
     return NextResponse.json(
