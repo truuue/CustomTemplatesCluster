@@ -92,12 +92,9 @@ export function TemplateEditor({ initialTemplate }: TemplateEditorProps) {
         sessionId: sessionId
       });
 
-      const url = new URL(
-        `/api/templates/${template._id}/sections/${updatedSection.id}`,
-        window.location.origin
-      );
-      url.searchParams.set("id", template._id);
-      url.searchParams.set("sectionId", updatedSection.id);
+      const baseUrl = `/api/templates/${template._id}/sections/${updatedSection.id}`;
+      const url = new URL(baseUrl, window.location.origin);
+      
       if (!session?.user?.id && sessionId) {
         url.searchParams.set("sessionId", sessionId);
       }
@@ -113,7 +110,10 @@ export function TemplateEditor({ initialTemplate }: TemplateEditorProps) {
 
       const response = await fetch(url.toString(), {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
         body: JSON.stringify(requestBody),
       });
 
