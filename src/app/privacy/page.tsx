@@ -39,7 +39,11 @@ export default function PrivacyPage() {
           </p>
           <ul className="list-inside list-disc space-y-2 text-muted-foreground">
             {siteConfig.legal.privacy.dataCollection.items?.map(
-              (item: string, index: number) => <li key={index}>{item}</li>
+              (item: string, index: number) => (
+                <li key={index}>
+                  {item.replace(/'/g, "&apos;").replace(/"/g, "&quot;")}
+                </li>
+              )
             )}
           </ul>
         </section>
