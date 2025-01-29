@@ -5,15 +5,10 @@ import { getServerSession } from "next-auth/next";
 import { NextRequest, NextResponse } from "next/server";
 import { authOptions } from "../../../../../../../pages/api/auth/[...nextauth]";
 
-type Props = {
-  params: {
-    id: string;
-    sectionId: string;
-  };
-};
-
-export async function DELETE(req: NextRequest, { params }: Props) {
-  const { id, sectionId } = params;
+export async function DELETE(req: NextRequest) {
+  const id = req.nextUrl.searchParams.get("id");
+  const sectionId = req.nextUrl.searchParams.get("sectionId");
+  const sessionId = req.nextUrl.searchParams.get("sessionId");
 
   if (!id || !sectionId) {
     return NextResponse.json(
@@ -25,7 +20,6 @@ export async function DELETE(req: NextRequest, { params }: Props) {
   try {
     const session = await getServerSession(authOptions);
     const db = await connectToDatabase();
-    const sessionId = req.nextUrl.searchParams.get("sessionId");
 
     // Vérifier que le template appartient à l'utilisateur ou correspond à la session
     const template = await db.collection("templates").findOne({
@@ -68,8 +62,9 @@ export async function DELETE(req: NextRequest, { params }: Props) {
   }
 }
 
-export async function PUT(req: NextRequest, { params }: Props) {
-  const { id, sectionId } = params;
+export async function PUT(req: NextRequest) {
+  const id = req.nextUrl.searchParams.get("id");
+  const sectionId = req.nextUrl.searchParams.get("sectionId");
 
   if (!id || !sectionId) {
     return NextResponse.json(

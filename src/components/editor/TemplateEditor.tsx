@@ -89,9 +89,8 @@ export function TemplateEditor({ initialTemplate }: TemplateEditorProps) {
         `/api/templates/${template._id}/sections/${updatedSection.id}`,
         window.location.origin
       );
-      if (!session?.user?.id && sessionId) {
-        url.searchParams.set("sessionId", sessionId);
-      }
+      url.searchParams.set("id", template._id);
+      url.searchParams.set("sectionId", updatedSection.id);
 
       const response = await fetch(url.toString(), {
         method: "PUT",
@@ -179,6 +178,8 @@ export function TemplateEditor({ initialTemplate }: TemplateEditorProps) {
         `/api/templates/${template._id}/sections/${sectionToDelete.id}`,
         window.location.origin
       );
+      url.searchParams.set("id", template._id);
+      url.searchParams.set("sectionId", sectionToDelete.id);
       if (!session?.user?.id && sessionId) {
         url.searchParams.set("sessionId", sessionId);
       }
