@@ -85,8 +85,12 @@ export function TemplateEditor({ initialTemplate }: TemplateEditorProps) {
   const handleSectionUpdate = async (updatedSection: Section) => {
     setIsSaving(true);
     try {
-      console.log("Debug - template._id:", template._id);
-      console.log("Debug - updatedSection.id:", updatedSection.id);
+      console.log("Debug - Données complètes:", {
+        template: template,
+        updatedSection: updatedSection,
+        session: session,
+        sessionId: sessionId
+      });
 
       const url = new URL(
         `/api/templates/${template._id}/sections/${updatedSection.id}`,
@@ -94,19 +98,27 @@ export function TemplateEditor({ initialTemplate }: TemplateEditorProps) {
       );
       url.searchParams.set("id", template._id);
       url.searchParams.set("sectionId", updatedSection.id);
+      if (!session?.user?.id && sessionId) {
+        url.searchParams.set("sessionId", sessionId);
+      }
 
       console.log("Debug - URL complète:", url.toString());
+      
+      const requestBody = {
+        ...updatedSection,
+        sessionId: !session?.user?.id ? sessionId : null,
+      };
+      
+      console.log("Debug - Request body:", requestBody);
 
       const response = await fetch(url.toString(), {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...updatedSection,
-          sessionId: !session?.user?.id ? sessionId : null,
-        }),
+        body: JSON.stringify(requestBody),
       });
 
       const data = await response.json();
+      console.log("Debug - Response:", data);
 
       if (!response.ok) {
         throw new Error(data.error || "Erreur lors de la mise à jour");
