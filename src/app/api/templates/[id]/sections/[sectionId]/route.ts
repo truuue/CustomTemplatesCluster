@@ -5,10 +5,14 @@ import { getServerSession } from "next-auth/next";
 import { NextRequest, NextResponse } from "next/server";
 import { authOptions } from "../../../../../../../pages/api/auth/[...nextauth]";
 
-export async function DELETE(
-  req: NextRequest,
-  { params }: { params: { id: string; sectionId: string } }
-) {
+type Props = {
+  params: {
+    id: string;
+    sectionId: string;
+  };
+};
+
+export async function DELETE(req: NextRequest, { params }: Props) {
   const { id, sectionId } = params;
 
   if (!id || !sectionId) {
@@ -64,10 +68,7 @@ export async function DELETE(
   }
 }
 
-export async function PUT(
-  req: NextRequest,
-  { params }: { params: { id: string; sectionId: string } }
-) {
+export async function PUT(req: NextRequest, { params }: Props) {
   const { id, sectionId } = params;
 
   if (!id || !sectionId) {
