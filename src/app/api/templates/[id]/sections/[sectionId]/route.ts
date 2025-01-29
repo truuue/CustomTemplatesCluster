@@ -1,4 +1,5 @@
 import { connectToDatabase } from "@/config/database";
+import { sectionSchema } from "@/lib/validations/template";
 import { ObjectId } from "mongodb";
 import { getServerSession } from "next-auth/next";
 import { NextRequest, NextResponse } from "next/server";
@@ -61,11 +62,9 @@ export async function DELETE(req: NextRequest) {
   }
 }
 
-export async function PUT(
-  req: Request,
-  { params }: { params: { id: string; sectionId: string } }
-) {
-  const { id, sectionId } = params;
+export async function PUT(req: NextRequest) {
+  const id = req.nextUrl.searchParams.get("id");
+  const sectionId = req.nextUrl.searchParams.get("sectionId");
 
   if (!id || !sectionId) {
     return NextResponse.json(
@@ -90,6 +89,15 @@ export async function PUT(
 
     if (!template) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+    }
+
+    // Validation de la section
+    const validationResult = sectionSchema.safeParse(updatedSection);
+    if (!validationResult.success) {
+      return NextResponse.json(
+        { error: "Format de section invalide" },
+        { status: 400 }
+      );
     }
 
     const result = await db.collection("templates").updateOne(

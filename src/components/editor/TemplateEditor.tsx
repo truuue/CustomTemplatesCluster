@@ -85,17 +85,21 @@ export function TemplateEditor({ initialTemplate }: TemplateEditorProps) {
   const handleSectionUpdate = async (updatedSection: Section) => {
     setIsSaving(true);
     try {
-      const response = await fetch(
+      const url = new URL(
         `/api/templates/${template._id}/sections/${updatedSection.id}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            ...updatedSection,
-            sessionId: !session?.user?.id ? sessionId : null,
-          }),
-        }
+        window.location.origin
       );
+      url.searchParams.set("id", template._id);
+      url.searchParams.set("sectionId", updatedSection.id);
+
+      const response = await fetch(url.toString(), {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...updatedSection,
+          sessionId: !session?.user?.id ? sessionId : null,
+        }),
+      });
 
       const data = await response.json();
 
