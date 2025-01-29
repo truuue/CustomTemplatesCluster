@@ -63,9 +63,11 @@ export async function DELETE(req: NextRequest) {
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string; sectionId: string } }
+  context: { params: { id: string; sectionId: string } }
 ) {
-  if (!params.id || !params.sectionId) {
+  const { id, sectionId } = context.params;
+
+  if (!id || !sectionId) {
     return NextResponse.json(
       { error: "ID ou sectionId invalide" },
       { status: 400 }
@@ -79,7 +81,7 @@ export async function PUT(
 
     // Vérifier que le template appartient à l'utilisateur ou correspond à la session
     const template = await db.collection("templates").findOne({
-      _id: new ObjectId(params.id),
+      _id: new ObjectId(id),
       $or: [
         { userId: session?.user?.id },
         { sessionId: sessionId, userId: null },
@@ -92,8 +94,8 @@ export async function PUT(
 
     const result = await db.collection("templates").updateOne(
       {
-        _id: new ObjectId(params.id),
-        "sections.id": params.sectionId,
+        _id: new ObjectId(id),
+        "sections.id": sectionId,
       },
       {
         $set: {
