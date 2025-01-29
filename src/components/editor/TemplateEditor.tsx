@@ -92,20 +92,19 @@ export function TemplateEditor({ initialTemplate }: TemplateEditorProps) {
         sessionId: sessionId
       });
 
-      const baseUrl = `/api/templates/${template._id}/sections/${updatedSection.id}`;
-      const url = new URL(baseUrl, window.location.origin);
+      const url = new URL(
+        `/api/templates/${template._id}/sections/${updatedSection.id}`,
+        window.location.origin
+      );
       
-      url.searchParams.set("id", template._id);
-      url.searchParams.set("sectionId", updatedSection.id);
       if (!session?.user?.id && sessionId) {
         url.searchParams.set("sessionId", sessionId);
       }
 
       console.log("Debug - URL complète:", url.toString());
       
-      const { id, ...sectionWithoutId } = updatedSection;
       const requestBody = {
-        ...sectionWithoutId,
+        ...updatedSection,
         sessionId: !session?.user?.id ? sessionId : null,
       };
       
@@ -118,6 +117,7 @@ export function TemplateEditor({ initialTemplate }: TemplateEditorProps) {
           "Accept": "application/json"
         },
         body: JSON.stringify(requestBody),
+        cache: 'no-store'
       });
 
       const data = await response.json();
