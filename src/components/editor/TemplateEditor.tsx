@@ -95,14 +95,17 @@ export function TemplateEditor({ initialTemplate }: TemplateEditorProps) {
       const baseUrl = `/api/templates/${template._id}/sections/${updatedSection.id}`;
       const url = new URL(baseUrl, window.location.origin);
       
+      url.searchParams.set("id", template._id);
+      url.searchParams.set("sectionId", updatedSection.id);
       if (!session?.user?.id && sessionId) {
         url.searchParams.set("sessionId", sessionId);
       }
 
       console.log("Debug - URL complète:", url.toString());
       
+      const { id, ...sectionWithoutId } = updatedSection;
       const requestBody = {
-        ...updatedSection,
+        ...sectionWithoutId,
         sessionId: !session?.user?.id ? sessionId : null,
       };
       
