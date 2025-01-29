@@ -92,31 +92,16 @@ export function TemplateEditor({ initialTemplate }: TemplateEditorProps) {
         sessionId: sessionId
       });
 
-      const url = new URL(
-        `/api/templates/${template._id}/sections/${updatedSection.id}`,
-        window.location.origin
-      );
-      
-      if (!session?.user?.id && sessionId) {
-        url.searchParams.set("sessionId", sessionId);
-      }
-
-      console.log("Debug - URL complète:", url.toString());
-      
-      const requestBody = {
-        ...updatedSection,
-        sessionId: !session?.user?.id ? sessionId : null,
-      };
-      
-      console.log("Debug - Request body:", requestBody);
-
-      const response = await fetch(url.toString(), {
+      const response = await fetch(`/api/templates/${template._id}/sections/${updatedSection.id}`, {
         method: "PUT",
         headers: { 
           "Content-Type": "application/json",
           "Accept": "application/json"
         },
-        body: JSON.stringify(requestBody),
+        body: JSON.stringify({
+          ...updatedSection,
+          sessionId: !session?.user?.id ? sessionId : null,
+        }),
         cache: 'no-store'
       });
 
