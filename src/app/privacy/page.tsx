@@ -38,10 +38,8 @@ export default function PrivacyPage() {
             {siteConfig.legal.privacy.dataCollection.intro}
           </p>
           <ul className="list-inside list-disc space-y-2 text-muted-foreground">
-            {siteConfig.legal.privacy.dataCollection.items.map(
-              (item: string, index: number) => (
-                <li key={index}>{item}</li>
-              )
+            {siteConfig.legal.privacy.dataCollection.items?.map(
+              (item: string, index: number) => <li key={index}>{item}</li>
             )}
           </ul>
         </section>
