@@ -66,12 +66,6 @@ export async function PUT(
   { params }: { params: { id: string; sectionId: string } }
 ) {
   try {
-    const session = await getServerSession(authOptions);
-
-    if (!session?.user?.id) {
-      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
-    }
-
     if (!ObjectId.isValid(params.id)) {
       return NextResponse.json(
         { error: "ID de template invalide" },
@@ -82,26 +76,13 @@ export async function PUT(
     const db = await connectToDatabase();
     const data = await request.json();
 
-    // Vérifier que le template appartient à l'utilisateur
-    const template = await db.collection("templates").findOne({
-      _id: new ObjectId(params.id),
-      userId: session.user.id,
-    });
-
-    if (!template) {
-      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
-    }
-
     const result = await db.collection("templates").updateOne(
       {
         _id: new ObjectId(params.id),
         "sections.id": params.sectionId,
       },
       {
-        $set: {
-          "sections.$": data,
-          updatedAt: new Date(),
-        },
+        $set: { "sections.$": data },
       }
     );
 
