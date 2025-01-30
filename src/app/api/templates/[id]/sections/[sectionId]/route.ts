@@ -1,4 +1,5 @@
 import { connectToDatabase } from "@/config/database";
+import { sectionSchema } from "@/lib/validations/template";
 import { ObjectId } from "mongodb";
 import { getServerSession } from "next-auth/next";
 import { NextRequest, NextResponse } from "next/server";
@@ -61,41 +62,73 @@ export async function DELETE(req: NextRequest) {
   }
 }
 
-export async function PUT(
-  request: Request,
-  { params }: { params: { id: string; sectionId: string } }
-) {
+export async function PUT(req: NextRequest) {
+  const id = req.nextUrl.searchParams.get("id");
+  const sectionId = req.nextUrl.searchParams.get("sectionId");
+
+  if (!id || !sectionId) {
+    return NextResponse.json(
+      { error: "ID ou sectionId invalide" },
+      { status: 400 }
+    );
+  }
+
   try {
-    if (!ObjectId.isValid(params.id)) {
+    const session = await getServerSession(authOptions);
+    const db = await connectToDatabase();
+    const { sessionId, ...updatedSection } = await req.json();
+
+    // Vérifier que le template appartient à l'utilisateur ou correspond à la session
+    const template = await db.collection("templates").findOne({
+      _id: new ObjectId(id),
+      $or: [
+        { userId: session?.user?.id },
+        { sessionId: sessionId, userId: null },
+      ],
+    });
+
+    if (!template) {
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+    }
+
+    // Validation de la section
+    const validationResult = sectionSchema.safeParse(updatedSection);
+    if (!validationResult.success) {
       return NextResponse.json(
-        { error: "ID de template invalide" },
+        { error: "Format de section invalide" },
         { status: 400 }
       );
     }
 
-    const db = await connectToDatabase();
-    const data = await request.json();
-
     const result = await db.collection("templates").updateOne(
       {
-        _id: new ObjectId(params.id),
-        "sections.id": params.sectionId,
+        _id: new ObjectId(id),
+        "sections.id": sectionId,
       },
       {
-        $set: { "sections.$": data },
+        $set: {
+          "sections.$": updatedSection,
+          updatedAt: new Date().toISOString(),
+        },
       }
     );
 
     if (result.matchedCount === 0) {
       return NextResponse.json(
-        { error: "Section non trouvée" },
+        { message: "Section non trouvée" },
         { status: 404 }
       );
     }
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json(updatedSection);
   } catch (error) {
-    console.error("Erreur lors de la mise à jour de la section:", error);
-    return NextResponse.json({ error: "Erreur serveur" }, { status: 500 });
+    return NextResponse.json(
+      {
+        status: "error",
+        message: "Erreur lors de la mise à jour de la section",
+        error: error instanceof Error ? error.message : "Erreur inconnue",
+      },
+      { status: 500 }
+    );
   }
 }

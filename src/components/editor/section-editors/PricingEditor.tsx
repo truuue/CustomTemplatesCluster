@@ -274,7 +274,7 @@ export function PricingEditor({ section, onUpdate }: PricingEditorProps) {
                             e.target.value
                           )
                         }
-                        placeholder="ex: S&apos;abonner"
+                        placeholder="ex: S'abonner"
                       />
                     </div>
                     <div>
@@ -307,7 +307,7 @@ export function PricingEditor({ section, onUpdate }: PricingEditorProps) {
             onValueChange={(value) => handleStyleChange("layout", value)}
           >
             <SelectTrigger>
-              <SelectValue placeholder="Choisir l&apos;alignement" />
+              <SelectValue placeholder="Choisir l'alignement" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="left">Gauche</SelectItem>
