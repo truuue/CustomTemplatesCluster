@@ -1,5 +1,4 @@
 import { connectToDatabase } from "@/config/database";
-import { sectionSchema } from "@/lib/validations/template";
 import { ObjectId } from "mongodb";
 import { getServerSession } from "next-auth/next";
 import { NextRequest, NextResponse } from "next/server";
@@ -62,73 +61,60 @@ export async function DELETE(req: NextRequest) {
   }
 }
 
-export async function PUT(req: NextRequest) {
-  const id = req.nextUrl.searchParams.get("id");
-  const sectionId = req.nextUrl.searchParams.get("sectionId");
-
-  if (!id || !sectionId) {
-    return NextResponse.json(
-      { error: "ID ou sectionId invalide" },
-      { status: 400 }
-    );
-  }
-
+export async function PUT(
+  request: Request,
+  { params }: { params: { id: string; sectionId: string } }
+) {
   try {
     const session = await getServerSession(authOptions);
-    const db = await connectToDatabase();
-    const { sessionId, ...updatedSection } = await req.json();
 
-    // Vérifier que le template appartient à l'utilisateur ou correspond à la session
+    if (!session?.user?.id) {
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+    }
+
+    if (!ObjectId.isValid(params.id)) {
+      return NextResponse.json(
+        { error: "ID de template invalide" },
+        { status: 400 }
+      );
+    }
+
+    const db = await connectToDatabase();
+    const data = await request.json();
+
+    // Vérifier que le template appartient à l'utilisateur
     const template = await db.collection("templates").findOne({
-      _id: new ObjectId(id),
-      $or: [
-        { userId: session?.user?.id },
-        { sessionId: sessionId, userId: null },
-      ],
+      _id: new ObjectId(params.id),
+      userId: session.user.id,
     });
 
     if (!template) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
-    // Validation de la section
-    const validationResult = sectionSchema.safeParse(updatedSection);
-    if (!validationResult.success) {
-      return NextResponse.json(
-        { error: "Format de section invalide" },
-        { status: 400 }
-      );
-    }
-
     const result = await db.collection("templates").updateOne(
       {
-        _id: new ObjectId(id),
-        "sections.id": sectionId,
+        _id: new ObjectId(params.id),
+        "sections.id": params.sectionId,
       },
       {
         $set: {
-          "sections.$": updatedSection,
-          updatedAt: new Date().toISOString(),
+          "sections.$": data,
+          updatedAt: new Date(),
         },
       }
     );
 
     if (result.matchedCount === 0) {
       return NextResponse.json(
-        { message: "Section non trouvée" },
+        { error: "Section non trouvée" },
         { status: 404 }
       );
     }
 
-    return NextResponse.json(updatedSection);
+    return NextResponse.json({ success: true });
   } catch (error) {
-    return NextResponse.json(
-      {
-        status: "error",
-        message: "Erreur lors de la mise à jour de la section",
-        error: error instanceof Error ? error.message : "Erreur inconnue",
-      },
-      { status: 500 }
-    );
+    console.error("Erreur lors de la mise à jour de la section:", error);
+    return NextResponse.json({ error: "Erreur serveur" }, { status: 500 });
   }
 }

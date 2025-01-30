@@ -1,6 +1,19 @@
+import { ObjectId } from "mongodb";
 import { z } from "zod";
 
+// Fonction utilitaire pour valider les ID MongoDB
+const isValidObjectId = (id: string) => {
+  try {
+    return ObjectId.isValid(id);
+  } catch {
+    return false;
+  }
+};
+
 export const templateSchema = z.object({
+  _id: z.string().refine(isValidObjectId, {
+    message: "ID MongoDB invalide",
+  }),
   name: z.string().min(1).max(100),
   description: z.string().max(500),
   thumbnail: z.string().optional(),
@@ -14,7 +27,7 @@ export const templateSchema = z.object({
 });
 
 export const sectionSchema = z.object({
-  id: z.string(),
+  id: z.string().uuid(),
   type: z.enum([
     "header",
     "hero",
