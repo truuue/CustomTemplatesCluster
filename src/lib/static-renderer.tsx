@@ -579,33 +579,6 @@ export async function generateStaticHTML(template: Template): Promise<{
                     </section>
                   `;
                 case "footer":
-                  const footerLinks = content.links || [
-                    {
-                      title: "Produit",
-                      items: [
-                        { label: "Fonctionnalités", href: "#" },
-                        { label: "Tarifs", href: "#" },
-                        { label: "FAQ", href: "#" },
-                      ],
-                    },
-                    {
-                      title: "Entreprise",
-                      items: [
-                        { label: "À propos", href: "#" },
-                        { label: "Blog", href: "#" },
-                        { label: "Carrières", href: "#" },
-                      ],
-                    },
-                    {
-                      title: "Légal",
-                      items: [
-                        { label: "Confidentialité", href: "#" },
-                        { label: "CGU", href: "#" },
-                        { label: "Mentions légales", href: "#" },
-                      ],
-                    },
-                  ];
-
                   const socialLinks = content.social || [
                     { icon: "facebook", url: "#" },
                     { icon: "twitter", url: "#" },
@@ -624,6 +597,12 @@ export async function generateStaticHTML(template: Template): Promise<{
                             <h3 class="text-lg font-bold">${content.title || ""}</h3>
                             <p class="text-muted-foreground">${content.subtitle || ""}</p>
 
+                            </div>
+                            </div>
+                            <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                            <p class="text-sm text-muted-foreground">
+                            © ${new Date().getFullYear()} ${content.companyName || ""}. Tous droits réservés.
+                            </p>
                             <div class="flex gap-4">
                               ${socialLinks
                                 .map(
@@ -656,55 +635,7 @@ export async function generateStaticHTML(template: Template): Promise<{
                                 )
                                 .join("")}
                             </div>
-                          </div>
 
-                          ${footerLinks
-                            .map(
-                              (group: {
-                                title: string;
-                                items: Array<{ label: string; href: string }>;
-                              }) => `
-                            <div class="space-y-4">
-                              <h4 class="font-semibold">${group.title}</h4>
-                              <ul class="space-y-2">
-                                ${group.items
-                                  .map(
-                                    (link: { label: string; href: string }) => `
-                                  <li>
-                                    <a
-                                      href="${link.href}"
-                                      class="text-muted-foreground hover:text-primary"
-                                    >
-                                      ${link.label}
-                                    </a>
-                                  </li>
-                                `
-                                  )
-                                  .join("")}
-                              </ul>
-                            </div>
-                          `
-                            )
-                            .join("")}
-                        </div>
-
-                        <div class="my-8 h-px bg-[hsl(var(--border))]"></div>
-
-                        <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                          <p class="text-sm text-muted-foreground">
-                            © ${new Date().getFullYear()} ${content.companyName || ""}. Tous droits réservés.
-                          </p>
-
-                          <div class="flex items-center gap-4">
-                            <input
-                              type="email"
-                              placeholder="Votre email"
-                              class="h-10 rounded-md border border-[hsl(var(--input))] bg-[hsl(var(--background))] px-3 py-2 text-sm ring-offset-[hsl(var(--background))] file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-[hsl(var(--muted-foreground))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--ring))] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 max-w-xs"
-                            />
-                            <button class="inline-flex h-10 items-center justify-center rounded-md bg-[hsl(var(--primary))] px-4 py-2 text-sm font-medium text-[hsl(var(--primary-foreground))] ring-offset-[hsl(var(--background))] transition-colors hover:bg-[hsl(var(--primary)/0.9)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--ring))] focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
-                              S'abonner
-                            </button>
-                          </div>
                         </div>
                       </div>
                     </footer>
