@@ -12,13 +12,6 @@ export async function DELETE(req: NextRequest) {
   const sectionId = segments[segments.length - 1];
   const sessionId = req.nextUrl.searchParams.get("sessionId");
 
-  logger.info("DELETE request received", {
-    pathname: req.nextUrl.pathname,
-    segments,
-    id,
-    sectionId
-  });
-
   if (!id || !sectionId) {
     return NextResponse.json(
       { error: "ID ou sectionId invalide" },
@@ -76,14 +69,6 @@ export async function PUT(req: NextRequest) {
   const segments = req.nextUrl.pathname.split('/');
   const id = segments[segments.length - 3];
   const sectionId = segments[segments.length - 1];
-
-  // Log pour debug
-  logger.info("PUT request received", {
-    pathname: req.nextUrl.pathname,
-    segments,
-    id,
-    sectionId
-  });
 
   if (!id || !sectionId) {
     logger.error("Invalid parameters", { id, sectionId });
