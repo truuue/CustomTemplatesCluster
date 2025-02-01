@@ -1,6 +1,6 @@
-import { Redis } from "ioredis";
 import { logPlanValidationError } from "./logger";
 import prisma from "./prisma";
+import { redis } from "./redis-limiter";
 import { stripe } from "./stripe";
 
 // Vérification de la clé API Stripe
@@ -8,8 +8,6 @@ if (!process.env.STRIPE_SECRET_KEY) {
   throw new Error("La clé API Stripe n'est pas configurée");
 }
 
-// Configuration Redis pour le cache
-const redis = new Redis(process.env.REDIS_URL || "redis://localhost:6379");
 const CACHE_TTL = 5 * 60; // 5 minutes en secondes
 const CACHE_PREFIX = "sub_status:";
 
@@ -29,7 +27,7 @@ export async function verifySubscriptionStatus(
     });
 
     if (!user || !user.stripeCustomerId || user.plan !== "PRO") {
-      await redis.set(`${CACHE_PREFIX}${userId}`, "true", "EX", CACHE_TTL);
+      await redis.set(`${CACHE_PREFIX}${userId}`, "true", CACHE_TTL);
       return true; // Les utilisateurs gratuits sont toujours valides
     }
 
@@ -52,7 +50,7 @@ export async function verifySubscriptionStatus(
         userId,
         "Abonnement PRO expiré - Rétrogradé vers FREE"
       );
-      await redis.set(`${CACHE_PREFIX}${userId}`, "false", "EX", CACHE_TTL);
+      await redis.set(`${CACHE_PREFIX}${userId}`, "false", CACHE_TTL);
       return false;
     }
 
@@ -60,7 +58,6 @@ export async function verifySubscriptionStatus(
     await redis.set(
       `${CACHE_PREFIX}${userId}`,
       hasActiveSubscription.toString(),
-      "EX",
       CACHE_TTL
     );
 
@@ -79,13 +76,7 @@ export async function checkAllSubscriptions() {
     });
 
     // Utiliser un verrou distribué pour éviter les exécutions simultanées
-    const lock = await redis.set(
-      "subscription_check_lock",
-      "1",
-      "EX",
-      3600,
-      "NX"
-    );
+    const lock = await redis.set("subscription_check_lock", "1", 3600);
     if (!lock) {
       console.log("Une autre vérification est déjà en cours");
       return;
