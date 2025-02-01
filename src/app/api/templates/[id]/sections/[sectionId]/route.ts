@@ -10,6 +10,9 @@ export async function DELETE(req: NextRequest) {
   const sectionId = req.nextUrl.searchParams.get("sectionId");
   const sessionId = req.nextUrl.searchParams.get("sessionId");
 
+  console.log("Received ID:", id);
+  console.log("Received Section ID:", sectionId);
+
   if (!id || !sectionId) {
     return NextResponse.json(
       { error: "ID ou sectionId invalide" },
@@ -65,6 +68,9 @@ export async function DELETE(req: NextRequest) {
 export async function PUT(req: NextRequest) {
   const id = req.nextUrl.searchParams.get("id");
   const sectionId = req.nextUrl.searchParams.get("sectionId");
+
+  console.log("Received ID:", id);
+  console.log("Received Section ID:", sectionId);
 
   if (!id || !sectionId) {
     return NextResponse.json(
