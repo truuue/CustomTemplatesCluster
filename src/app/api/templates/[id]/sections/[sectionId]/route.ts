@@ -1,13 +1,13 @@
 import { connectToDatabase } from "@/config/database";
+import { logger } from "@/lib/logger";
 import { sectionSchema } from "@/lib/validations/template";
 import { ObjectId } from "mongodb";
 import { getServerSession } from "next-auth/next";
 import { NextRequest, NextResponse } from "next/server";
 import { authOptions } from "../../../../../../../pages/api/auth/[...nextauth]";
-import { logger } from "@/lib/logger";
 
 export async function DELETE(req: NextRequest) {
-  const segments = req.nextUrl.pathname.split('/');
+  const segments = req.nextUrl.pathname.split("/");
   const id = segments[segments.length - 3];
   const sectionId = segments[segments.length - 1];
   const sessionId = req.nextUrl.searchParams.get("sessionId");
@@ -66,7 +66,7 @@ export async function DELETE(req: NextRequest) {
 
 export async function PUT(req: NextRequest) {
   // Récupérer l'ID et sectionId depuis les segments d'URL
-  const segments = req.nextUrl.pathname.split('/');
+  const segments = req.nextUrl.pathname.split("/");
   const id = segments[segments.length - 3];
   const sectionId = segments[segments.length - 1];
 

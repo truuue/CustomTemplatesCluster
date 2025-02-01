@@ -1,6 +1,9 @@
+import { connectToDatabase } from "@/config/database";
+import prisma from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { authOptions } from "../../pages/api/auth/[...nextauth]";
+import { getUserPlanRestrictions } from "./plan-restrictions";
 import { rateLimit } from "./rate-limit";
 
 export async function middleware(req: NextRequest) {
@@ -25,10 +28,47 @@ export async function middleware(req: NextRequest) {
     }
   }
 
-  // Vérification de l'authentification (logique existante)
+  // Vérification de l'authentification
   const session = await getServerSession(authOptions);
   if (!session) {
     return NextResponse.redirect(new URL("/login", req.url));
+  }
+
+  // Vérification des restrictions du plan
+  const user = await prisma.user.findUnique({
+    where: { id: session.user.id },
+    select: { plan: true },
+  });
+
+  const userPlan = user?.plan || "FREE";
+  const restrictions = getUserPlanRestrictions(userPlan);
+
+  // Vérification des accès aux fonctionnalités premium
+  if (req.nextUrl.pathname.startsWith("/templates/")) {
+    // Vérifier le nombre de templates pour le plan gratuit
+    if (userPlan === "FREE") {
+      const db = await connectToDatabase();
+      const templatesCount = await db.collection("templates").countDocuments({
+        userId: session.user.id,
+      });
+
+      if (
+        templatesCount >= restrictions.maxTemplates &&
+        req.nextUrl.pathname === "/templates/new"
+      ) {
+        return NextResponse.redirect(new URL("/#pricing", req.url));
+      }
+    }
+  }
+
+  // Vérification des fonctionnalités premium
+  if (
+    (req.nextUrl.pathname.includes("/analytics") &&
+      !restrictions.hasAdvancedAnalytics) ||
+    (req.nextUrl.pathname.includes("/templates/premium") &&
+      !restrictions.hasAllTemplates)
+  ) {
+    return NextResponse.redirect(new URL("/#pricing", req.url));
   }
 
   const response = NextResponse.next();
@@ -52,6 +92,8 @@ export const config = {
     // Routes protégées nécessitant une authentification
     "/templates/:path*",
     "/account/:path*",
+    "/custom-domain/:path*",
+    "/analytics/:path*",
     // Routes API
     "/api/:path*",
   ],

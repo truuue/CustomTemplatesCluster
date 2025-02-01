@@ -122,7 +122,6 @@ export default function Pricing() {
                   "Landing pages illimitées",
                   "Tous les templates",
                   "Support prioritaire",
-                  "Domaine personnalisé",
                   "Analytics avancés",
                 ].map((feature) => (
                   <li key={feature} className="flex items-center">

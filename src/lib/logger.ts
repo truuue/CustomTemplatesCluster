@@ -4,5 +4,5 @@ export const logger = {
   },
   error: (message: string, data?: any) => {
     console.error(`[ERROR] ${message}`, data);
-  }
-}; 
+  },
+};
