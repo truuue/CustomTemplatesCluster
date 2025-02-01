@@ -86,7 +86,7 @@ export function TemplateEditor({ initialTemplate }: TemplateEditorProps) {
     setIsSaving(true);
     try {
       const url = new URL(
-        `/api/templates/${template._id}/sections/${updatedSection.id}`,
+        `/api/templates/${encodeURIComponent(template._id)}/sections/${encodeURIComponent(updatedSection.id)}`,
         window.location.origin
       );
       url.searchParams.set("id", template._id);

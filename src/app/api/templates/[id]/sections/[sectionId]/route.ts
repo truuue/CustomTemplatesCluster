@@ -4,10 +4,12 @@ import { ObjectId } from "mongodb";
 import { getServerSession } from "next-auth/next";
 import { NextRequest, NextResponse } from "next/server";
 import { authOptions } from "../../../../../../../pages/api/auth/[...nextauth]";
+import { logger } from "@/lib/logger";
 
 export async function DELETE(req: NextRequest) {
-  const id = req.nextUrl.searchParams.get("id");
-  const sectionId = req.nextUrl.searchParams.get("sectionId");
+  const segments = req.nextUrl.pathname.split('/');
+  const id = segments[segments.length - 3];
+  const sectionId = segments[segments.length - 1];
   const sessionId = req.nextUrl.searchParams.get("sessionId");
 
   if (!id || !sectionId) {
@@ -63,10 +65,13 @@ export async function DELETE(req: NextRequest) {
 }
 
 export async function PUT(req: NextRequest) {
-  const id = req.nextUrl.searchParams.get("id");
-  const sectionId = req.nextUrl.searchParams.get("sectionId");
+  // Récupérer l'ID et sectionId depuis les segments d'URL
+  const segments = req.nextUrl.pathname.split('/');
+  const id = segments[segments.length - 3];
+  const sectionId = segments[segments.length - 1];
 
   if (!id || !sectionId) {
+    logger.error("Invalid parameters", { id, sectionId });
     return NextResponse.json(
       { error: "ID ou sectionId invalide" },
       { status: 400 }

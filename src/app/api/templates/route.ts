@@ -37,7 +37,6 @@ export async function POST(request: Request) {
   try {
     const session = await getServerSession(authOptions);
     const data = await request.json();
-    console.log("Données reçues:", data);
 
     // Validation du template
     const validationResult = templateSchema.safeParse(data);
