@@ -29,5 +29,21 @@ export function canCreateNewTemplate(
   userPlan: "FREE" | "PRO"
 ): boolean {
   const restrictions = getUserPlanRestrictions(userPlan);
+
+  // Validation supplémentaire
+  if (currentTemplatesCount < 0) return false;
+  if (userPlan === "FREE" && currentTemplatesCount >= restrictions.maxTemplates)
+    return false;
+  if (typeof currentTemplatesCount !== "number") return false;
+
   return currentTemplatesCount < restrictions.maxTemplates;
+}
+
+// Nouvelle fonction de validation
+export function validatePlanAccess(
+  feature: keyof PlanRestrictions,
+  userPlan: "FREE" | "PRO"
+): boolean {
+  const restrictions = getUserPlanRestrictions(userPlan);
+  return restrictions[feature] === true;
 }

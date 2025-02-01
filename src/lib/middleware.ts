@@ -37,11 +37,16 @@ export async function middleware(req: NextRequest) {
   // Vérification des restrictions du plan
   const user = await prisma.user.findUnique({
     where: { id: session.user.id },
-    select: { plan: true },
+    select: { plan: true, stripeCustomerId: true },
   });
 
   const userPlan = user?.plan || "FREE";
   const restrictions = getUserPlanRestrictions(userPlan);
+
+  // Vérification supplémentaire pour les utilisateurs PRO
+  if (userPlan === "PRO" && !user?.stripeCustomerId) {
+    return NextResponse.redirect(new URL("/#pricing", req.url));
+  }
 
   // Vérification des accès aux fonctionnalités premium
   if (req.nextUrl.pathname.startsWith("/templates/")) {
