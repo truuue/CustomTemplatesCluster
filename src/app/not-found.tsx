@@ -2,9 +2,9 @@
 
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 
 export default function NotFound() {
   const router = useRouter();
@@ -12,7 +12,7 @@ export default function NotFound() {
   return (
     <div className="flex min-h-[100dvh] flex-col items-center justify-center p-4">
       <div className="text-center">
-        <div className="mb-8 relative w-full max-w-[500px] mx-auto">
+        <div className="relative mx-auto mb-8 w-full max-w-[500px]">
           <Image
             src="/images/404.svg"
             alt="Illustration 404"
@@ -24,7 +24,8 @@ export default function NotFound() {
         </div>
         <h1 className="mb-4 text-2xl font-semibold">Page non trouvée</h1>
         <p className="mb-8 text-muted-foreground">
-          Désolé, la page que vous recherchez n&apos;existe pas ou a été déplacée.
+          Désolé, la page que vous recherchez n&apos;existe pas ou a été
+          déplacée.
         </p>
         <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
           <Button onClick={() => router.back()} variant="outline">
@@ -38,4 +39,4 @@ export default function NotFound() {
       </div>
     </div>
   );
-} 
+}
