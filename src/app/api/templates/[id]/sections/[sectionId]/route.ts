@@ -7,12 +7,17 @@ import { authOptions } from "../../../../../../../pages/api/auth/[...nextauth]";
 import { logger } from "@/lib/logger";
 
 export async function DELETE(req: NextRequest) {
-  const id = req.nextUrl.searchParams.get("id");
-  const sectionId = req.nextUrl.searchParams.get("sectionId");
+  const segments = req.nextUrl.pathname.split('/');
+  const id = segments[segments.length - 3];
+  const sectionId = segments[segments.length - 1];
   const sessionId = req.nextUrl.searchParams.get("sessionId");
 
-  console.log("Received ID:", id);
-  console.log("Received Section ID:", sectionId);
+  logger.info("DELETE request received", {
+    pathname: req.nextUrl.pathname,
+    segments,
+    id,
+    sectionId
+  });
 
   if (!id || !sectionId) {
     return NextResponse.json(
@@ -67,17 +72,17 @@ export async function DELETE(req: NextRequest) {
 }
 
 export async function PUT(req: NextRequest) {
-  const id = req.nextUrl.searchParams.get("id");
-  const sectionId = req.nextUrl.searchParams.get("sectionId");
-  const url = req.url;
+  // Récupérer l'ID et sectionId depuis les segments d'URL
+  const segments = req.nextUrl.pathname.split('/');
+  const id = segments[segments.length - 3];
+  const sectionId = segments[segments.length - 1];
 
-  // Logging plus détaillé
+  // Log pour debug
   logger.info("PUT request received", {
-    url,
+    pathname: req.nextUrl.pathname,
+    segments,
     id,
-    sectionId,
-    headers: Object.fromEntries(req.headers),
-    searchParams: Object.fromEntries(req.nextUrl.searchParams)
+    sectionId
   });
 
   if (!id || !sectionId) {
