@@ -4,6 +4,7 @@ import { ObjectId } from "mongodb";
 import { getServerSession } from "next-auth/next";
 import { NextRequest, NextResponse } from "next/server";
 import { authOptions } from "../../../../../../../pages/api/auth/[...nextauth]";
+import { logger } from "@/lib/logger";
 
 export async function DELETE(req: NextRequest) {
   const id = req.nextUrl.searchParams.get("id");
@@ -68,11 +69,19 @@ export async function DELETE(req: NextRequest) {
 export async function PUT(req: NextRequest) {
   const id = req.nextUrl.searchParams.get("id");
   const sectionId = req.nextUrl.searchParams.get("sectionId");
+  const url = req.url;
 
-  console.log("Received ID:", id);
-  console.log("Received Section ID:", sectionId);
+  // Logging plus détaillé
+  logger.info("PUT request received", {
+    url,
+    id,
+    sectionId,
+    headers: Object.fromEntries(req.headers),
+    searchParams: Object.fromEntries(req.nextUrl.searchParams)
+  });
 
   if (!id || !sectionId) {
+    logger.error("Invalid parameters", { id, sectionId });
     return NextResponse.json(
       { error: "ID ou sectionId invalide" },
       { status: 400 }

@@ -85,15 +85,15 @@ export function TemplateEditor({ initialTemplate }: TemplateEditorProps) {
   const handleSectionUpdate = async (updatedSection: Section) => {
     setIsSaving(true);
     try {
-      console.log("Updating section with ID:", updatedSection.id);
-      console.log("Template ID:", template._id);
-
       const url = new URL(
-        `/api/templates/${template._id}/sections/${updatedSection.id}`,
+        `/api/templates/${encodeURIComponent(template._id)}/sections/${encodeURIComponent(updatedSection.id)}`,
         window.location.origin
       );
       url.searchParams.set("id", template._id);
       url.searchParams.set("sectionId", updatedSection.id);
+
+      console.log("URL complète:", url.toString());
+      console.log("Paramètres de l'URL:", Object.fromEntries(url.searchParams));
 
       const response = await fetch(url.toString(), {
         method: "PUT",
