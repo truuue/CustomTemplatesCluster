@@ -1,0 +1,11 @@
+{
+  "ignores": [
+    "@shadcn/ui",
+    "simple-icons",
+    "@types/node",
+    "autoprefixer",
+    "postcss",
+    "prettier-plugin-organize-imports",
+    "prettier-plugin-tailwindcss"
+  ]
+}
