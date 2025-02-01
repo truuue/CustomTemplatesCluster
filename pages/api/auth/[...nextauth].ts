@@ -103,9 +103,26 @@ export const authOptions: NextAuthOptions = {
         return false;
       }
     },
+    jwt: async ({ token, user }) => {
+      if (user?.email) {
+        // Récupérer les informations de l'utilisateur depuis la base de données
+        const dbUser = await prisma.user.findUnique({
+          where: { email: user.email },
+          select: { plan: true, isAdmin: true },
+        });
+
+        if (dbUser) {
+          token.plan = dbUser.plan;
+          token.isAdmin = dbUser.isAdmin;
+        }
+      }
+      return token;
+    },
     session: async ({ session, token }) => {
       if (session?.user) {
         session.user.id = token.sub!;
+        session.user.plan = token.plan as "FREE" | "PRO";
+        session.user.isAdmin = token.isAdmin as boolean;
       }
       return session;
     },

@@ -23,6 +23,7 @@ model User {
 
   stripeCustomerId String?
   plan             UserPlan @default(FREE)
+  isAdmin          Boolean  @default(false)
 }
 
 model Account {
