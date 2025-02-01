@@ -3,8 +3,10 @@ import prisma from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { authOptions } from "../../pages/api/auth/[...nextauth]";
+import { logUnauthorizedAccess } from "./logger";
 import { getUserPlanRestrictions } from "./plan-restrictions";
 import { rateLimit } from "./rate-limit";
+import { verifySubscriptionStatus } from "./subscription-checker";
 
 export async function middleware(req: NextRequest) {
   // Vérifier si c'est une route API
@@ -43,9 +45,17 @@ export async function middleware(req: NextRequest) {
   const userPlan = user?.plan || "FREE";
   const restrictions = getUserPlanRestrictions(userPlan);
 
-  // Vérification supplémentaire pour les utilisateurs PRO
-  if (userPlan === "PRO" && !user?.stripeCustomerId) {
-    return NextResponse.redirect(new URL("/#pricing", req.url));
+  // Vérification de l'abonnement pour les utilisateurs PRO
+  if (userPlan === "PRO") {
+    const isSubscriptionValid = await verifySubscriptionStatus(session.user.id);
+    if (!isSubscriptionValid) {
+      logUnauthorizedAccess(
+        session.user.id,
+        "Accès PRO avec abonnement invalide",
+        userPlan
+      );
+      return NextResponse.redirect(new URL("/#pricing", req.url));
+    }
   }
 
   // Vérification des accès aux fonctionnalités premium
@@ -61,6 +71,11 @@ export async function middleware(req: NextRequest) {
         templatesCount >= restrictions.maxTemplates &&
         req.nextUrl.pathname === "/templates/new"
       ) {
+        logUnauthorizedAccess(
+          session.user.id,
+          "Tentative de création de template au-delà de la limite",
+          userPlan
+        );
         return NextResponse.redirect(new URL("/#pricing", req.url));
       }
     }
@@ -73,6 +88,11 @@ export async function middleware(req: NextRequest) {
     (req.nextUrl.pathname.includes("/templates/premium") &&
       !restrictions.hasAllTemplates)
   ) {
+    logUnauthorizedAccess(
+      session.user.id,
+      `Tentative d'accès à ${req.nextUrl.pathname}`,
+      userPlan
+    );
     return NextResponse.redirect(new URL("/#pricing", req.url));
   }
 
