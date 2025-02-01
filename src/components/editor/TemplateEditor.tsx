@@ -85,6 +85,9 @@ export function TemplateEditor({ initialTemplate }: TemplateEditorProps) {
   const handleSectionUpdate = async (updatedSection: Section) => {
     setIsSaving(true);
     try {
+      console.log("Updating section with ID:", updatedSection.id);
+      console.log("Template ID:", template._id);
+
       const url = new URL(
         `/api/templates/${template._id}/sections/${updatedSection.id}`,
         window.location.origin
@@ -133,6 +136,8 @@ export function TemplateEditor({ initialTemplate }: TemplateEditorProps) {
   const handleSectionsReorder = async (reorderedSections: Section[]) => {
     setIsSaving(true);
     try {
+      console.log("Reordering sections for template ID:", template._id);
+
       const url = new URL(
         `/api/templates/${template._id}/sections/reorder`,
         window.location.origin
@@ -174,6 +179,9 @@ export function TemplateEditor({ initialTemplate }: TemplateEditorProps) {
   const handleSectionDelete = async (sectionToDelete: Section) => {
     setIsSaving(true);
     try {
+      console.log("Deleting section with ID:", sectionToDelete.id);
+      console.log("Template ID:", template._id);
+
       const url = new URL(
         `/api/templates/${template._id}/sections/${sectionToDelete.id}`,
         window.location.origin
