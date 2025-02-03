@@ -1,6 +1,6 @@
 import { sendRedisAlert } from "@/lib/email";
 import { Redis } from "ioredis";
-import logger from "./logger";
+import logger from "@/lib/logger";
 
 const DAILY_LIMIT = 9000; // 90% de la limite gratuite de 10k
 const HOURLY_LIMIT = Math.floor(DAILY_LIMIT / 24);

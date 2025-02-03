@@ -1,6 +1,6 @@
 import { CronJob } from "cron";
-import logger from "./logger";
-import { checkAllSubscriptions } from "./subscription-checker";
+import logger from "@/lib/logger";
+import { checkAllSubscriptions } from "@/lib/subscription-checker";
 
 const TIMEZONE = process.env.TIMEZONE || "Europe/Paris";
 const CHECK_TIME = process.env.SUBSCRIPTION_CHECK_TIME || "0 0 * * *";

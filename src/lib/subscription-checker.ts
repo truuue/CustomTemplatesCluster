@@ -1,7 +1,7 @@
-import { logPlanValidationError } from "./logger";
-import prisma from "./prisma";
-import { redis } from "./redis-limiter";
-import { stripe } from "./stripe";
+import { logPlanValidationError } from "@/lib/logger";
+import prisma from "@/lib/prisma";
+import { redis } from "@/lib/redis-limiter";
+import { stripe } from "@/lib/stripe";
 
 // Vérification de la clé API Stripe
 if (!process.env.STRIPE_SECRET_KEY) {

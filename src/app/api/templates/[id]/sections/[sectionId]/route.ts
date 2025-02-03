@@ -1,5 +1,5 @@
 import { connectToDatabase } from "@/config/database";
-import { logger } from "@/lib/logger";
+import logger from "@/lib/logger";
 import { sectionSchema } from "@/lib/validations/template";
 import { ObjectId } from "mongodb";
 import { getServerSession } from "next-auth/next";

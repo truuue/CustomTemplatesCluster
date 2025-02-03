@@ -1,5 +1,5 @@
 import { Resend } from "resend";
-import logger from "./logger";
+import logger from "@/lib/logger";
 
 if (!process.env.RESEND_API_KEY) {
   throw new Error("La clé API Resend n'est pas configurée");
