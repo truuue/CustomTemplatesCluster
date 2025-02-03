@@ -51,7 +51,7 @@ export default function CookiesManager({
           </DialogTitle>
           <DialogDescription className="text-base">
             Nous respectons votre vie privée. Personnalisez vos préférences de
-            cookies ci-dessous. Pour plus d'informations, consultez notre{" "}
+            cookies ci-dessous. Pour plus d&apos;informations, consultez notre{" "}
             <Link
               href="/privacy"
               className="inline-flex items-center gap-1 text-primary hover:underline"
@@ -79,7 +79,7 @@ export default function CookiesManager({
                 <p className="text-sm text-muted-foreground">
                   Ces cookies sont nécessaires au fonctionnement du site. Ils
                   permettent les fonctionnalités de base comme la navigation,
-                  l'accès aux zones sécurisées et la mémorisation de vos
+                  l&apos;accès aux zones sécurisées et la mémorisation de vos
                   préférences essentielles.
                 </p>
               </div>
@@ -108,10 +108,11 @@ export default function CookiesManager({
                   </span>
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  Ces cookies nous permettent d'analyser l'utilisation du site
-                  pour mesurer et améliorer ses performances. Ils nous aident à
-                  comprendre comment les visiteurs interagissent avec le site,
-                  identifier les problèmes et fournir une meilleure expérience.
+                  Ces cookies nous permettent d&apos;analyser l&apos;utilisation
+                  du site pour mesurer et améliorer ses performances. Ils nous
+                  aident à comprendre comment les visiteurs interagissent avec
+                  le site, identifier les problèmes et fournir une meilleure
+                  expérience.
                 </p>
               </div>
             </div>
