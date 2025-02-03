@@ -1,12 +1,12 @@
 import { connectToDatabase } from "@/config/database";
+import { logUnauthorizedAccess } from "@/lib/logger";
+import { getUserPlanRestrictions } from "@/lib/plan-restrictions";
 import prisma from "@/lib/prisma";
+import { rateLimit } from "@/lib/rate-limit";
+import { verifySubscriptionStatus } from "@/lib/subscription-checker";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { authOptions } from "../../pages/api/auth/[...nextauth]";
-import { logUnauthorizedAccess } from "@/lib/logger";
-import { getUserPlanRestrictions } from "@/lib/plan-restrictions";
-import { rateLimit } from "@/lib/rate-limit";
-import { verifySubscriptionStatus } from "@/lib/subscription-checker";
 
 export async function middleware(req: NextRequest) {
   // Vérifier si c'est une route API

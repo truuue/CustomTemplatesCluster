@@ -1,5 +1,5 @@
-import { Resend } from "resend";
 import logger from "@/lib/logger";
+import { Resend } from "resend";
 
 if (!process.env.RESEND_API_KEY) {
   throw new Error("La clé API Resend n'est pas configurée");
@@ -62,7 +62,7 @@ export async function sendRedisAlert(stats: {
 
     logger.info({
       message: "Alerte Redis envoyée par email",
-      emailId: result.data?.id ?? 'unknown',
+      emailId: result.data?.id ?? "unknown",
       dailyPercentage,
       hourlyPercentage,
     });

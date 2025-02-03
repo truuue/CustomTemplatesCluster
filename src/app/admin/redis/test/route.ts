@@ -1,8 +1,8 @@
-import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-import { redis } from "@/lib/redis-limiter";
-import { authOptions } from "../../../../../pages/api/auth/[...nextauth]";
 import { sendRedisAlert } from "@/lib/email";
+import { redis } from "@/lib/redis-limiter";
+import { getServerSession } from "next-auth";
+import { NextResponse } from "next/server";
+import { authOptions } from "../../../../../pages/api/auth/[...nextauth]";
 
 export async function POST(request: Request) {
   const session = await getServerSession(authOptions);
@@ -25,7 +25,7 @@ export async function POST(request: Request) {
       daily: 4500, // 50% de la limite
       hourly: 187, // 50% de la limite horaire
       dailyLimit: 9000,
-      hourlyLimit: 375
+      hourlyLimit: 375,
     };
 
     // Envoyer une alerte de test
@@ -38,14 +38,16 @@ export async function POST(request: Request) {
       details: {
         connectionTest: readValue === testValue,
         alertSent: true,
-        simulatedLoad: simulatedStats
-      }
+        simulatedLoad: simulatedStats,
+      },
     });
-
   } catch (error) {
-    return NextResponse.json({
-      success: false,
-      error: error instanceof Error ? error.message : "Erreur inconnue"
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : "Erreur inconnue",
+      },
+      { status: 500 }
+    );
   }
 }
