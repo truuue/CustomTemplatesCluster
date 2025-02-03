@@ -38,13 +38,15 @@ export default function PrivacyPage() {
             {siteConfig.legal.privacy.dataCollection.intro}
           </p>
           <ul className="list-inside list-disc space-y-2 text-muted-foreground">
-            {(siteConfig.legal.privacy.dataCollection.items || []).map(
-              (value, index) => (
-                <li key={index}>
-                  {value.replace(/'/g, "&apos;").replace(/"/g, "&quot;")}
-                </li>
-              )
-            )}
+            {Array.isArray(siteConfig.legal.privacy.dataCollection.items)
+              ? siteConfig.legal.privacy.dataCollection.items.map(
+                  (value, index) => (
+                    <li key={index}>
+                      {value.replace(/'/g, "&apos;").replace(/"/g, "&quot;")}
+                    </li>
+                  )
+                )
+              : null}
           </ul>
         </section>
 
@@ -90,11 +92,11 @@ export default function PrivacyPage() {
             Conformément au RGPD, vous disposez des droits suivants :
           </p>
           <ul className="list-inside list-disc space-y-2 text-muted-foreground">
-            <li>Droit d'accès à vos données personnelles</li>
+            <li>Droit d&apos;accès à vos données personnelles</li>
             <li>Droit de rectification de vos données</li>
-            <li>Droit à l'effacement de vos données</li>
+            <li>Droit à l&apos;effacement de vos données</li>
             <li>Droit à la portabilité de vos données</li>
-            <li>Droit d'opposition au traitement</li>
+            <li>Droit d&apos;opposition au traitement</li>
           </ul>
         </section>
 
